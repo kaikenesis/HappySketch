@@ -4,37 +4,40 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed;
     [SerializeField] private KeyCode leftHand, rightHand, leftFoot, rightFoot;
-    private float currentSpeed;
-    private bool isMoving = false;
+    [SerializeField] private float animationSpeed;
+    [SerializeField] private List<AnimationClip> climbAnimClips;
+    private Animator playerAnim;
+    private int animIndex = 0;
+    private bool isPlayingAnimation = false;
 
     void Start()
     {
-        currentSpeed = moveSpeed;
+        playerAnim = GetComponent<Animator>();
+        playerAnim.speed = animationSpeed;
     }
 
     void Update()
     {
-        if (PressedBtn(leftHand))
-            isMoving = true;
-        
-        MoveUp();
+        if (PressedBtn(leftHand) && !isPlayingAnimation)
+            MoveUp();
     }
 
     void MoveUp()
     {
-        if (!isMoving)
-            return;
-        
-        transform.Translate(0, currentSpeed / 50.0f, 0);
-        currentSpeed *= 0.98f;
+        float animDuration = climbAnimClips[animIndex].length / playerAnim.speed;
+        StartCoroutine(ToggleIsPlayingAnimation(animDuration));
 
-        if (currentSpeed <= 0.1f)
-        {
-            isMoving = false;
-            currentSpeed = moveSpeed;
-        }
+        playerAnim.Play(climbAnimClips[animIndex].name, -1, 0f);
+        animIndex = (animIndex + 1) % climbAnimClips.Count;
+    }
+
+
+    IEnumerator ToggleIsPlayingAnimation(float duration)
+    {
+        isPlayingAnimation = true;
+        yield return new WaitForSeconds(duration);
+        isPlayingAnimation = false;
     }
 
     public bool PressedBtn(KeyCode keycode)
