@@ -6,7 +6,7 @@ public class MainMenuButton : BaseButton
         Init();
     }
 
-    void Start()
+    private void Start()
     {
         SetInfo();
     }

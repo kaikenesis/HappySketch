@@ -3,14 +3,8 @@ using UnityEngine.UI;
 
 public abstract class BaseButton : MonoBehaviour
 {
-    enum EButtonType
-    {
-        Tutorial,
-        LevelSelect,
-        GameStart,
-        Retry,
-        MainMenu
-    }
+    [SerializeField]
+    public EButtonType buttonType { get; private set; }
 
     private Button button;
 
@@ -19,7 +13,7 @@ public abstract class BaseButton : MonoBehaviour
         Init();
     }
 
-    void Start()
+    private void Start()
     {
         SetInfo();
     }
@@ -39,4 +33,13 @@ public abstract class BaseButton : MonoBehaviour
     }
 
     public abstract void OnClicked();
+}
+
+public enum EButtonType
+{
+    Tutorial,
+    LevelSelect,
+    GameStart,
+    Retry,
+    MainMenu
 }

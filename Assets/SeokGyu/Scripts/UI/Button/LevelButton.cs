@@ -6,17 +6,14 @@ using UnityEngine;
 public class LevelButton : BaseButton
 {
     [SerializeField]
-    private ELevel level;
-    private TextMeshProUGUI textName;
-    [SerializeField]
-    private GameObject starImg;
+    public ELevel level { get; private set; }
 
     private void Awake()
     {
         Init();
     }
 
-    void Start()
+    private void Start()
     {
         SetInfo();
     }
@@ -24,11 +21,6 @@ public class LevelButton : BaseButton
     protected override void Init()
     {
         base.Init();
-
-        textName = GetComponentInChildren<TextMeshProUGUI>();
-
-        SetLevelName();
-        SetStarCount();
     }
 
     protected override void SetInfo()
@@ -38,43 +30,27 @@ public class LevelButton : BaseButton
 
     public override void OnClicked()
     {
-        // 키설명 화면으로 전환
+        SetLevelInfo();
     }
 
-    private void SetLevelName()
+    private void SetLevelInfo()
     {
         switch (level)
         {
             case ELevel.Easy:
-                textName.SetText("Easy");
+                Debug.Log("쉬움");
                 break;
             case ELevel.Normal:
-                textName.SetText("Normal");
+                Debug.Log("보통");
                 break;
             case ELevel.Hard:
-                textName.SetText("Hard");
+                Debug.Log("어려움");
                 break;
-        }
-    }
-
-    private void SetStarCount()
-    {
-        float xPos = 0;
-        if ((int)level % 2 == 0) xPos = -90 * ((int)level / 2);
-        else if ((int)level % 2 == 1) xPos = -45 - 90 * ((int)level / 2);
-
-        starImg.transform.localPosition = new Vector3(xPos, starImg.transform.localPosition.y, 0);
-        for (int i = 0; i < (int)level; i++)
-        {
-            xPos += 90;
-            GameObject ob = Instantiate(starImg);
-            ob.transform.SetParent(transform);
-            ob.transform.localPosition = new Vector3(xPos, starImg.transform.localPosition.y, 0);
         }
     }
 }
 
-enum ELevel
+public enum ELevel
 {
     Easy,
     Normal,
