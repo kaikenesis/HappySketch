@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f1784cf794812d14fa68c9b9c58f1a6a, type: 3}
+  m_Script: {fileID: 11500000, guid: a1c4b8df4f2158a4fa075db1f777bdac, type: 3}
   m_Name: NoteTimeInfo
   m_EditorClassIdentifier: 
   totalTime:
@@ -24,8 +24,11 @@ MonoBehaviour:
   - 0.5
   - 0.4
   - 0.3
-  minRecreateTime: 0.5
-  maxRecreateTime: 2
+  minRecreateTime: 0.1
+  maxRecreateTime: 0.4
+  feverStartTime: 50
+  feverCheckTime: 0.5
   perfectScore: 10
   goodScore: 5
   badScore: 0
+  playTime: 60
