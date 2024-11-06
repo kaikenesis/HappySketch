@@ -1,5 +1,6 @@
 using System;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 
 public class LevelButton : BaseButton
@@ -58,11 +59,17 @@ public class LevelButton : BaseButton
 
     private void SetStarCount()
     {
+        float xPos = 0;
+        if ((int)level % 2 == 0) xPos = -90 * ((int)level / 2);
+        else if ((int)level % 2 == 1) xPos = -45 - 90 * ((int)level / 2);
+
+        starImg.transform.localPosition = new Vector3(xPos, starImg.transform.localPosition.y, 0);
         for (int i = 0; i < (int)level; i++)
         {
+            xPos += 90;
             GameObject ob = Instantiate(starImg);
             ob.transform.SetParent(transform);
-            ob.transform.position = starImg.transform.position;
+            ob.transform.localPosition = new Vector3(xPos, starImg.transform.localPosition.y, 0);
         }
     }
 }
