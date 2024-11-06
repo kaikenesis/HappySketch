@@ -9,12 +9,12 @@ public class WallControl : MonoBehaviour
     [SerializeField] private MeshRenderer meshRenderer;
     private float wallHeight;
 
-    void Start()
-    {
-        wallHeight = meshRenderer.bounds.size.y;
-        walls[2].gameObject.SetActive(false);
-        walls[3].gameObject.SetActive(false);
-    }
+    //void Start()
+    //{
+    //    wallHeight = meshRenderer.bounds.size.y;
+    //    walls[2].gameObject.SetActive(false);
+    //    walls[3].gameObject.SetActive(false);
+    //}
 
     void Update()
     {

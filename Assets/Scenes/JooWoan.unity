@@ -1969,13 +1969,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 860678935}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6d999d9c6f0cce45bbaec0be4c4af41, type: 3}
+  m_Script: {fileID: 11500000, guid: 831809c054d3c4d428bfa4badc071e3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   leftHand: 97
-  rightHand: 115
-  leftFoot: 122
-  rightFoot: 120
+  rightHand: 0
+  leftFoot: 0
+  rightFoot: 0
   animationSpeed: 2
   climbAnimClips:
   - {fileID: 7400000, guid: d69aeb89feafb3848a5f820f6fb5ea24, type: 2}
@@ -2263,6 +2263,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 3836581064361698930, guid: a524090786e7ba545bd5ce3d24c9a3fb, type: 3}
   m_PrefabInstance: {fileID: 1020487896}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1023405669 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5670530765770498062, guid: b468b07a28bd3f04fab991e548ac4d08, type: 3}
+  m_PrefabInstance: {fileID: 3119796036492993160}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1052615093
 PrefabInstance:
@@ -5066,16 +5071,40 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6330985170651882880, guid: b468b07a28bd3f04fab991e548ac4d08, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5670530765770498062, guid: b468b07a28bd3f04fab991e548ac4d08, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7530588499358625903}
   m_SourcePrefab: {fileID: 100100000, guid: b468b07a28bd3f04fab991e548ac4d08, type: 3}
 --- !u!4 &7530588499358625900 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8898550231360319436, guid: b468b07a28bd3f04fab991e548ac4d08, type: 3}
   m_PrefabInstance: {fileID: 3119796036492993160}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7530588499358625903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1023405669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 831809c054d3c4d428bfa4badc071e3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftHand: 106
+  rightHand: 0
+  leftFoot: 0
+  rightFoot: 0
+  animationSpeed: 2
+  climbAnimClips:
+  - {fileID: 7400000, guid: d69aeb89feafb3848a5f820f6fb5ea24, type: 2}
+  - {fileID: 7400000, guid: 4ed199e64539ede459f932cea93adcb1, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
