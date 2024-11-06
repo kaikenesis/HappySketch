@@ -3,24 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using static System.Runtime.CompilerServices.RuntimeHelpers;
 
+/*
+    1. Wall  : Actual walls within the inspector, total: 4
+    2. Block : Positions where walls can be placed at.
+*/
 public class WallControl : MonoBehaviour
 {
     [SerializeField] private List<Transform> playerTransforms;
-    private List<int> activatedTileIndexes = new List<int>();
-
+    private List<int> currentBlockIndexes = new List<int>();
     private List<Transform> walls = new List<Transform>();
     private float wallHeight;
-    private float startY;
+    private float firstWallRectBottom, firstWallRectCenter;
 
     void Start()
     {
         foreach (Transform wall in transform)
         {
             walls.Add(wall);
-            activatedTileIndexes.Add(-1);
+            currentBlockIndexes.Add(0);
         }
         wallHeight = walls[0].GetComponent<MeshRenderer>().bounds.size.y;
-        startY = walls[0].transform.position.y - wallHeight / 2;
+        firstWallRectBottom = walls[0].transform.position.y - wallHeight / 2;
+        firstWallRectCenter = walls[0].transform.position.y;
     }
     void Update()
     {
@@ -31,29 +35,27 @@ public class WallControl : MonoBehaviour
     {
         for (int i = 0; i < playerTransforms.Count; i++)
         {
-            float playerPosY = (playerTransforms[i].position.y - startY) / wallHeight;
-            int lowerTile = (int)Mathf.Floor(playerPosY);
-            int upperTile = (int)Mathf.Ceil(playerPosY);
+            float playerPosY = (playerTransforms[i].position.y - firstWallRectBottom) / wallHeight;
 
-            Debug.Log($"{lowerTile} , {upperTile}");
+            int upperBlock = (int)Mathf.Round(playerPosY);
+            int lowerBlock = Mathf.Max(0, upperBlock - 1);
 
-            if (activatedTileIndexes[i * 2] == lowerTile)
+            if (upperBlock == currentBlockIndexes[i * 2])
                 continue;
 
-            activatedTileIndexes[i * 2] = lowerTile;
-            activatedTileIndexes[i * 2 + 1] = upperTile;
+            currentBlockIndexes[i * 2]      = upperBlock;
+            currentBlockIndexes[i * 2 + 1]  = lowerBlock;
 
             walls[i * 2].position = new Vector3(
                 walls[i * 2].position.x,
-                walls[0].position.y + lowerTile * wallHeight,
+                firstWallRectCenter + lowerBlock * wallHeight,
                 walls[i * 2].position.z
             );
             walls[i * 2 + 1].position = new Vector3(
                 walls[i * 2 + 1].position.x,
-                walls[0].position.y + upperTile * wallHeight,
+                firstWallRectCenter + upperBlock * wallHeight,
                 walls[i * 2 + 1].position.z
             );
         }
-
     }
 }
