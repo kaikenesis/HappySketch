@@ -641,7 +641,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8898550231360319436}
   - component: {fileID: 3814382582647948028}
-  - component: {fileID: 6330985170651882880}
   m_Layer: 7
   m_Name: Player_Ann
   m_TagString: Untagged
@@ -687,26 +686,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &6330985170651882880
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5670530765770498062}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6d999d9c6f0cce45bbaec0be4c4af41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  leftHand: 106
-  rightHand: 107
-  leftFoot: 110
-  rightFoot: 109
-  animationSpeed: 2
-  climbAnimClips:
-  - {fileID: 7400000, guid: d69aeb89feafb3848a5f820f6fb5ea24, type: 2}
-  - {fileID: 7400000, guid: 4ed199e64539ede459f932cea93adcb1, type: 2}
 --- !u!1 &5789668817819721035
 GameObject:
   m_ObjectHideFlags: 0
