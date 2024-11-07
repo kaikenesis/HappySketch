@@ -28,7 +28,5 @@ public class StartButton : BaseButton
         base.OnClicked();
 
         Debug.Log("Clicked StartButton");
-        UIManager.Instance.ChangeUI(buttonType);
-        gameObject.GetComponent<Canvas>().enabled = false;
     }
 }

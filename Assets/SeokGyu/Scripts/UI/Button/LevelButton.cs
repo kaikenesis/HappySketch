@@ -34,8 +34,6 @@ public class LevelButton : BaseButton
 
         SetLevelInfo();
         Debug.Log("Clicked LevelButton");
-        UIManager.Instance.ChangeUI(buttonType);
-        gameObject.GetComponent<Canvas>().enabled = false;
     }
 
     private void SetLevelInfo()
