@@ -1,6 +1,9 @@
 
-public class TutorialButton : BaseButton
+using UnityEngine;
+
+public class GameStartButton : BaseButton
 {
+    private GameObject selectLevelUI;
     private void Awake()
     {
         Init();
@@ -14,6 +17,8 @@ public class TutorialButton : BaseButton
     protected override void Init()
     {
         base.Init();
+
+        selectLevelUI = GameObject.Find("SelectLevel");
     }
 
     protected override void SetInfo()
@@ -23,6 +28,6 @@ public class TutorialButton : BaseButton
 
     public override void OnClicked()
     {
-        // 난이도 화면으로 전환
+
     }
 }

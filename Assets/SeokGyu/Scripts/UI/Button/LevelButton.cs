@@ -5,8 +5,7 @@ using UnityEngine;
 
 public class LevelButton : BaseButton
 {
-    [SerializeField]
-    public ELevel level { get; private set; }
+    public ELevel level;
 
     private void Awake()
     {
@@ -21,6 +20,7 @@ public class LevelButton : BaseButton
     protected override void Init()
     {
         base.Init();
+        
     }
 
     protected override void SetInfo()
@@ -30,11 +30,17 @@ public class LevelButton : BaseButton
 
     public override void OnClicked()
     {
+        base.OnClicked();
+
         SetLevelInfo();
+        Debug.Log("Clicked LevelButton");
+        UIManager.Instance.ChangeUI(buttonType);
+        gameObject.GetComponent<Canvas>().enabled = false;
     }
 
     private void SetLevelInfo()
     {
+        UIManager.Instance.curLevel = level;
         switch (level)
         {
             case ELevel.Easy:
@@ -54,5 +60,6 @@ public enum ELevel
 {
     Easy,
     Normal,
-    Hard
+    Hard,
+    MAX
 }

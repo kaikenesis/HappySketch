@@ -1,4 +1,6 @@
 
+using UnityEngine;
+
 public class StartButton : BaseButton
 {
     private void Awake()
@@ -23,6 +25,10 @@ public class StartButton : BaseButton
 
     public override void OnClicked()
     {
-        // 인게임 화면으로 전환
+        base.OnClicked();
+
+        Debug.Log("Clicked StartButton");
+        UIManager.Instance.ChangeUI(buttonType);
+        gameObject.GetComponent<Canvas>().enabled = false;
     }
 }

@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TitleNameUI : MonoBehaviour
+public class GameDirector : MonoBehaviour
 {
-    // 타이틀 이미지, 별도 텍스트
+    private void Awake()
+    {
+        UIManager.Instance.curLevel = ELevel.MAX;
+    }
 
     void Start()
     {
