@@ -171,6 +171,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   noteTimeInfo: {fileID: 11400000, guid: f9db6e8a31c2293449313b5687a15c17, type: 2}
+  noteEffect: {fileID: 1429954232896169633, guid: 36bf435c2a513694ab923407a7aa7900, type: 3}
 --- !u!1 &647330765
 GameObject:
   m_ObjectHideFlags: 0
@@ -402,7 +403,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 1026962486}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1

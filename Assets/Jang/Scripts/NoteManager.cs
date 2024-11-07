@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class NoteManager : MonoBehaviour
 {
     private List<GameObject> notes = new();
     [SerializeField] NoteTimeInfo noteTimeInfo;
+    public GameObject noteEffect;
     
     private int level = 0;
     private int score = 0;
@@ -21,17 +24,13 @@ public class NoteManager : MonoBehaviour
     Coroutine disableNote = null;
     Coroutine waitRecreate = null;
 
+    Vector3[] positions = { new Vector3(-800, 80, 0), new Vector3(-200, 80, 0), new Vector3(-800, -400, 0), new Vector3(-200, -400, 0) };
+    private int noteWidth = 150;
+
     void Start()
     {
-        for(int i = 0; i<4; i++)
-        {
-            GameObject obj = new GameObject();
-            obj.name = "note" + (i+1);
-            obj.AddComponent<Note>();
-            obj.GetComponent<Note>().SetNoteTimeInfo(noteTimeInfo);
-            obj.transform.SetParent(transform);
-            notes.Add(obj);
-        }
+        GenerateNotes();
+        noteEffect.transform.localScale = new Vector3(100,100,100);
     }
 
     void Update()
@@ -53,10 +52,15 @@ public class NoteManager : MonoBehaviour
         }
     }
 
+    public void SetGameStart()
+    {
+        isPlay = true;
+    }
+
     public void SetLevel(int lv)
     {
         level = lv;
-        for(int i = 0; i < notes.Count; i++)
+        for (int i = 0; i < notes.Count; i++)
         {
             notes[i].GetComponent<Note>().SetLevel(lv);
         }
@@ -69,7 +73,7 @@ public class NoteManager : MonoBehaviour
         for (int i = 0; i < notes.Count; i++)
         {
             float rand = Random.Range(0, 100);
-            if (rand >= 50)
+            if (rand >= 30)
                 notes[i].SetActive(true);
             if (i == 3)
             {
@@ -102,60 +106,64 @@ public class NoteManager : MonoBehaviour
         canEnable = true;
     }
 
+    void GenerateNotes()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            GameObject obj = new GameObject();
+            obj.name = "note" + (i + 1);
+            obj.transform.SetParent(transform);
+            notes.Add(obj);
+
+            Note note = obj.AddComponent<Note>();
+            note.SetNoteTimeInfo(noteTimeInfo);
+            obj.AddComponent<Image>();
+
+            obj.transform.localPosition = positions[i];
+            RectTransform rectTran = obj.GetComponent<RectTransform>();
+            rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, noteWidth);
+            rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, noteWidth);
+        }
+    }
+
     void CheckNotes()
     {
         if (Input.GetKeyDown(KeyCode.A))
         {
-            if (notes[0].activeSelf ==  true)
-            { 
-                score = notes[0].GetComponent<Note>().Check();
-                curScore += score;
-                if (score != noteTimeInfo.BadScore)
-                {
-                    correctCount++;
-                }
-            }
+            Check(0);
             return;
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
-            if (notes[1].activeSelf == true)
-            {    
-                score = notes[1].GetComponent<Note>().Check();
-                curScore += score;
-                if (score != noteTimeInfo.BadScore)
-                {
-                    correctCount++;
-                }
-            }
+            Check(1);
             return;
         }
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            if (notes[2].activeSelf == true)
-            {    
-                score = notes[2].GetComponent<Note>().Check();
-                curScore += score;
-                if (score != noteTimeInfo.BadScore)
-                {
-                    correctCount++;
-                }
-            }
+            Check(2);
             return;
         }
         if (Input.GetKeyDown(KeyCode.X))
         {
-            if (notes[3].activeSelf == true)
-            {    
-                score = notes[3].GetComponent<Note>().Check();
-                curScore += score;
-                if (score != noteTimeInfo.BadScore)
-                {
-                    correctCount++;
-                }
-            }
+            Check(3);
             return;
         }        
+    }
+
+    void Check(int i)
+    {
+        if (notes[i].activeSelf == true)
+        {
+            Note note = notes[i].GetComponent<Note>();
+            score = note.Check();
+            curScore += score;
+            if (score != noteTimeInfo.BadScore)
+            {
+                correctCount++;
+            }
+            Vector2 createPos = note.transform.position;
+            Instantiate(noteEffect, createPos, Quaternion.identity, transform.parent);
+        }
     }
 
     void CheckFever()
@@ -197,8 +205,4 @@ public class NoteManager : MonoBehaviour
         }
     }
 
-    public void SetGameStart()
-    {
-        isPlay = true;
-    }
 }
