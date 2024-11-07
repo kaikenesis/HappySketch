@@ -29,7 +29,7 @@ public class NoteManager : MonoBehaviour
             obj.name = "note" + (i+1);
             obj.AddComponent<Note>();
             obj.GetComponent<Note>().SetNoteTimeInfo(noteTimeInfo);
-            //obj.transform.SetParent(transform);
+            obj.transform.SetParent(transform);
             notes.Add(obj);
         }
     }
