@@ -135,6 +135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonType: 0
+  curUIType: 0
 --- !u!1 &6620093403422088271
 GameObject:
   m_ObjectHideFlags: 0
@@ -202,8 +203,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uD074\uB9AD\uD558\uC5EC \uC2DC\uC791"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: edaa2cf179f9b7f4aa5c076d6725eb00, type: 2}
-  m_sharedMaterial: {fileID: -8290538925086884444, guid: edaa2cf179f9b7f4aa5c076d6725eb00, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d7cfd9724825e5341b3959930f5139c2, type: 2}
+  m_sharedMaterial: {fileID: -8290538925086884444, guid: d7cfd9724825e5341b3959930f5139c2, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

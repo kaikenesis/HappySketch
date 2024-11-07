@@ -69,8 +69,8 @@ MonoBehaviour:
     \uB354 \uB192\uC774 \uC62C\uB77C\uAC00\uB294\n1\uBD84 \uB300\uACB0 \uD074\uB77C\uC774\uBC0D
     \uAC8C\uC784!"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: e904523b0454c284fb77d512826d70c2, type: 2}
-  m_sharedMaterial: {fileID: 7272413862285159500, guid: e904523b0454c284fb77d512826d70c2, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: e710daf214e55b24dad68b72e10a06c4, type: 2}
+  m_sharedMaterial: {fileID: 7272413862285159500, guid: e710daf214e55b24dad68b72e10a06c4, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

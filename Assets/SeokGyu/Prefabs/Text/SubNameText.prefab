@@ -68,8 +68,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uD074\uB77C\uC774\uBC0D \uBBF8\uB2C8\uAC8C\uC784"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: edaa2cf179f9b7f4aa5c076d6725eb00, type: 2}
-  m_sharedMaterial: {fileID: -8290538925086884444, guid: edaa2cf179f9b7f4aa5c076d6725eb00, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d7cfd9724825e5341b3959930f5139c2, type: 2}
+  m_sharedMaterial: {fileID: -8290538925086884444, guid: d7cfd9724825e5341b3959930f5139c2, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -144,6 +144,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 8131714161495516004}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b3e51e5870c8a5468cb2561f39cf9ac, type: 3}
+  m_Script: {fileID: 11500000, guid: e0065fcc0f5da064d9d2140d78df5390, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
