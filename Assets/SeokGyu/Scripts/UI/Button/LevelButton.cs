@@ -1,11 +1,10 @@
-using System;
 using TMPro;
-using UnityEditor;
 using UnityEngine;
 
 public class LevelButton : BaseButton
 {
     public ELevel level;
+    private TextMeshProUGUI text;
 
     private void Awake()
     {
@@ -20,7 +19,20 @@ public class LevelButton : BaseButton
     protected override void Init()
     {
         base.Init();
-        
+        text = GetComponentInChildren<TextMeshProUGUI>();
+
+        switch (level)
+        {
+            case ELevel.Easy:
+                text.text = "쉬움";
+                break;
+            case ELevel.Normal:
+                text.text = "보통";
+                break;
+            case ELevel.Hard:
+                text.text = "어려움";
+                break;
+        }
     }
 
     protected override void SetInfo()
@@ -33,7 +45,7 @@ public class LevelButton : BaseButton
         base.OnClicked();
 
         SetLevelInfo();
-        Debug.Log("Clicked LevelButton");
+        UIManager.Instance.SetExplainSubName();
     }
 
     private void SetLevelInfo()
@@ -42,13 +54,13 @@ public class LevelButton : BaseButton
         switch (level)
         {
             case ELevel.Easy:
-                Debug.Log("쉬움");
+                text.text = "쉬움";
                 break;
             case ELevel.Normal:
-                Debug.Log("보통");
+                text.text = "보통";
                 break;
             case ELevel.Hard:
-                Debug.Log("어려움");
+                text.text = "어려움";
                 break;
         }
     }

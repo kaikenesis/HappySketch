@@ -34,7 +34,6 @@ public abstract class BaseButton : MonoBehaviour
 
     public virtual void OnClicked()
     {
-        Debug.Log("ClickedBase");
         UIManager.Instance.ChangeUI(curUIType, buttonType);
     }
 }

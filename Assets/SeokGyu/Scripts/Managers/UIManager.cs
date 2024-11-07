@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
+    public ELevel curLevel;
+
     private static UIManager instance;
     private GameObject mainMenuUI;
     private GameObject selectLevelUI;
@@ -45,6 +48,7 @@ public class UIManager : MonoBehaviour
         selectLevelUI.GetComponent<Canvas>().enabled = false;
         explainUI.GetComponent<Canvas>().enabled = false;
 
+        
     }
 
     public void ChangeUI(EUIType curUIType, EButtonType buttonType)
@@ -82,5 +86,26 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public ELevel curLevel;
+    public void SetExplainSubName()
+    {
+        Transform child = explainUI.transform.Find("SubNameText");
+        Debug.Log(child);
+        TextMeshProUGUI subNameText = child.GetComponentInChildren<TextMeshProUGUI>();
+        Debug.Log(subNameText);
+
+        switch (curLevel)
+        {
+            case ELevel.Easy:
+                subNameText.text = "쉬움 난이도";
+                break;
+            case ELevel.Normal:
+                subNameText.text = "보통 난이도";
+                break;
+            case ELevel.Hard:
+                subNameText.text = "어려움 난이도";
+                break;
+        }
+
+
+    }
 }

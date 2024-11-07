@@ -27,6 +27,5 @@ public class StartButton : BaseButton
     {
         base.OnClicked();
 
-        Debug.Log("Clicked StartButton");
     }
 }
