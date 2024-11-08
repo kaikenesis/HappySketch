@@ -10,7 +10,7 @@ using static System.Runtime.CompilerServices.RuntimeHelpers;
 public class WallControl : MonoBehaviour
 {
     [SerializeField] private List<Transform> playerTransforms;
-    private List<int> currentBlockIndexes = new List<int>();
+    [SerializeField] private List<int> currentBlockIndexes = new List<int>();
     private List<Transform> walls = new List<Transform>();
     private float wallHeight;
     private float firstWallRectBottom, firstWallRectCenter;
@@ -20,7 +20,7 @@ public class WallControl : MonoBehaviour
         foreach (Transform wall in transform)
         {
             walls.Add(wall);
-            currentBlockIndexes.Add(0);
+            currentBlockIndexes.Add(-1);
         }
         wallHeight = walls[0].GetComponent<MeshRenderer>().bounds.size.y;
         firstWallRectBottom = walls[0].transform.position.y - wallHeight / 2;
@@ -40,7 +40,7 @@ public class WallControl : MonoBehaviour
             int upperBlock = (int)Mathf.Round(playerPosY);
             int lowerBlock = Mathf.Max(0, upperBlock - 1);
 
-            if (upperBlock == currentBlockIndexes[i * 2])
+            if (IsExistingWall(upperBlock))
                 continue;
 
             currentBlockIndexes[i * 2]      = upperBlock;
@@ -57,5 +57,15 @@ public class WallControl : MonoBehaviour
                 walls[i * 2 + 1].position.z
             );
         }
+    }
+
+    bool IsExistingWall(int upperBlockIndex)
+    {
+        for (int i = 0; i < currentBlockIndexes.Count; i++)
+        {
+            if (upperBlockIndex == currentBlockIndexes[i])
+                return true;
+        }
+        return false;
     }
 }
