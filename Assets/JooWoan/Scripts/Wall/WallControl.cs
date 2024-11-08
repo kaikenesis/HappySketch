@@ -14,13 +14,14 @@ public class WallControl : MonoBehaviour
     private List<Transform> walls = new List<Transform>();
     private float wallHeight;
     private float firstWallRectBottom, firstWallRectCenter;
+    private int[] blocks = new int[2];
 
     void Start()
     {
         foreach (Transform wall in transform)
         {
             walls.Add(wall);
-            currentBlockIndexes.Add(-1);
+            currentBlockIndexes.Add(0);
         }
         wallHeight = walls[0].GetComponent<MeshRenderer>().bounds.size.y;
         firstWallRectBottom = walls[0].transform.position.y - wallHeight / 2;
@@ -37,25 +38,22 @@ public class WallControl : MonoBehaviour
         {
             float playerPosY = (playerTransforms[i].position.y - firstWallRectBottom) / wallHeight;
 
-            int upperBlock = (int)Mathf.Round(playerPosY);
-            int lowerBlock = Mathf.Max(0, upperBlock - 1);
+            blocks[0] = (int)Mathf.Round(playerPosY);
+            blocks[1] = Mathf.Max(0, blocks[0] - 1);
 
-            if (IsExistingWall(upperBlock))
-                continue;
+            for (int j = 0; j < blocks.Length; j++)
+            {
+                if (!IsExistingWall(blocks[j]))
+                {
+                    currentBlockIndexes[i * 2 + j]  = blocks[j];
 
-            currentBlockIndexes[i * 2]      = upperBlock;
-            currentBlockIndexes[i * 2 + 1]  = lowerBlock;
-
-            walls[i * 2].position = new Vector3(
-                walls[i * 2].position.x,
-                firstWallRectCenter + lowerBlock * wallHeight,
-                walls[i * 2].position.z
-            );
-            walls[i * 2 + 1].position = new Vector3(
-                walls[i * 2 + 1].position.x,
-                firstWallRectCenter + upperBlock * wallHeight,
-                walls[i * 2 + 1].position.z
-            );
+                    walls[i * 2 + j].position = new Vector3(
+                        walls[i * 2 + j].position.x,
+                        firstWallRectCenter + blocks[j] * wallHeight,
+                        walls[i * 2 + j].position.z
+                    );
+                }
+            }
         }
     }
 
