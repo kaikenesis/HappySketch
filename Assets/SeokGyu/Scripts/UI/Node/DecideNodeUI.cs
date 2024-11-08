@@ -1,14 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DecideNode : MonoBehaviour
 {
     [SerializeField]
     [Range(3,100)]
-    private int segments;
+    private int segments = 24;
     [SerializeField]
-    private float circleRadius = 0.0f;
+    private float circleRadius = 200.0f;
     RectTransform child = null;
     LineRenderer line;
 
@@ -29,10 +27,10 @@ public class DecideNode : MonoBehaviour
         {
             child = ob.GetComponent<RectTransform>();
             line = ob.GetComponent<LineRenderer>();
-            line.positionCount = segments+1;
+            line.positionCount = segments+ 1;
             line.useWorldSpace = false;
+            line.endWidth = 10f;
             CreatePoints();
-            //child.sizeDelta = new Vector2(circleRadius, circleRadius);
         }
         
     }
@@ -44,11 +42,9 @@ public class DecideNode : MonoBehaviour
 
     void UpdateNode()
     {
-        //circleRadius-= 0.1f;
         if (circleRadius < 0.0f) return;
 
         CreatePoints();
-        //child.sizeDelta = new Vector2(circleRadius, circleRadius);
     }
 
     void CreatePoints()
