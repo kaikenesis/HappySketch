@@ -12,6 +12,7 @@ public class WallControl : MonoBehaviour
     [SerializeField] private List<Transform> playerTransforms;
     [SerializeField] private List<int> currentBlockIndexes = new List<int>();
     private List<Transform> walls = new List<Transform>();
+    private List<TreeMixup> bgTrees = new List<TreeMixup>();
     private float wallHeight;
     private float firstWallRectBottom, firstWallRectCenter;
     private int[] blocks = new int[2];
@@ -21,18 +22,24 @@ public class WallControl : MonoBehaviour
         foreach (Transform wall in transform)
         {
             walls.Add(wall);
-            currentBlockIndexes.Add(0);
+            currentBlockIndexes.Add(-1);
+
+            TreeMixup bgTree = wall.GetComponent<TreeMixup>();
+
+            if (bgTree)
+                bgTrees.Add(bgTree);
         }
         wallHeight = walls[0].GetComponent<MeshRenderer>().bounds.size.y;
         firstWallRectBottom = walls[0].transform.position.y - wallHeight / 2;
         firstWallRectCenter = walls[0].transform.position.y;
     }
+
     void Update()
     {
         EnableWalls();
     }
 
-    void EnableWalls()
+    private void EnableWalls()
     {
         for (int i = 0; i < playerTransforms.Count; i++)
         {
@@ -41,29 +48,58 @@ public class WallControl : MonoBehaviour
             blocks[0] = (int)Mathf.Round(playerPosY);
             blocks[1] = Mathf.Max(0, blocks[0] - 1);
 
-            for (int j = 0; j < blocks.Length; j++)
+            bool flag = false;
+
+            for (int j = 0; j < 2; j++)
             {
                 if (!IsExistingWall(blocks[j]))
                 {
-                    currentBlockIndexes[i * 2 + j]  = blocks[j];
-
-                    walls[i * 2 + j].position = new Vector3(
-                        walls[i * 2 + j].position.x,
-                        firstWallRectCenter + blocks[j] * wallHeight,
-                        walls[i * 2 + j].position.z
-                    );
+                    flag = true;
+                    UpdateWallIndex(i * 2 + j, blocks[j]);
                 }
+            }
+            if (flag)
+                UpdateWallPositions(i * 2, blocks[0]);
+        }
+    }
+
+    private bool IsExistingWall(int blockIndex)
+    {
+        for (int i = 0; i < currentBlockIndexes.Count; i++)
+        {
+            if (blockIndex == currentBlockIndexes[i])
+                return true;
+        }
+        return false;
+    }
+
+    private void UpdateWallPositions(int currentWallIndex, int newBlockIndex)
+    {
+        for (int i = 0; i < 2; i++)
+        {
+            int blockIndex = (int)(
+                (walls[currentWallIndex + i].position.y - firstWallRectCenter) / wallHeight
+            );
+            if (!IsExistingWall(blockIndex))
+            {
+                MoveWall(currentWallIndex + i, newBlockIndex);
+                return;
             }
         }
     }
 
-    bool IsExistingWall(int upperBlockIndex)
+    private void MoveWall(int wallIndex, int blockIndex)
     {
-        for (int i = 0; i < currentBlockIndexes.Count; i++)
-        {
-            if (upperBlockIndex == currentBlockIndexes[i])
-                return true;
-        }
-        return false;
+        walls[wallIndex].position = new Vector3(
+            walls[wallIndex].position.x,
+            firstWallRectCenter + blockIndex * wallHeight,
+            walls[wallIndex].position.z
+        );
+        bgTrees[wallIndex].ChangeTreeObject();
+    }
+
+    private void UpdateWallIndex(int wallIndex, int blockIndex)
+    {
+        currentBlockIndexes[wallIndex] = blockIndex;
     }
 }
