@@ -7,9 +7,10 @@ using UnityEngine.UI;
 public class NoteManager : MonoBehaviour
 {
     private List<GameObject> notes = new();
+    private List<GameObject> inCircleNotes = new();
     [SerializeField] NoteTimeInfo noteTimeInfo;
     public GameObject noteEffect;
-    
+
     private int level = 0;
     private int score = 0;
     private int curScore = 0;
@@ -24,8 +25,9 @@ public class NoteManager : MonoBehaviour
     Coroutine disableNote = null;
     Coroutine waitRecreate = null;
 
-    Vector3[] positions = { new Vector3(-800, 80, 0), new Vector3(-200, 80, 0), new Vector3(-800, -400, 0), new Vector3(-200, -400, 0) };
-    private int noteWidth = 150;
+    Vector2[] positions = { new(-800, 80), new(-200, 80), new(-800, -400), new(-200, -400),
+                            new(200, 80), new(800, 80), new(200, -400), new(800, -400)};
+    private int outCircleWidth = 300;
 
     void Start()
     {
@@ -74,11 +76,15 @@ public class NoteManager : MonoBehaviour
         {
             float rand = Random.Range(0, 100);
             if (rand >= 30)
-                notes[i].SetActive(true);
-            if (i == 3)
+            { 
+                inCircleNotes[i].SetActive(true);
+            }
+            if (i == 3 || i == 7)
             {
-                if(notes[i-1].activeSelf == true)
-                    notes[i].SetActive(false);
+                if(inCircleNotes[i-1].activeSelf == true)
+                { 
+                    inCircleNotes[i].SetActive(false);
+                }
             }
         }
         yield return new WaitForSeconds(noteTimeInfo.TotalTime[level]);
@@ -93,7 +99,7 @@ public class NoteManager : MonoBehaviour
         Debug.Log("ео а╬╥А");
         for (int i = 0; i < notes.Count; i++)
         {
-            notes[i].SetActive(false);
+            inCircleNotes[i].SetActive(false);
         }
         yield return waitRecreate = StartCoroutine(WaitRecreate());
     }
@@ -108,21 +114,39 @@ public class NoteManager : MonoBehaviour
 
     void GenerateNotes()
     {
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 8; i++)
         {
+            GameObject insideCircle = new GameObject();
+            insideCircle.name = "inCircle note" + (i + 1);
+            insideCircle.transform.SetParent(transform);
+            insideCircle.transform.localPosition = positions[i];
+            CircleGraphic inCircleCG = insideCircle.AddComponent<CircleGraphic>();
+
+            RectTransform childRectTran = insideCircle.GetComponent<RectTransform>();
+            childRectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, outCircleWidth / 2);
+            childRectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, outCircleWidth / 2);
+            inCircleCG.color = Color.blue;
+            inCircleNotes.Add(insideCircle);
+
             GameObject obj = new GameObject();
             obj.name = "note" + (i + 1);
             obj.transform.SetParent(transform);
+            obj.transform.localPosition = positions[i];
+            obj.transform.SetParent(insideCircle.transform);
             notes.Add(obj);
 
             Note note = obj.AddComponent<Note>();
             note.SetNoteTimeInfo(noteTimeInfo);
-            obj.AddComponent<Image>();
+            CircleGraphic cg = obj.AddComponent<CircleGraphic>();
+            cg.color = Color.red;
+            cg.SetMode(CircleGraphic.Mode.Edge);
+            cg.SetEdgeThickness(10);
 
-            obj.transform.localPosition = positions[i];
             RectTransform rectTran = obj.GetComponent<RectTransform>();
-            rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, noteWidth);
-            rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, noteWidth);
+            rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, outCircleWidth);
+            rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, outCircleWidth);
+
+            insideCircle.SetActive(false);
         }
     }
 
@@ -161,7 +185,7 @@ public class NoteManager : MonoBehaviour
             {
                 correctCount++;
             }
-            Vector2 createPos = note.transform.position;
+            Vector3 createPos = note.transform.position;
             Instantiate(noteEffect, createPos, Quaternion.identity, transform.parent);
         }
     }
