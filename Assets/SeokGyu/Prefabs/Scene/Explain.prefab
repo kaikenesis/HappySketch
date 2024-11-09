@@ -195,6 +195,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2842816073644418847, guid: 2ee40d0db2063734dac3dcd47fecf89e, type: 3}
+      propertyPath: curUIType
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5397973960103725200, guid: 2ee40d0db2063734dac3dcd47fecf89e, type: 3}
       propertyPath: m_Name
       value: GameStartButton

@@ -346,7 +346,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonType: 1
-  curUIType: 0
+  curUIType: 1
   level: 0
 --- !u!1001 &1720460705482946122
 PrefabInstance:

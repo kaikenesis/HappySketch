@@ -13,11 +13,6 @@ public abstract class BaseButton : MonoBehaviour
         Init();
     }
 
-    private void Start()
-    {
-        SetInfo();
-    }
-
     protected virtual void Init()
     {
         button = transform.GetComponent<Button>();
@@ -27,15 +22,7 @@ public abstract class BaseButton : MonoBehaviour
         }
     }
 
-    protected virtual void SetInfo()
-    {
-
-    }
-
-    public virtual void OnClicked()
-    {
-        UIManager.Instance.ChangeUI(curUIType, buttonType);
-    }
+    public abstract void OnClicked();
 }
 
 public enum EUIType

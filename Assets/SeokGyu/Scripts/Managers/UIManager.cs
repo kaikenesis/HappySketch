@@ -47,8 +47,6 @@ public class UIManager : MonoBehaviour
         mainMenuUI.GetComponent<Canvas>().enabled = true;
         selectLevelUI.GetComponent<Canvas>().enabled = false;
         explainUI.GetComponent<Canvas>().enabled = false;
-
-        
     }
 
     public void ChangeUI(EUIType curUIType, EButtonType buttonType)

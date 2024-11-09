@@ -1,7 +1,8 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class LevelButton : BaseButton
+public class LevelButton : ChangeUIButton
 {
     public ELevel level;
     private TextMeshProUGUI text;
@@ -9,11 +10,6 @@ public class LevelButton : BaseButton
     private void Awake()
     {
         Init();
-    }
-
-    private void Start()
-    {
-        SetInfo();
     }
 
     protected override void Init()
@@ -33,11 +29,6 @@ public class LevelButton : BaseButton
                 text.text = "¾î·Á¿ò";
                 break;
         }
-    }
-
-    protected override void SetInfo()
-    {
-        base.SetInfo();
     }
 
     public override void OnClicked()
