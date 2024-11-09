@@ -22,7 +22,7 @@ public class WallControl : MonoBehaviour
         foreach (Transform wall in transform)
         {
             walls.Add(wall);
-            currentBlockIndexes.Add(-1);
+            currentBlockIndexes.Add(999);
 
             TreeMixup bgTree = wall.GetComponent<TreeMixup>();
 
@@ -46,7 +46,7 @@ public class WallControl : MonoBehaviour
             float playerPosY = (playerTransforms[i].position.y - firstWallRectBottom) / wallHeight;
 
             blocks[0] = (int)Mathf.Round(playerPosY);
-            blocks[1] = Mathf.Max(0, blocks[0] - 1);
+            blocks[1] = blocks[0] - 1;
 
             bool flag = false;
 
