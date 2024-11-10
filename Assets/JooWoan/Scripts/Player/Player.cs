@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] private PlayerNumber playerNumber;
     [SerializeField] private KeyCode leftHand, rightHand, leftFoot, rightFoot;
     [SerializeField] private float animationSpeed;
     [SerializeField] private List<AnimationClip> climbAnimClips;
@@ -15,28 +16,30 @@ public class Player : MonoBehaviour
     {
         playerAnim = GetComponent<Animator>();
         playerAnim.speed = animationSpeed;
+        GameController.Instance.RegisterPlayer(playerNumber, this);
     }
 
     void Update()
     {
-        if (PressedBtn(leftHand) && !isPlayingAnimation)
-            MoveUp();
+        if (PressedBtn(leftHand))
+            StartCoroutine(MoveUp(1));
     }
 
-    void MoveUp()
+    public IEnumerator MoveUp(int repeat)
     {
-        float animDuration = climbAnimClips[animIndex].length / playerAnim.speed;
-        StartCoroutine(ToggleIsPlayingAnimation(animDuration));
-
-        playerAnim.Play(climbAnimClips[animIndex].name, -1, 0f);
-        animIndex = (animIndex + 1) % climbAnimClips.Count;
-    }
-
-
-    IEnumerator ToggleIsPlayingAnimation(float duration)
-    {
+        if (isPlayingAnimation)
+            yield break;
+        
         isPlayingAnimation = true;
-        yield return new WaitForSeconds(duration);
+        for (int i = 0; i < repeat; i++)
+        {
+            float animDuration = climbAnimClips[animIndex].length / playerAnim.speed;
+
+            playerAnim.Play(climbAnimClips[animIndex].name, -1, 0f);
+            animIndex = (animIndex + 1) % climbAnimClips.Count;
+            
+            yield return new WaitForSeconds(animDuration);
+        }
         isPlayingAnimation = false;
     }
 
