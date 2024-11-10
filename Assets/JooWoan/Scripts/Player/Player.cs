@@ -34,7 +34,7 @@ public class Player : MonoBehaviour
         if (isPlayingAnimation)
             yield break;
         
-        currentHeight += GameController.Instance.HeightPerIncrease * repeat;
+        IncreaseHeight(repeat);
 
         isPlayingAnimation = true;
         for (int i = 0; i < repeat; i++)
@@ -47,6 +47,12 @@ public class Player : MonoBehaviour
             yield return new WaitForSeconds(animDuration);
         }
         isPlayingAnimation = false;
+    }
+
+    private void IncreaseHeight(int repeat)
+    {
+        currentHeight += GameController.Instance.HeightPerIncrease * repeat;
+        GameController.Instance.TryDisableFirstFloor();
     }
 
     public bool PressedBtn(KeyCode keycode)

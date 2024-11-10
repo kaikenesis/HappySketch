@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class TreeMixup : MonoBehaviour
 {
-    [SerializeField] private List<GameObject> treeObjects;
+    private List<GameObject> treeObjects = new List<GameObject>();
     private int currentTreeObjectIdx;
 
     void Start()
     {
+        foreach (Transform treeTransform in transform)
+            treeObjects.Add(treeTransform.gameObject);
+
         if (treeObjects.Count == 0)
             return;
         

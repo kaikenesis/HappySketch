@@ -3,44 +3,40 @@ using TMPro;
 using UnityEngine;
 
 /*
-    1. Wall         :   Actual walls within the inspector, total: 4
-    2. Block        :   Positions where walls can be placed at.
+    1. Block        :   Positions where walls can be placed at.
 
-    3. playerBlocks :   Blocks where players are positioned.
+    2. playerBlocks :   Blocks where players are positioned.
                         Each player takes up 2 blocks.
                         
                         ex)
                         playerBlocks = [P1, P1, P2, P2]
 
-    4. wallBlocks   :   Blocks where walls are positioned.
+    3. wallBlocks   :   Blocks where walls are positioned.
 */
 public class WallControl : MonoBehaviour
 {
     [SerializeField] private List<Transform> playerTransforms;
+    [SerializeField] private List<Transform> blocks = new List<Transform>();
+    [SerializeField] private List<TreeMixup> treeBlocks = new List<TreeMixup>();
+    [SerializeField] private MeshRenderer wallRenderer;
+
     [SerializeField] private List<int> playerBlocks = new List<int>();
     [SerializeField] private List<int> wallBlocks = new List<int>();
-    private List<Transform> walls = new List<Transform>();
-    private List<TreeMixup> bgTrees = new List<TreeMixup>();
-    private int[] blocks = new int[2];
+    private int[] tempBlocks = new int[2];
+    
     private float wallHeight;
     private float firstWallRectBottom, firstWallRectCenter;
 
     void Start()
     {
-        foreach (Transform wall in transform)
+        for (int i = 0; i < blocks.Count; i++)
         {
-            walls.Add(wall);
             wallBlocks.Add(0);
             playerBlocks.Add(0);
-
-            TreeMixup bgTree = wall.GetComponent<TreeMixup>();
-
-            if (bgTree)
-                bgTrees.Add(bgTree);
         }
-        wallHeight = walls[0].GetComponent<MeshRenderer>().bounds.size.y;
-        firstWallRectBottom = walls[0].transform.position.y - wallHeight / 2;
-        firstWallRectCenter = walls[0].transform.position.y;
+        wallHeight = wallRenderer.bounds.size.y;
+        firstWallRectBottom = blocks[0].transform.position.y - wallHeight / 2;
+        firstWallRectCenter = blocks[0].transform.position.y;
 
         SetupWalls();
     }
@@ -64,15 +60,15 @@ public class WallControl : MonoBehaviour
         {
             float playerPosY = (playerTransforms[i].position.y - firstWallRectBottom) / wallHeight;
 
-            blocks[0] = (int)Mathf.Round(playerPosY);
-            blocks[1] = blocks[0] - 1;
+            tempBlocks[0] = (int)Mathf.Round(playerPosY);
+            tempBlocks[1] = tempBlocks[0] - 1;
             
-            UpdatePlayerBlock(i * 2, blocks[0]);
-            UpdatePlayerBlock(i * 2 + 1, blocks[1]);
+            UpdatePlayerBlock(i * 2, tempBlocks[0]);
+            UpdatePlayerBlock(i * 2 + 1, tempBlocks[1]);
 
-            if (!IsWallPlacedAt(blocks[0]))
+            if (!IsWallPlacedAt(tempBlocks[0]))
             {
-                int newBlock = blocks[0];
+                int newBlock = tempBlocks[0];
                 AdjustWalls(newBlock);
             }
         }
@@ -101,13 +97,13 @@ public class WallControl : MonoBehaviour
 
     private void MoveWall(int wallIndex, int blockIndex)
     {
-        walls[wallIndex].position = new Vector3(
-            walls[wallIndex].position.x,
+        blocks[wallIndex].position = new Vector3(
+            blocks[wallIndex].position.x,
             firstWallRectCenter + blockIndex * wallHeight,
-            walls[wallIndex].position.z
+            blocks[wallIndex].position.z
         );
         wallBlocks[wallIndex] = blockIndex;
-        bgTrees[wallIndex].ChangeTreeObject();
+        treeBlocks[wallIndex].ChangeTreeObject();
     }
 
     private void UpdatePlayerBlock(int wallIndex, int blockIndex)

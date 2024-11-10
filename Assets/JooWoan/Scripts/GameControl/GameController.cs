@@ -15,6 +15,8 @@ public class GameController : MonoBehaviour
     [SerializeField] private float heightPerIncrease;
     public float HeightPerIncrease => heightPerIncrease;
 
+    private GameObject firstFloor;
+
     void Awake()
     {
         if (instance == null)
@@ -29,6 +31,11 @@ public class GameController : MonoBehaviour
         }
     }
 
+    void Start()
+    {
+        firstFloor = GameObject.FindGameObjectWithTag("GameFirstFloor");
+    }
+
     public void RegisterPlayer(int playerNumber, Player newPlayer)
     {
         if (playerDict.TryGetValue(playerNumber, out Player _))
@@ -40,5 +47,20 @@ public class GameController : MonoBehaviour
     public void MoveupPlayer(int playerNumber, int repeat)
     {
         StartCoroutine(playerDict[playerNumber].MoveUp(repeat));
+    }
+
+    public void TryDisableFirstFloor()
+    {
+        bool canDisable = true;
+        foreach (KeyValuePair<int, Player> playerInfo in playerDict)
+        {
+            if (playerInfo.Value.CurrentHeight <= 2500f)
+            {
+                canDisable = false;
+                break;
+            }
+        }
+        if (canDisable)
+            firstFloor.SetActive(false);
     }
 }
