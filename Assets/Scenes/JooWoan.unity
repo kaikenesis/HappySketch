@@ -1910,6 +1910,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 831809c054d3c4d428bfa4badc071e3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerNumber: 0
   leftHand: 97
   rightHand: 0
   leftFoot: 0
@@ -1969,7 +1970,8 @@ MonoBehaviour:
   playerTransforms:
   - {fileID: 860678937}
   - {fileID: 7530588499358625900}
-  currentBlockIndexes: 
+  playerBlocks: 
+  wallBlocks: 
 --- !u!1 &884158956
 GameObject:
   m_ObjectHideFlags: 0
@@ -5396,6 +5398,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 831809c054d3c4d428bfa4badc071e3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerNumber: 1
   leftHand: 106
   rightHand: 0
   leftFoot: 0
