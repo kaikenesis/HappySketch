@@ -1,28 +1,37 @@
-using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
-using static System.Runtime.CompilerServices.RuntimeHelpers;
 
 /*
-    1. Wall  : Actual walls within the inspector, total: 4
-    2. Block : Positions where walls can be placed at.
+    1. Wall         :   Actual walls within the inspector, total: 4
+    2. Block        :   Positions where walls can be placed at.
+
+    3. playerBlocks :   Blocks where players are positioned.
+                        Each player takes up 2 blocks.
+                        
+                        ex)
+                        playerBlocks = [P1, P1, P2, P2]
+
+    4. wallBlocks   :   Blocks where walls are positioned.
 */
 public class WallControl : MonoBehaviour
 {
     [SerializeField] private List<Transform> playerTransforms;
-    [SerializeField] private List<int> currentBlockIndexes = new List<int>();
+    [SerializeField] private List<int> playerBlocks = new List<int>();
+    [SerializeField] private List<int> wallBlocks = new List<int>();
     private List<Transform> walls = new List<Transform>();
     private List<TreeMixup> bgTrees = new List<TreeMixup>();
+    private int[] blocks = new int[2];
     private float wallHeight;
     private float firstWallRectBottom, firstWallRectCenter;
-    private int[] blocks = new int[2];
 
     void Start()
     {
         foreach (Transform wall in transform)
         {
             walls.Add(wall);
-            currentBlockIndexes.Add(999);
+            wallBlocks.Add(0);
+            playerBlocks.Add(0);
 
             TreeMixup bgTree = wall.GetComponent<TreeMixup>();
 
@@ -32,11 +41,21 @@ public class WallControl : MonoBehaviour
         wallHeight = walls[0].GetComponent<MeshRenderer>().bounds.size.y;
         firstWallRectBottom = walls[0].transform.position.y - wallHeight / 2;
         firstWallRectCenter = walls[0].transform.position.y;
+
+        SetupWalls();
     }
 
     void Update()
     {
         EnableWalls();
+    }
+
+    private void SetupWalls()
+    {
+        MoveWall(0, 0);
+        MoveWall(1, -1);
+        MoveWall(2, -2);
+        MoveWall(3, -3);
     }
 
     private void EnableWalls()
@@ -47,42 +66,34 @@ public class WallControl : MonoBehaviour
 
             blocks[0] = (int)Mathf.Round(playerPosY);
             blocks[1] = blocks[0] - 1;
+            
+            UpdatePlayerBlock(i * 2, blocks[0]);
+            UpdatePlayerBlock(i * 2 + 1, blocks[1]);
 
-            bool flag = false;
-
-            for (int j = 0; j < 2; j++)
+            if (!IsWallPlacedAt(blocks[0]))
             {
-                if (!IsExistingWall(blocks[j]))
+                int newBlock = blocks[0];
+                AdjustWalls(newBlock);
+            }
+        }
+    }
+
+    private void AdjustWalls(int newBlock)
+    {
+        for (int j = 0; j < wallBlocks.Count; j++)
+        {
+            bool canMove = true;
+            for (int k = 0; k < playerBlocks.Count; k++)
+            {
+                if (wallBlocks[j] == playerBlocks[k])
                 {
-                    flag = true;
-                    UpdateWallIndex(i * 2 + j, blocks[j]);
+                    canMove = false;
+                    break;
                 }
             }
-            if (flag)
-                UpdateWallPositions(i * 2, blocks[0]);
-        }
-    }
-
-    private bool IsExistingWall(int blockIndex)
-    {
-        for (int i = 0; i < currentBlockIndexes.Count; i++)
-        {
-            if (blockIndex == currentBlockIndexes[i])
-                return true;
-        }
-        return false;
-    }
-
-    private void UpdateWallPositions(int currentWallIndex, int newBlockIndex)
-    {
-        for (int i = 0; i < 2; i++)
-        {
-            int blockIndex = (int)(
-                (walls[currentWallIndex + i].position.y - firstWallRectCenter) / wallHeight
-            );
-            if (!IsExistingWall(blockIndex))
+            if (canMove)
             {
-                MoveWall(currentWallIndex + i, newBlockIndex);
+                MoveWall(j, newBlock);
                 return;
             }
         }
@@ -95,11 +106,22 @@ public class WallControl : MonoBehaviour
             firstWallRectCenter + blockIndex * wallHeight,
             walls[wallIndex].position.z
         );
+        wallBlocks[wallIndex] = blockIndex;
         bgTrees[wallIndex].ChangeTreeObject();
     }
 
-    private void UpdateWallIndex(int wallIndex, int blockIndex)
+    private void UpdatePlayerBlock(int wallIndex, int blockIndex)
     {
-        currentBlockIndexes[wallIndex] = blockIndex;
+        playerBlocks[wallIndex] = blockIndex;
+    }
+
+    private bool IsWallPlacedAt(int blockIndex)
+    {
+        for (int i = 0; i < wallBlocks.Count; i++)
+        {
+            if (wallBlocks[i] == blockIndex)
+                return true;
+        }
+        return false;
     }
 }
