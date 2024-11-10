@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -6,21 +7,13 @@ using UnityEngine;
 public class GameController : MonoBehaviour
 {
     private static GameController instance = null;
-    public static GameController Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                GameObject newGameObject = new GameObject("_GameController");
-                instance = newGameObject.AddComponent<GameController>();
-            }
-            return instance;
-        }
-    }
+    public static GameController Instance => instance;
 
-    private IDictionary<PlayerNumber, Player> playerDict = new Dictionary<PlayerNumber, Player>();
-    public IDictionary<PlayerNumber, Player> PlayerDict => playerDict;
+    private IDictionary<int, Player> playerDict = new Dictionary<int, Player>();
+    public IDictionary<int, Player> PlayerDict => playerDict;
+
+    [SerializeField] private float heightPerIncrease;
+    public float HeightPerIncrease => heightPerIncrease;
 
     void Awake()
     {
@@ -36,7 +29,7 @@ public class GameController : MonoBehaviour
         }
     }
 
-    public void RegisterPlayer(PlayerNumber playerNumber, Player newPlayer)
+    public void RegisterPlayer(int playerNumber, Player newPlayer)
     {
         if (playerDict.TryGetValue(playerNumber, out Player _))
             return;
@@ -44,14 +37,8 @@ public class GameController : MonoBehaviour
         playerDict.Add(playerNumber, newPlayer);
     }
 
-    public void MoveupPlayer(PlayerNumber playerNumber, int repeat)
+    public void MoveupPlayer(int playerNumber, int repeat)
     {
         StartCoroutine(playerDict[playerNumber].MoveUp(repeat));
     }
-}
-
-public enum PlayerNumber
-{
-    PLAYER_1,
-    PLAYER_2
 }
