@@ -9,13 +9,7 @@ public class Note : MonoBehaviour
     private float lastCheckTime = 0;
     private float noteWidth = 300;
     private RectTransform rectTran;
-    private Camera cam;
-    private GameObject noteEffect;
 
-    public void SetEffect(GameObject effect)
-    {
-        noteEffect = effect;
-    }
     public void SetLevel(int lv)
     {
         level = lv;

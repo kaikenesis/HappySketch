@@ -139,7 +139,6 @@ public class NoteManager : MonoBehaviour
 
             Note note = obj.AddComponent<Note>();
             note.SetNoteTimeInfo(noteTimeInfo);
-            note.SetEffect(noteEffect);
             CircleGraphic cg = obj.AddComponent<CircleGraphic>();
             cg.color = Color.red;
             cg.SetMode(CircleGraphic.Mode.Edge);
