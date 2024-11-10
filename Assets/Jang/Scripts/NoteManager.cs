@@ -8,8 +8,8 @@ public class NoteManager : MonoBehaviour
 {
     private List<GameObject> notes = new();
     private List<GameObject> inCircleNotes = new();
-    [SerializeField] NoteTimeInfo noteTimeInfo;
-    public GameObject noteEffect;
+    [SerializeField] private NoteTimeInfo noteTimeInfo;
+    [SerializeField] private GameObject noteEffect;
 
     private int level = 0;
     private int score = 0;
@@ -31,6 +31,8 @@ public class NoteManager : MonoBehaviour
 
     void Start()
     {
+        RectTransform parentRect = transform.parent.GetComponent<RectTransform>();
+        parentRect.localScale = Vector3.one;
         GenerateNotes();
         noteEffect.transform.localScale = new Vector3(100,100,100);
     }
@@ -137,6 +139,7 @@ public class NoteManager : MonoBehaviour
 
             Note note = obj.AddComponent<Note>();
             note.SetNoteTimeInfo(noteTimeInfo);
+            note.SetEffect(noteEffect);
             CircleGraphic cg = obj.AddComponent<CircleGraphic>();
             cg.color = Color.red;
             cg.SetMode(CircleGraphic.Mode.Edge);
@@ -171,24 +174,46 @@ public class NoteManager : MonoBehaviour
         {
             Check(3);
             return;
-        }        
+        }
+
+        if (Input.GetKeyDown(KeyCode.Semicolon))
+        {
+            Check(4);
+            return;
+        }
+        if (Input.GetKeyDown(KeyCode.Quote))
+        {
+            Check(5);
+            return;
+        }
+        if (Input.GetKeyDown(KeyCode.Period))
+        {
+            Check(6);
+            return;
+        }
+        if (Input.GetKeyDown(KeyCode.Slash))
+        {
+            Check(7);
+            return;
+        }
     }
 
     void Check(int i)
     {
-        if (notes[i].activeSelf == true)
+        Note note = notes[i].GetComponent<Note>();
+        Vector3 createPos = note.transform.position;
+        Instantiate(noteEffect, createPos, Quaternion.identity, transform.parent);
+        if (inCircleNotes[i].activeSelf == true)
         {
-            Note note = notes[i].GetComponent<Note>();
             score = note.Check();
             curScore += score;
             if (score != noteTimeInfo.BadScore)
             {
                 correctCount++;
             }
-            Vector3 createPos = note.transform.position;
-            Instantiate(noteEffect, createPos, Quaternion.identity, transform.parent);
         }
     }
+    
 
     void CheckFever()
     {
@@ -207,7 +232,7 @@ public class NoteManager : MonoBehaviour
 
             for (int i = 0; i < notes.Count; i++)
             {
-                notes[i].SetActive(true);
+                inCircleNotes[i].SetActive(true);
             }
         }
     }
@@ -224,7 +249,7 @@ public class NoteManager : MonoBehaviour
             }
             for (int i = 0; i < notes.Count; i++)
             {
-                notes[i].SetActive(false);
+                inCircleNotes[i].SetActive(false);
             }
         }
     }

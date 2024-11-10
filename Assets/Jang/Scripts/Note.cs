@@ -8,8 +8,14 @@ public class Note : MonoBehaviour
     private bool isFever = false;
     private float lastCheckTime = 0;
     private float noteWidth = 300;
-    RectTransform rectTran;
+    private RectTransform rectTran;
+    private Camera cam;
+    private GameObject noteEffect;
 
+    public void SetEffect(GameObject effect)
+    {
+        noteEffect = effect;
+    }
     public void SetLevel(int lv)
     {
         level = lv;
@@ -18,6 +24,8 @@ public class Note : MonoBehaviour
     {
         curTime = noteTimeInfo.FeverStartTime;
         isFever = b;
+        rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, noteWidth);
+        rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, noteWidth);
     }
 
     void SetLastCheckTime()
@@ -76,7 +84,6 @@ public class Note : MonoBehaviour
 
     private void Start()
     {
-        gameObject.SetActive(true);
         rectTran = GetComponent<RectTransform>();
     }
     void OnEnable()
@@ -85,18 +92,17 @@ public class Note : MonoBehaviour
         noteWidth = 300;
     }
 
-    // Update is called once per frame
     void Update()
     {
         curTime += Time.deltaTime;
-        ShrinkImage();
+        if(!isFever)
+            ShrinkImage();
     }
 
     void ShrinkImage()
     {
-        // noteTimeInfo.TotalTime[level] / curTime
-        noteWidth = noteWidth - noteWidth / 100 * (curTime / noteTimeInfo.TotalTime[level] * 100);
-        rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, noteWidth);
-        rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, noteWidth);
+        float progress = Mathf.Clamp01(1 - (curTime / noteTimeInfo.TotalTime[level]));
+        rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, noteWidth * progress);
+        rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, noteWidth * progress);
     }
 }
