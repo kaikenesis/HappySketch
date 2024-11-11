@@ -1,75 +1,65 @@
-using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class LevelButton : BaseButton
+public class LevelButton : ChangeUIButton
 {
-    [SerializeField]
-    private ELevel level;
-    private TextMeshProUGUI textName;
-    [SerializeField]
-    private GameObject starImg;
+    public ELevel level;
+    private TextMeshProUGUI text;
+    
 
     private void Awake()
     {
         Init();
     }
 
-    void Start()
-    {
-        SetInfo();
-    }
-
     protected override void Init()
     {
         base.Init();
+        text = GetComponentInChildren<TextMeshProUGUI>();
 
-        textName = GetComponentInChildren<TextMeshProUGUI>();
-
-        SetLevelName();
-        SetStarCount();
-    }
-
-    protected override void SetInfo()
-    {
-        base.SetInfo();
+        switch (level)
+        {
+            case ELevel.Easy:
+                text.text = "쉬움";
+                break;
+            case ELevel.Normal:
+                text.text = "보통";
+                break;
+            case ELevel.Hard:
+                text.text = "어려움";
+                break;
+        }
     }
 
     public override void OnClicked()
     {
-        // 키설명 화면으로 전환
+        SetLevelInfo();
+        base.OnClicked();
     }
 
-    private void SetLevelName()
+    private void SetLevelInfo()
     {
+        uiDirector.curLevel = level;
         switch (level)
         {
             case ELevel.Easy:
-                textName.SetText("Easy");
+                text.text = "쉬움";
                 break;
             case ELevel.Normal:
-                textName.SetText("Normal");
+                text.text = "보통";
                 break;
             case ELevel.Hard:
-                textName.SetText("Hard");
+                text.text = "어려움";
                 break;
-        }
-    }
-
-    private void SetStarCount()
-    {
-        for (int i = 0; i < (int)level; i++)
-        {
-            GameObject ob = Instantiate(starImg);
-            ob.transform.SetParent(transform);
-            ob.transform.position = starImg.transform.position;
         }
     }
 }
 
-enum ELevel
+public enum ELevel
 {
     Easy,
     Normal,
-    Hard
+    Hard,
+    MAX
 }

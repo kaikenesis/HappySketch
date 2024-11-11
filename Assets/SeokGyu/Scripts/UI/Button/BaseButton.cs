@@ -3,14 +3,8 @@ using UnityEngine.UI;
 
 public abstract class BaseButton : MonoBehaviour
 {
-    enum EButtonType
-    {
-        Tutorial,
-        LevelSelect,
-        GameStart,
-        Retry,
-        MainMenu
-    }
+    public EButtonType buttonType;
+    public EUIType curUIType;
 
     private Button button;
 
@@ -19,24 +13,37 @@ public abstract class BaseButton : MonoBehaviour
         Init();
     }
 
-    void Start()
-    {
-        SetInfo();
-    }
-
     protected virtual void Init()
     {
         button = transform.GetComponent<Button>();
         if (button != null)
         {
-            button.onClick.AddListener(SetInfo);
+            button.onClick.AddListener(OnClicked);
+
+            Navigation navi = new Navigation();
+            navi.mode = Navigation.Mode.None;
+            button.navigation = navi;
         }
     }
 
-    protected virtual void SetInfo()
-    {
-
-    }
-
     public abstract void OnClicked();
+}
+
+public enum EUIType
+{
+    MainMenu,
+    SelectLevel,
+    Explain,
+    InGame,
+    MAX
+}
+
+public enum EButtonType
+{
+    Start,
+    SelectLevel,
+    GameStart,
+    Retry,
+    MainMenu,
+    MAX
 }
