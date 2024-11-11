@@ -47,7 +47,19 @@ public class WallControl : MonoBehaviour
         EnableWalls();
     }
 
-    private void SetupWalls()
+    public void ResetBlockStates()
+    {
+        for (int i = 0; i < blocks.Count; i++)
+        {
+            wallBlocks[i] = 0;
+            playerBlocks[i] = 0;
+        }
+        SetupWalls();
+        for (int i = 0; i < treeBlocks.Count; i++)
+            treeBlocks[i].ResetTreeBlocks();
+    }
+
+    public void SetupWalls()
     {
         MoveWall(0, 0);
         MoveWall(1, -1);
