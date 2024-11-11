@@ -1,11 +1,11 @@
 using TMPro;
 using UnityEngine;
 
-public class CountDown : MonoBehaviour
+public class CountDown : BaseScene
 {
     [SerializeField]
     private GameObject textObject;
-    private TextMeshProUGUI text;
+    private TextMeshProUGUI countText;
     [SerializeField]
     private int maxCount = 3;
     private int curCount;
@@ -18,13 +18,15 @@ public class CountDown : MonoBehaviour
         Init();
     }
 
-    private void Init()
+    protected override void Init()
     {
-        text = textObject.GetComponent<TextMeshProUGUI>();
-        if (text != null)
+        base.Init();
+
+        countText = textObject.GetComponent<TextMeshProUGUI>();
+        if (countText != null)
         {
             curCount = maxCount;
-            text.text = curCount.ToString();
+            countText.text = curCount.ToString();
         }
     }
 
@@ -48,16 +50,19 @@ public class CountDown : MonoBehaviour
             }
             else
             {
-                text.text = curCount.ToString();
+                countText.text = curCount.ToString();
             }
             timer = 0f;
         }
     }
 
-    public void Activation()
+    public override void Activate()
     {
+        base.Activate();
+
+        transform.SetAsLastSibling();
         isActive = true;
         curCount = maxCount;
-        text.text = curCount.ToString();
+        countText.text = curCount.ToString();
     }
 }

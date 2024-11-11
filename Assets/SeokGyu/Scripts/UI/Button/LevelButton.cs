@@ -6,6 +6,7 @@ public class LevelButton : ChangeUIButton
 {
     public ELevel level;
     private TextMeshProUGUI text;
+    
 
     private void Awake()
     {
@@ -33,15 +34,13 @@ public class LevelButton : ChangeUIButton
 
     public override void OnClicked()
     {
-        base.OnClicked();
-
         SetLevelInfo();
-        UIManager.Instance.SetExplainSubName();
+        base.OnClicked();
     }
 
     private void SetLevelInfo()
     {
-        UIManager.Instance.curLevel = level;
+        uiDirector.curLevel = level;
         switch (level)
         {
             case ELevel.Easy:

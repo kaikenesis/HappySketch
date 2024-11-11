@@ -19,6 +19,10 @@ public abstract class BaseButton : MonoBehaviour
         if (button != null)
         {
             button.onClick.AddListener(OnClicked);
+
+            Navigation navi = new Navigation();
+            navi.mode = Navigation.Mode.None;
+            button.navigation = navi;
         }
     }
 
