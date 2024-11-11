@@ -1,10 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
+    public UIDirector uiDirector;
+    public int playerNum = 2;
+
     private static UIManager instance;
     public static UIManager Instance
     {

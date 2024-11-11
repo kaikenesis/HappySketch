@@ -1,10 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.AI;
-using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
 
 public class UIDirector : MonoBehaviour
 {
@@ -12,17 +6,30 @@ public class UIDirector : MonoBehaviour
     [SerializeField] private GameObject selectLevel;
     [SerializeField] private GameObject explain;
     [SerializeField] private GameObject inGame;
-
     private bool isDebug = false;
-
+    
+    public int[] scoreList { get; private set; }
     public ELevel curLevel;
 
-    private void Init()
+    private void Start()
     {
+        SetInfo();
+    }
+
+    private void SetInfo()
+    {
+        UIManager.Instance.uiDirector = this;
+
         mainMenu.GetComponent<Canvas>().enabled = true;
         selectLevel.GetComponent<Canvas>().enabled = false;
         explain.GetComponent<Canvas>().enabled = false;
         inGame.GetComponent<Canvas>().enabled = false;
+
+        scoreList = new int[UIManager.Instance.playerNum];
+        for (int i = 0; i < scoreList.Length; i++)
+        {
+            scoreList[i] = 0;
+        }
     }
 
     public void ChangeUI(EUIType curUIType, EButtonType buttonType)
@@ -63,6 +70,13 @@ public class UIDirector : MonoBehaviour
         }
     }
 
+    public void InCreaseScore(int playerNum, int score)
+    {
+        int num = playerNum - 1;
+        scoreList[num] += score;
+        inGame.GetComponent<InGameScene>().SetScore(num, scoreList[num]);
+    }
+
     private void OnGUI()
     {
         if (GUI.Button(new Rect(0, 0, 100, 50), "디버깅"))
@@ -78,7 +92,8 @@ public class UIDirector : MonoBehaviour
             }
             if (GUI.Button(new Rect(0, 100, 100, 50), "점수 증가"))
             {
-                inGame.GetComponent<InGameScene>().InCreaseScore(10, 30);
+                inGame.GetComponent<InGameScene>().SetScore(0, 10);
+                inGame.GetComponent<InGameScene>().SetScore(1, 30);
             }
             if (GUI.Button(new Rect(0, 150, 100, 50), "피버 타임"))
             {
