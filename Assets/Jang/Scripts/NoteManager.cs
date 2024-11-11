@@ -20,7 +20,7 @@ public class NoteManager : MonoBehaviour
 
     private bool canEnable = true;
     private bool isFever = false;
-    private bool isPlay = false; // false로 하다가 set하는 방식으로 게임 시작
+    [SerializeField]private bool isPlay = false; // false로 하다가 set하는 방식으로 게임 시작
 
     Coroutine enableNote = null;
     Coroutine disableNote = null;
@@ -31,8 +31,7 @@ public class NoteManager : MonoBehaviour
     Vector2[] positions = { new(-800, 80), new(-200, 80), new(-800, -400), new(-200, -400),
                             new(200, 80), new(800, 80), new(200, -400), new(800, -400)};
     private Dictionary<KeyCode, int> keyDict = new();
-    private readonly KeyCode[] keyCodes = { KeyCode.A, KeyCode.S, KeyCode.Z, KeyCode.X,
-        KeyCode.Semicolon, KeyCode.Quote, KeyCode.Period, KeyCode.Slash };
+    private readonly KeyCode[] keyCodes = { KeyCode.A, KeyCode.S, KeyCode.Z, KeyCode.X, KeyCode.J, KeyCode.K, KeyCode.N, KeyCode.M };
 
     void Awake()
     {
@@ -66,10 +65,10 @@ public class NoteManager : MonoBehaviour
         keyDict.Add(KeyCode.S, 1);
         keyDict.Add(KeyCode.Z, 2);
         keyDict.Add(KeyCode.X, 3);
-        keyDict.Add(KeyCode.Semicolon, 4);
-        keyDict.Add(KeyCode.Quote, 5);
-        keyDict.Add(KeyCode.Period, 6);
-        keyDict.Add(KeyCode.Slash, 7);
+        keyDict.Add(KeyCode.J, 4);
+        keyDict.Add(KeyCode.K, 5);
+        keyDict.Add(KeyCode.N, 6);
+        keyDict.Add(KeyCode.M, 7);
     }
 
     public void SetGameStart()
