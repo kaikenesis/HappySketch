@@ -44,6 +44,8 @@ public class Note : MonoBehaviour
             }
             SetLastCheckTime();
             Debug.Log("Perfect");
+            GameController.Instance.MoveupPlayer(1, 1);
+            GameController.Instance.MoveupPlayer(2, 1);
             return noteTimeInfo.PerfectScore;
         }
 

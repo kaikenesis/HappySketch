@@ -4,7 +4,7 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class NoteManager : MonoBehaviour
+public class NoteManager : Singleton<NoteManager>
 {
     [SerializeField] private NoteTimeInfo noteTimeInfo;
     [SerializeField] private GameObject noteEffect;
@@ -33,7 +33,7 @@ public class NoteManager : MonoBehaviour
     private Dictionary<KeyCode, int> keyDict = new();
     private readonly KeyCode[] keyCodes = { KeyCode.A, KeyCode.S, KeyCode.Z, KeyCode.X, KeyCode.J, KeyCode.K, KeyCode.N, KeyCode.M };
 
-    void Awake()
+    void Start()
     {
         SetKeys();
         GenerateNotes();
@@ -117,6 +117,8 @@ public class NoteManager : MonoBehaviour
         Debug.Log(curScoreP2);
 
         // 여기서 count를 넘겨
+        GameController.Instance.MoveupPlayer(1, correctCountP1);
+        GameController.Instance.MoveupPlayer(2, correctCountP2);
 
         correctCountP1 = 0;
         correctCountP2 = 0;
