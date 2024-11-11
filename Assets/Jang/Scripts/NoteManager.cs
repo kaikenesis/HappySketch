@@ -20,7 +20,7 @@ public class NoteManager : MonoBehaviour
 
     private bool canEnable = true;
     private bool isFever = false;
-    private bool isPlay = true; // false로 하다가 set하는 방식으로 게임 시작
+    private bool isPlay = false; // false로 하다가 set하는 방식으로 게임 시작
 
     Coroutine enableNote = null;
     Coroutine disableNote = null;
