@@ -1,11 +1,12 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+using Random = UnityEngine.Random;
 
 public class TreeMixup : MonoBehaviour
 {
     private List<GameObject> treeBlocks = new List<GameObject>();
-    private int currentTreeObjectIdx;
+    private int currentBlockIdx;
 
     void Start()
     {
@@ -16,7 +17,20 @@ public class TreeMixup : MonoBehaviour
             return;
 
         treeBlocks[0].SetActive(true);
-        currentTreeObjectIdx = 0;
+        currentBlockIdx = 0;
+    }
+
+    public void ResetTreeBlocks()
+    {
+        for (int i = 0; i < treeBlocks.Count; i++)
+        {
+            treeBlocks[i].SetActive(false);
+
+            foreach (Transform tree in treeBlocks[i].transform)
+                tree.gameObject.SetActive(true);
+        }
+        treeBlocks[0].SetActive(true);
+        currentBlockIdx = 0;
     }
 
     public void ChangeTreeObject()
@@ -26,10 +40,10 @@ public class TreeMixup : MonoBehaviour
         
         int randomIndex = Random.Range(0, treeBlocks.Count);
 
-        treeBlocks[currentTreeObjectIdx].SetActive(false);
+        treeBlocks[currentBlockIdx].SetActive(false);
         treeBlocks[randomIndex].SetActive(true);
 
-        currentTreeObjectIdx = randomIndex;
+        currentBlockIdx = randomIndex;
     }
 
     private void EnableTrees(int index)
