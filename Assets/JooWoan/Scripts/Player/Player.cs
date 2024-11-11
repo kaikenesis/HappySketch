@@ -5,9 +5,10 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField] private int playerNumber;
-    [SerializeField] private KeyCode leftHand, rightHand, leftFoot, rightFoot;
     [SerializeField] private float animationSpeed;
     [SerializeField] private List<AnimationClip> climbAnimClips;
+    [SerializeField] private Camera playerCam;
+    public Camera PlayerCam => playerCam;
 
     private Animator playerAnim;
     private int animIndex = 0;
@@ -23,12 +24,6 @@ public class Player : MonoBehaviour
         playerAnim = GetComponent<Animator>();
         playerAnim.speed = animationSpeed;
         GameController.Instance.RegisterPlayer(playerNumber, this);
-    }
-
-    void Update()
-    {
-        if (PressedBtn(leftHand))
-            StartCoroutine(MoveUp(1));
     }
 
     public IEnumerator MoveUp(int repeat)
@@ -55,10 +50,5 @@ public class Player : MonoBehaviour
     {
         currentHeight += GameController.Instance.HeightPerIncrease * repeat;
         GameController.Instance.TryDisableFirstFloor();
-    }
-
-    public bool PressedBtn(KeyCode keycode)
-    {
-        return Input.GetKeyDown(keycode);
     }
 }

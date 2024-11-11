@@ -1959,6 +1959,7 @@ MonoBehaviour:
   climbAnimClips:
   - {fileID: 7400000, guid: d69aeb89feafb3848a5f820f6fb5ea24, type: 2}
   - {fileID: 7400000, guid: 4ed199e64539ede459f932cea93adcb1, type: 2}
+  playerCam: {fileID: 572399571}
   currentHeight: 0
 --- !u!1 &868281990
 GameObject:
@@ -5573,6 +5574,7 @@ MonoBehaviour:
   climbAnimClips:
   - {fileID: 7400000, guid: d69aeb89feafb3848a5f820f6fb5ea24, type: 2}
   - {fileID: 7400000, guid: 4ed199e64539ede459f932cea93adcb1, type: 2}
+  playerCam: {fileID: 1302598525}
   currentHeight: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
