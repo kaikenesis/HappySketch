@@ -16,10 +16,12 @@ public class Note : MonoBehaviour
     }
     public void SetFever(bool b)
     {
-        curTime = noteTimeInfo.FeverStartTime;
         isFever = b;
-        rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, noteWidth/2);
-        rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, noteWidth/2);
+        curTime = noteTimeInfo.FeverStartTime;
+        if (rectTran == null)
+            rectTran = GetComponent<RectTransform>();
+        rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, noteWidth / 2f);
+        rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, noteWidth / 2f);
     }
 
     void SetLastCheckTime()

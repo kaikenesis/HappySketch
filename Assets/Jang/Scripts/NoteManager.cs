@@ -20,7 +20,7 @@ public class NoteManager : Singleton<NoteManager>
 
     private bool canEnable = true;
     private bool isFever = false;
-    [SerializeField]private bool isPlay = false; // false로 하다가 set하는 방식으로 게임 시작
+    [SerializeField]private bool isPlay = false;
 
     Coroutine enableNote = null;
     Coroutine disableNote = null;
@@ -57,6 +57,21 @@ public class NoteManager : Singleton<NoteManager>
         {
             enableNote = StartCoroutine(EnableNote());
         }
+
+        if (isFever)
+        {
+            for (int i = 0; i < inCircleNotes.Count; i++)
+            {
+                CircleGraphic inCircleCG = inCircleNotes[i].GetComponent<CircleGraphic>();
+                
+                inCircleCG.color = new Color(Random.Range(0, 255) / 255f, Random.Range(0, 255) / 255f, Random.Range(0, 255) / 255f);
+            }
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        
     }
 
     private void SetKeys()
@@ -75,6 +90,10 @@ public class NoteManager : Singleton<NoteManager>
     {
         isPlay = true;
         curTime = 0;
+        correctCountP1 = 0;
+        correctCountP2 = 0;
+        curScoreP1 = 0;
+        curScoreP2 = 0;
     }
 
     public void SetLevel(int lv)
@@ -155,7 +174,7 @@ public class NoteManager : Singleton<NoteManager>
             childRectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, outCircleWidth / 2);
             childRectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, outCircleWidth / 2);
             //color
-            inCircleCG.color = Color.blue;
+            inCircleCG.color = new Color32(185, 197, 238, 255);
             inCircleNotes.Add(insideCircle);
 
             GameObject obj = new GameObject();
@@ -169,7 +188,7 @@ public class NoteManager : Singleton<NoteManager>
             note.SetNoteTimeInfo(noteTimeInfo);
             CircleGraphic cg = obj.AddComponent<CircleGraphic>();
             //color
-            cg.color = Color.red;
+            cg.color = new Color32(238,74,74,255);
             cg.SetMode(CircleGraphic.Mode.Edge);
             cg.SetEdgeThickness(10);
 
