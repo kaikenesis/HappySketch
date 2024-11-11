@@ -30,6 +30,7 @@ public class CloudControl : MonoBehaviour
             cloud.SetActive(false);
         }
         EnableRandomClouds();
+        gameObject.SetActive(false);
     }
 
     void Update()

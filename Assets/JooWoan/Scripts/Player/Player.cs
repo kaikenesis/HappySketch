@@ -13,8 +13,10 @@ public class Player : MonoBehaviour
     private int animIndex = 0;
     private bool isPlayingAnimation = false;
 
+    ////////////////////////////////////////////////
     [SerializeField] private float currentHeight = 0;
     public float CurrentHeight => currentHeight;
+    ////////////////////////////////////////////////
 
     void Start()
     {

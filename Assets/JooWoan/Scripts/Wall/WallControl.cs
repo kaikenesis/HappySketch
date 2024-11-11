@@ -18,6 +18,7 @@ public class WallControl : MonoBehaviour
     [SerializeField] private List<Transform> playerTransforms;
     [SerializeField] private List<Transform> blocks = new List<Transform>();
     [SerializeField] private List<TreeMixup> treeBlocks = new List<TreeMixup>();
+    [SerializeField] private List<GameObject> cloudBlocks = new List<GameObject>();
     [SerializeField] private MeshRenderer wallRenderer;
 
     [SerializeField] private List<int> playerBlocks = new List<int>();
@@ -104,6 +105,9 @@ public class WallControl : MonoBehaviour
         );
         wallBlocks[wallIndex] = blockIndex;
         treeBlocks[wallIndex].ChangeTreeObject();
+
+        bool enableCloud = blockIndex >= GameController.Instance.EnableCloudBlockIndex;
+        cloudBlocks[wallIndex].SetActive(enableCloud);
     }
 
     private void UpdatePlayerBlock(int wallIndex, int blockIndex)

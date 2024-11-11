@@ -8,15 +8,6 @@ public class GameController : MonoBehaviour
 {
     private static GameController instance = null;
     public static GameController Instance => instance;
-
-    private IDictionary<int, Player> playerDict = new Dictionary<int, Player>();
-    public IDictionary<int, Player> PlayerDict => playerDict;
-
-    [SerializeField] private float heightPerIncrease;
-    public float HeightPerIncrease => heightPerIncrease;
-
-    private GameObject firstFloor;
-
     void Awake()
     {
         if (instance == null)
@@ -30,6 +21,17 @@ public class GameController : MonoBehaviour
             return;
         }
     }
+
+    public IDictionary<int, Player> PlayerDict => playerDict;
+    public float HeightPerIncrease => heightPerIncrease;
+    public int EnableCloudBlockIndex => enableCloudBlockIndex;
+
+    [SerializeField] private float heightPerIncrease;
+    [SerializeField] private float disableFirstFloorHeight;
+    [SerializeField] private int enableCloudBlockIndex;
+
+    private IDictionary<int, Player> playerDict = new Dictionary<int, Player>();
+    private GameObject firstFloor;
 
     void Start()
     {
@@ -54,7 +56,7 @@ public class GameController : MonoBehaviour
         bool canDisable = true;
         foreach (KeyValuePair<int, Player> playerInfo in playerDict)
         {
-            if (playerInfo.Value.CurrentHeight <= 2500f)
+            if (playerInfo.Value.CurrentHeight <= disableFirstFloorHeight)
             {
                 canDisable = false;
                 break;
