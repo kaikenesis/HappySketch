@@ -18,8 +18,8 @@ public class Note : MonoBehaviour
     {
         curTime = noteTimeInfo.FeverStartTime;
         isFever = b;
-        rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, noteWidth);
-        rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, noteWidth);
+        rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, noteWidth/2);
+        rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, noteWidth/2);
     }
 
     void SetLastCheckTime()
@@ -76,7 +76,7 @@ public class Note : MonoBehaviour
         return noteTimeInfo.PerfectScore;
     }
 
-    private void Start()
+    private void Awake()
     {
         rectTran = GetComponent<RectTransform>();
     }
@@ -90,10 +90,10 @@ public class Note : MonoBehaviour
     {
         curTime += Time.deltaTime;
         if(!isFever)
-            ShrinkImage();
+            ShrinkCircle();
     }
 
-    void ShrinkImage()
+    void ShrinkCircle()
     {
         float progress = Mathf.Clamp01(1 - (curTime / noteTimeInfo.TotalTime[level]));
         rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, noteWidth * progress);

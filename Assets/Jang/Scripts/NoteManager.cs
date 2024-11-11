@@ -6,17 +6,18 @@ using UnityEngine.UI;
 
 public class NoteManager : MonoBehaviour
 {
-    private List<GameObject> notes = new();
-    private List<GameObject> inCircleNotes = new();
     [SerializeField] private NoteTimeInfo noteTimeInfo;
     [SerializeField] private GameObject noteEffect;
 
     private int level = 0;
     private int score = 0;
-    private int curScore = 0;
-    private int correctCount = 0;
+    private int curScoreP1 = 0;
+    private int correctCountP1 = 0;
+    private int curScoreP2 = 0;
+    private int correctCountP2 = 0;
+    private int outCircleWidth = 300;
     private float curTime = 0;
-    
+
     private bool canEnable = true;
     private bool isFever = false;
     private bool isPlay = true; // false로 하다가 set하는 방식으로 게임 시작
@@ -25,14 +26,17 @@ public class NoteManager : MonoBehaviour
     Coroutine disableNote = null;
     Coroutine waitRecreate = null;
 
+    private List<GameObject> notes = new();
+    private List<GameObject> inCircleNotes = new();
     Vector2[] positions = { new(-800, 80), new(-200, 80), new(-800, -400), new(-200, -400),
                             new(200, 80), new(800, 80), new(200, -400), new(800, -400)};
-    private int outCircleWidth = 300;
+    private Dictionary<KeyCode, int> keyDict = new();
+    private readonly KeyCode[] keyCodes = { KeyCode.A, KeyCode.S, KeyCode.Z, KeyCode.X,
+        KeyCode.Semicolon, KeyCode.Quote, KeyCode.Period, KeyCode.Slash };
 
-    void Start()
+    void Awake()
     {
-        RectTransform parentRect = transform.parent.GetComponent<RectTransform>();
-        parentRect.localScale = Vector3.one;
+        SetKeys();
         GenerateNotes();
         noteEffect.transform.localScale = new Vector3(100,100,100);
     }
@@ -56,9 +60,22 @@ public class NoteManager : MonoBehaviour
         }
     }
 
+    private void SetKeys()
+    {        
+        keyDict.Add(KeyCode.A, 0);
+        keyDict.Add(KeyCode.S, 1);
+        keyDict.Add(KeyCode.Z, 2);
+        keyDict.Add(KeyCode.X, 3);
+        keyDict.Add(KeyCode.Semicolon, 4);
+        keyDict.Add(KeyCode.Quote, 5);
+        keyDict.Add(KeyCode.Period, 6);
+        keyDict.Add(KeyCode.Slash, 7);
+    }
+
     public void SetGameStart()
     {
         isPlay = true;
+        curTime = 0;
     }
 
     public void SetLevel(int lv)
@@ -95,9 +112,18 @@ public class NoteManager : MonoBehaviour
 
     IEnumerator DisableNote()
     {
-        Debug.Log(correctCount);
-        // 여기서 count를 넘겨줘?
-        correctCount = 0;
+        Debug.Log(correctCountP1);
+        Debug.Log(correctCountP2);
+        Debug.Log(curScoreP1);
+        Debug.Log(curScoreP2);
+
+        // 여기서 count를 넘겨
+
+        correctCountP1 = 0;
+        correctCountP2 = 0;
+        curScoreP1 = 0;
+        curScoreP2 = 0;
+
         Debug.Log("턴 종료");
         for (int i = 0; i < notes.Count; i++)
         {
@@ -127,6 +153,7 @@ public class NoteManager : MonoBehaviour
             RectTransform childRectTran = insideCircle.GetComponent<RectTransform>();
             childRectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, outCircleWidth / 2);
             childRectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, outCircleWidth / 2);
+            //color
             inCircleCG.color = Color.blue;
             inCircleNotes.Add(insideCircle);
 
@@ -140,6 +167,7 @@ public class NoteManager : MonoBehaviour
             Note note = obj.AddComponent<Note>();
             note.SetNoteTimeInfo(noteTimeInfo);
             CircleGraphic cg = obj.AddComponent<CircleGraphic>();
+            //color
             cg.color = Color.red;
             cg.SetMode(CircleGraphic.Mode.Edge);
             cg.SetEdgeThickness(10);
@@ -151,49 +179,16 @@ public class NoteManager : MonoBehaviour
             insideCircle.SetActive(false);
         }
     }
-
+    
     void CheckNotes()
     {
-        if (Input.GetKeyDown(KeyCode.A))
+        foreach (KeyCode key in keyCodes)
         {
-            Check(0);
-            return;
-        }
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            Check(1);
-            return;
-        }
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            Check(2);
-            return;
-        }
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            Check(3);
-            return;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Semicolon))
-        {
-            Check(4);
-            return;
-        }
-        if (Input.GetKeyDown(KeyCode.Quote))
-        {
-            Check(5);
-            return;
-        }
-        if (Input.GetKeyDown(KeyCode.Period))
-        {
-            Check(6);
-            return;
-        }
-        if (Input.GetKeyDown(KeyCode.Slash))
-        {
-            Check(7);
-            return;
+            if (Input.GetKeyDown(key))
+            {
+                Check(keyDict[key]);
+                return;
+            }
         }
     }
 
@@ -205,10 +200,19 @@ public class NoteManager : MonoBehaviour
         if (inCircleNotes[i].activeSelf == true)
         {
             score = note.Check();
-            curScore += score;
+            if (i < 4)
+            {
+                curScoreP1 += score;
+                if (score != noteTimeInfo.BadScore)
+                {
+                    correctCountP1++;
+                }
+                return;
+            }
+            curScoreP2 += score;
             if (score != noteTimeInfo.BadScore)
             {
-                correctCount++;
+                correctCountP2++;
             }
         }
     }
