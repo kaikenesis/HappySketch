@@ -70,7 +70,7 @@ public class UIDirector : MonoBehaviour
         }
     }
 
-    public void InCreaseScore(int playerNum, int score)
+    public void IncreaseScore(int playerNum, int score)
     {
         int num = playerNum - 1;
         scoreList[num] += score;
