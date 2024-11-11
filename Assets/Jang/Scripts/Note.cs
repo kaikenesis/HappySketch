@@ -1,18 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
 
 public class Note : MonoBehaviour
 {
-    private NoteManager noteManager;
-    private float[] totalTime;
-    private float[] perfectTime;
-    private float[] goodTime;
-    private float curTime;
     NoteTimeInfo noteTimeInfo;
-    public int level;
-    
+    private float curTime;
+    private int level = 0;
+    private bool isFever = false;
+    private float lastCheckTime = 0;
+    private float noteWidth = 300;
+    private RectTransform rectTran;
+
+    public void SetLevel(int lv)
+    {
+        level = lv;
+    }
+    public void SetFever(bool b)
+    {
+        curTime = noteTimeInfo.FeverStartTime;
+        isFever = b;
+        rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, noteWidth/2);
+        rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, noteWidth/2);
+    }
+
+    void SetLastCheckTime()
+    {
+        lastCheckTime = curTime;
+    }
+
     public void SetNoteTimeInfo(NoteTimeInfo noteTimeInfo)
     {
         this.noteTimeInfo = noteTimeInfo;
@@ -20,8 +34,22 @@ public class Note : MonoBehaviour
 
     public int Check()
     {
+        //ÇÇ¹ö
+        if (isFever)
+        {
+            if (curTime - lastCheckTime < noteTimeInfo.FeverCheckTime)
+            {
+                Debug.Log(curTime);
+                return 0;
+            }
+            SetLastCheckTime();
+            Debug.Log("Perfect");
+            return noteTimeInfo.PerfectScore;
+        }
+
         Debug.Log(curTime);
-        gameObject.SetActive(false);
+        transform.parent.gameObject.SetActive(false);
+        //gameObject.SetActive(false);
 
         if (curTime > noteTimeInfo.TotalTime[level] / 2 + noteTimeInfo.PerfectTime[level] + noteTimeInfo.GoodTime[level])
         {
@@ -42,25 +70,33 @@ public class Note : MonoBehaviour
         {
             Debug.Log("Good");
             return noteTimeInfo.GoodScore;
-        }        
+        }
 
         Debug.Log("Perfect");
         return noteTimeInfo.PerfectScore;
     }
 
-    private void Start()
+    private void Awake()
     {
-        level = 0;
-        gameObject.SetActive(false);
+        rectTran = GetComponent<RectTransform>();
     }
     void OnEnable()
     {
         curTime = 0;
+        noteWidth = 300;
     }
 
-    // Update is called once per frame
     void Update()
     {
         curTime += Time.deltaTime;
+        if(!isFever)
+            ShrinkCircle();
+    }
+
+    void ShrinkCircle()
+    {
+        float progress = Mathf.Clamp01(1 - (curTime / noteTimeInfo.TotalTime[level]));
+        rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, noteWidth * progress);
+        rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, noteWidth * progress);
     }
 }
