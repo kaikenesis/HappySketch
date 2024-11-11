@@ -76,7 +76,7 @@ public class Note : MonoBehaviour
         return noteTimeInfo.PerfectScore;
     }
 
-    private void Awake()
+    private void Start()
     {
         rectTran = GetComponent<RectTransform>();
     }
