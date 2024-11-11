@@ -47,6 +47,7 @@ public class CountDown : BaseScene
             {
                 isActive = false;
                 GetComponent<Canvas>().enabled = false;
+                NoteManager.instance.SetGameStart();
             }
             else
             {
