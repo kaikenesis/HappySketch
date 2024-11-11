@@ -1484,14 +1484,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerNumber: 1
-  leftHand: 97
-  rightHand: 0
-  leftFoot: 0
-  rightFoot: 0
   animationSpeed: 2
   climbAnimClips:
   - {fileID: 7400000, guid: d69aeb89feafb3848a5f820f6fb5ea24, type: 2}
   - {fileID: 7400000, guid: 4ed199e64539ede459f932cea93adcb1, type: 2}
+  playerCam: {fileID: 171551464}
   currentHeight: 0
 --- !u!4 &458408411 stripped
 Transform:
@@ -3290,14 +3287,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerNumber: 2
-  leftHand: 106
-  rightHand: 0
-  leftFoot: 0
-  rightFoot: 0
   animationSpeed: 2
   climbAnimClips:
   - {fileID: 7400000, guid: d69aeb89feafb3848a5f820f6fb5ea24, type: 2}
   - {fileID: 7400000, guid: 4ed199e64539ede459f932cea93adcb1, type: 2}
+  playerCam: {fileID: 1592799533}
   currentHeight: 0
 --- !u!1 &1144914375
 GameObject:
