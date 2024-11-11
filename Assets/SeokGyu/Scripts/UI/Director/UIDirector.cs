@@ -6,8 +6,15 @@ public class UIDirector : MonoBehaviour
     [SerializeField] private GameObject selectLevel;
     [SerializeField] private GameObject explain;
     [SerializeField] private GameObject inGame;
+    [SerializeField] private GameObject resultScreen;
     private bool isDebug = false;
-    
+
+    private Canvas mainMenuCanvas;
+    private Canvas selectLevelCanvas;
+    private Canvas explainCanvas;
+    private Canvas inGameCanvas;
+    private Canvas resultScreenCanvas;
+
     public int[] scoreList { get; private set; }
     public ELevel curLevel;
 
@@ -20,10 +27,17 @@ public class UIDirector : MonoBehaviour
     {
         UIManager.Instance.uiDirector = this;
 
-        mainMenu.GetComponent<Canvas>().enabled = true;
-        selectLevel.GetComponent<Canvas>().enabled = false;
-        explain.GetComponent<Canvas>().enabled = false;
-        inGame.GetComponent<Canvas>().enabled = false;
+        mainMenuCanvas = mainMenu.GetComponent<Canvas>();
+        selectLevelCanvas = selectLevel.GetComponent<Canvas>();
+        explainCanvas = explain.GetComponent<Canvas>();
+        inGameCanvas = inGame.GetComponent<Canvas>();
+        resultScreenCanvas = resultScreen.GetComponent<Canvas>();
+
+        mainMenuCanvas.enabled = true;
+        selectLevelCanvas.enabled = false;
+        explainCanvas.enabled = false;
+        inGameCanvas.enabled = false;
+        resultScreenCanvas.enabled = false;
 
         scoreList = new int[UIManager.Instance.playerNum];
         for (int i = 0; i < scoreList.Length; i++)
@@ -37,26 +51,26 @@ public class UIDirector : MonoBehaviour
         switch (curUIType)
         {
             case EUIType.MainMenu:
-                mainMenu.GetComponent<Canvas>().enabled = false;
+                mainMenuCanvas.enabled = false;
                 break;
             case EUIType.SelectLevel:
-                selectLevel.GetComponent<Canvas>().enabled = false;
+                selectLevelCanvas.enabled = false;
                 break;
             case EUIType.Explain:
-                explain.GetComponent<Canvas>().enabled = false;
+                explainCanvas.enabled = false;
                 break;
             case EUIType.InGame:
-                inGame.GetComponent<Canvas>().enabled = false;
+                inGameCanvas.enabled = false;
                 break;
         }
 
         switch (buttonType)
         {
             case EButtonType.Start:
-                selectLevel.GetComponent<Canvas>().enabled = true;
+                selectLevelCanvas.enabled = true;
                 break;
             case EButtonType.SelectLevel:
-                explain.GetComponent<Canvas>().enabled = true;
+                explainCanvas.enabled = true;
                 explain.GetComponent<ExplainScene>().SetText(curLevel);
                 break;
             case EButtonType.GameStart:
@@ -65,7 +79,7 @@ public class UIDirector : MonoBehaviour
             case EButtonType.Retry:
                 break;
             case EButtonType.MainMenu:
-                mainMenu.GetComponent<Canvas>().enabled = true;
+                mainMenuCanvas.enabled = true;
                 break;
         }
     }
@@ -75,6 +89,16 @@ public class UIDirector : MonoBehaviour
         int num = playerNum - 1;
         scoreList[num] += score;
         inGame.GetComponent<InGameScene>().SetScore(num, scoreList[num]);
+    }
+
+    public void ActivateFever()
+    {
+        inGame.GetComponent<InGameScene>().ActivateFeverTime();
+    }
+
+    public void UpdateTimer()
+    {
+        inGame.GetComponent<InGameScene>().DecreaseTime();
     }
 
     private void OnGUI()
