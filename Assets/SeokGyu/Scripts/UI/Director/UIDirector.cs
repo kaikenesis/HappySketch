@@ -17,6 +17,7 @@ public class UIDirector : MonoBehaviour
 
     private ExplainScene explain;
     private InGameScene inGame;
+    private ResultScene resultScene;
 
     public ELevel curLevel;
 
@@ -37,6 +38,7 @@ public class UIDirector : MonoBehaviour
 
         explain = explainObject.GetComponent<ExplainScene>();
         inGame = inGameObject.GetComponent<InGameScene>();
+        resultScene = resultScreenObject.GetComponent<ResultScene>();
 
         mainMenuCanvas.enabled = true;
         selectLevelCanvas.enabled = false;
@@ -79,18 +81,21 @@ public class UIDirector : MonoBehaviour
                 inGame.Activate();
                 break;
             case EButtonType.Retry:
-                // 게임내용 초기화 및 재실행
+                inGame.ResetGame();
+                inGame.Activate();
                 break;
             case EButtonType.MainMenu:
-                inGame.enabled = false;
+                inGame.ResetGame();
+                inGameCanvas.enabled = false;
                 mainMenuCanvas.enabled = true;
-                // 게임내용 초기화 및 재실행
                 break;
         }
     }
 
     public void IncreaseScore(int playerNum, int score)
     {
+        if (UIManager.Instance.bPlayGame == false) return;
+
         int num = playerNum - 1;
         UIManager.Instance.scores[num] += score;
         inGame.SetScore(num, UIManager.Instance.scores[num]);
@@ -98,12 +103,38 @@ public class UIDirector : MonoBehaviour
 
     public void ActivateFever()
     {
+        if (UIManager.Instance.bPlayGame == false) return;
+
         inGame.ActivateFeverTime();
     }
 
     public void UpdateTimer()
     {
+        if (UIManager.Instance.bPlayGame == false) return;
+
         inGame.DecreaseTime();
+    }
+
+    public void FinishGame()
+    {
+        resultCanvas.enabled = true;
+        CompareScore();
+    }
+
+    void CompareScore()
+    {
+        int max = UIManager.Instance.scores[0];
+        int playerNum = 0;
+        for(int i =1;i<UIManager.Instance.playerNum;i++)
+        {
+            if(max < UIManager.Instance.scores[i])
+            {
+                max = UIManager.Instance.scores[i];
+                playerNum = i;
+            }
+        }
+
+        resultScene.SetWinner(playerNum);
     }
 
     private void OnGUI()
@@ -128,6 +159,18 @@ public class UIDirector : MonoBehaviour
             if (GUI.Button(new Rect(0, 150, 100, 50), "피버 타임"))
             {
                 inGame.ActivateFeverTime();
+            }
+            if (GUI.Button(new Rect(0, 200, 100, 50), "1p승리"))
+            {
+                UIManager.Instance.curTime = 5;
+                IncreaseScore(1, 1000);
+                inGame.DecreaseTime();
+            }
+            if (GUI.Button(new Rect(0, 250, 100, 50), "2p승리"))
+            {
+                UIManager.Instance.curTime = 5;
+                IncreaseScore(2, 1000);
+                inGame.DecreaseTime();
             }
         }
     }
