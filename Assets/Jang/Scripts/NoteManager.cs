@@ -135,10 +135,6 @@ public class NoteManager : Singleton<NoteManager>
         Debug.Log(curScoreP1);
         Debug.Log(curScoreP2);
 
-        // 여기서 count를 넘겨
-        GameController.Instance.MoveupPlayer(1, correctCountP1);
-        GameController.Instance.MoveupPlayer(2, correctCountP2);
-
         correctCountP1 = 0;
         correctCountP2 = 0;
         curScoreP1 = 0;
@@ -225,14 +221,14 @@ public class NoteManager : Singleton<NoteManager>
                 curScoreP1 += score;
                 if (score != noteTimeInfo.BadScore)
                 {
-                    correctCountP1++;
+                    GameController.Instance.MoveupPlayer(1);
                 }
                 return;
             }
             curScoreP2 += score;
             if (score != noteTimeInfo.BadScore)
             {
-                correctCountP2++;
+                GameController.Instance.MoveupPlayer(2);
             }
         }
     }

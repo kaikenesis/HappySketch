@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Player : MonoBehaviour
 {
@@ -14,10 +15,7 @@ public class Player : MonoBehaviour
     private int animIndex = 0;
     private bool isPlayingAnimation = false;
 
-    ////////////////////////////////////////////////
-    [SerializeField] private float currentHeight = 0;
-    public float CurrentHeight => currentHeight;
-    ////////////////////////////////////////////////
+    int animationRepeat = 0;
 
     void Start()
     {
@@ -26,29 +24,33 @@ public class Player : MonoBehaviour
         GameController.Instance.RegisterPlayer(playerNumber, this);
     }
 
-    public IEnumerator MoveUp(int repeat)
+    void Update()
     {
-        if (isPlayingAnimation)
-            yield break;
-        
-        IncreaseHeight(repeat);
-
-        isPlayingAnimation = true;
-        for (int i = 0; i < repeat; i++)
-        {
-            float animDuration = climbAnimClips[animIndex].length / playerAnim.speed;
-
-            playerAnim.Play(climbAnimClips[animIndex].name, -1, 0f);
-            animIndex = (animIndex + 1) % climbAnimClips.Count;
-            
-            yield return new WaitForSeconds(animDuration);
-        }
-        isPlayingAnimation = false;
+        MoveUp();
     }
 
-    private void IncreaseHeight(int repeat)
+    public void QueueAnimationRepeat()
     {
-        currentHeight += GameController.Instance.HeightPerIncrease * repeat;
-        GameController.Instance.TryDisableFirstFloor();
+        animationRepeat++;
+    }
+
+    private void MoveUp()
+    {
+        if (isPlayingAnimation || animationRepeat <= 0)
+            return;
+
+        animationRepeat--;
+        isPlayingAnimation = true;
+
+        float animDuration = climbAnimClips[animIndex].length / playerAnim.speed;
+        Invoke("DisableIsPlayingAnimation", animDuration);
+
+        playerAnim.Play(climbAnimClips[animIndex].name, -1, 0f);
+        animIndex = (animIndex + 1) % climbAnimClips.Count;
+    }
+
+    private void DisableIsPlayingAnimation()
+    {
+        isPlayingAnimation = false;
     }
 }

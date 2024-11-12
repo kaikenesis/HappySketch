@@ -46,25 +46,25 @@ public class GameController : MonoBehaviour
         playerDict.Add(playerNumber, newPlayer);
     }
 
-    public void MoveupPlayer(int playerNumber, int repeat)
+    public void MoveupPlayer(int playerNumber)
     {
-        StartCoroutine(playerDict[playerNumber].MoveUp(repeat));
+        playerDict[playerNumber].QueueAnimationRepeat();
     }
 
-    public void TryDisableFirstFloor()
-    {
-        bool canDisable = true;
-        foreach (KeyValuePair<int, Player> playerInfo in playerDict)
-        {
-            if (playerInfo.Value.CurrentHeight <= disableFirstFloorHeight)
-            {
-                canDisable = false;
-                break;
-            }
-        }
-        if (canDisable)
-            firstFloor.SetActive(false);
-    }
+    //public void TryDisableFirstFloor()
+    //{
+    //    bool canDisable = true;
+    //    foreach (KeyValuePair<int, Player> playerInfo in playerDict)
+    //    {
+    //        if (playerInfo.Value.CurrentHeight <= disableFirstFloorHeight)
+    //        {
+    //            canDisable = false;
+    //            break;
+    //        }
+    //    }
+    //    if (canDisable)
+    //        firstFloor.SetActive(false);
+    //}
 
     public Camera GetPlayerCamera(int playerNumber)
     {
