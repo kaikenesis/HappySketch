@@ -11,10 +11,6 @@ public class NoteManager : Singleton<NoteManager>
 
     private int level = 0;
     private int score = 0;
-    private int curScoreP1 = 0;
-    private int correctCountP1 = 0;
-    private int curScoreP2 = 0;
-    private int correctCountP2 = 0;
     private int outCircleWidth = 300;
     private float curTime = 0;
 
@@ -90,10 +86,6 @@ public class NoteManager : Singleton<NoteManager>
     {
         isPlay = true;
         curTime = 0;
-        correctCountP1 = 0;
-        correctCountP2 = 0;
-        curScoreP1 = 0;
-        curScoreP2 = 0;
     }
 
     public void SetLevel(int lv)
@@ -112,6 +104,10 @@ public class NoteManager : Singleton<NoteManager>
         for (int i = 0; i < notes.Count; i++)
         {
             float rand = Random.Range(0, 100);
+
+            //  1 2 3 : 40 40 20
+            //  총 점수 같음
+            //  25퍼 50퍼 80퍼
             if (rand >= 30)
             { 
                 inCircleNotes[i].SetActive(true);
@@ -125,30 +121,18 @@ public class NoteManager : Singleton<NoteManager>
             }
         }
         yield return new WaitForSeconds(noteTimeInfo.TotalTime[level]);
+        enableNote = null;
         disableNote = StartCoroutine(DisableNote());
     }
 
     IEnumerator DisableNote()
     {
-        Debug.Log(correctCountP1);
-        Debug.Log(correctCountP2);
-        Debug.Log(curScoreP1);
-        Debug.Log(curScoreP2);
-
-        // 여기서 count를 넘겨
-        GameController.Instance.MoveupPlayer(1, correctCountP1);
-        GameController.Instance.MoveupPlayer(2, correctCountP2);
-
-        correctCountP1 = 0;
-        correctCountP2 = 0;
-        curScoreP1 = 0;
-        curScoreP2 = 0;
-
         Debug.Log("턴 종료");
         for (int i = 0; i < notes.Count; i++)
         {
             inCircleNotes[i].SetActive(false);
         }
+        disableNote = null;
         yield return waitRecreate = StartCoroutine(WaitRecreate());
     }
 
@@ -157,6 +141,7 @@ public class NoteManager : Singleton<NoteManager>
         float rand = Random.Range(noteTimeInfo.MinRecreateTime, noteTimeInfo.MaxRecreateTime);
         Debug.Log($"재생성 시간 : {rand}");
         yield return new WaitForSeconds(rand);
+        waitRecreate = null;
         canEnable = true;
     }
 
@@ -222,17 +207,16 @@ public class NoteManager : Singleton<NoteManager>
             score = note.Check();
             if (i < 4)
             {
-                curScoreP1 += score;
                 if (score != noteTimeInfo.BadScore)
                 {
-                    correctCountP1++;
+                    GameController.Instance.MoveupPlayer(1, 1);
+                    // 스코어도 준다
                 }
                 return;
             }
-            curScoreP2 += score;
             if (score != noteTimeInfo.BadScore)
             {
-                correctCountP2++;
+                GameController.Instance.MoveupPlayer(2, 1);
             }
         }
     }
@@ -249,9 +233,12 @@ public class NoteManager : Singleton<NoteManager>
                 notes[i].GetComponent<Note>().SetFever(true);
             }
 
-            StopCoroutine(enableNote);
-            StopCoroutine(disableNote);
-            StopCoroutine(waitRecreate);
+            if (enableNote != null)
+                StopCoroutine(enableNote);
+            if (disableNote != null)
+                StopCoroutine(disableNote);
+            if (waitRecreate != null)
+                StopCoroutine(waitRecreate);
 
             for (int i = 0; i < notes.Count; i++)
             {
