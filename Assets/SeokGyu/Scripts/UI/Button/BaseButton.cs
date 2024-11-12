@@ -35,6 +35,7 @@ public enum EUIType
     SelectLevel,
     Explain,
     InGame,
+    Result,
     MAX
 }
 

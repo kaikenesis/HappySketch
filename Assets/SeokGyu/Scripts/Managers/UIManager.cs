@@ -1,16 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
+    public UIDirector uiDirector;
+    public int playerNum = 2;
+    public int[] scores;
+    public bool bPlayGame = false;
+    public float maxTime = 60.0f;
+    public float curTime;
+
     private static UIManager instance;
     public static UIManager Instance
     {
         get
         {
-            if(instance == null)
+            if (instance == null)
             {
                 GameObject newGameObject = new GameObject("UIManager");
                 instance = newGameObject.AddComponent<UIManager>();
@@ -34,5 +38,9 @@ public class UIManager : MonoBehaviour
         instance = this;
 
         DontDestroyOnLoad(this.gameObject);
+
+        scores = new int[playerNum];
+        for (int i = 0; i < scores.Length; i++)
+            scores[i] = 0;
     }
 }

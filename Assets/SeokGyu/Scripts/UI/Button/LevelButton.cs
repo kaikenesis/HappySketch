@@ -1,11 +1,9 @@
 using TMPro;
-using UnityEngine;
-using UnityEngine.UI;
 
 public class LevelButton : ChangeUIButton
 {
     public ELevel level;
-    private TextMeshProUGUI text;
+    private TextMeshProUGUI subTitleText;
     
 
     private void Awake()
@@ -16,18 +14,18 @@ public class LevelButton : ChangeUIButton
     protected override void Init()
     {
         base.Init();
-        text = GetComponentInChildren<TextMeshProUGUI>();
+        subTitleText = GetComponentInChildren<TextMeshProUGUI>();
 
         switch (level)
         {
             case ELevel.Easy:
-                text.text = "쉬움";
+                subTitleText.text = "쉬움";
                 break;
             case ELevel.Normal:
-                text.text = "보통";
+                subTitleText.text = "보통";
                 break;
             case ELevel.Hard:
-                text.text = "어려움";
+                subTitleText.text = "어려움";
                 break;
         }
     }
@@ -44,13 +42,13 @@ public class LevelButton : ChangeUIButton
         switch (level)
         {
             case ELevel.Easy:
-                text.text = "쉬움";
+                subTitleText.text = "쉬움";
                 break;
             case ELevel.Normal:
-                text.text = "보통";
+                subTitleText.text = "보통";
                 break;
             case ELevel.Hard:
-                text.text = "어려움";
+                subTitleText.text = "어려움";
                 break;
         }
     }

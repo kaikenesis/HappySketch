@@ -65,4 +65,13 @@ public class GameController : MonoBehaviour
         if (canDisable)
             firstFloor.SetActive(false);
     }
+
+    public Camera GetPlayerCamera(int playerNumber)
+    {
+        if (playerDict.TryGetValue(playerNumber, out Player player))
+            return player.PlayerCam;
+
+        Debug.LogWarning($"Player {playerNumber} does not exist");
+        return null;
+    }
 }

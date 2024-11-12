@@ -1,28 +1,48 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.AI;
-using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
 
 public class UIDirector : MonoBehaviour
 {
-    [SerializeField] private GameObject mainMenu;
-    [SerializeField] private GameObject selectLevel;
-    [SerializeField] private GameObject explain;
-    [SerializeField] private GameObject inGame;
+    [SerializeField] private GameObject mainMenuObject;
+    [SerializeField] private GameObject selectLevelObject;
+    [SerializeField] private GameObject explainObject;
+    [SerializeField] private GameObject inGameObject;
+    [SerializeField] private GameObject resultScreenObject;
+    private bool bDebug = false;
 
-    private bool isDebug = false;
+    private Canvas mainMenuCanvas;
+    private Canvas selectLevelCanvas;
+    private Canvas explainCanvas;
+    private Canvas inGameCanvas;
+    private Canvas resultCanvas;
+
+    private ExplainScene explain;
+    private InGameScene inGame;
 
     public ELevel curLevel;
 
-    private void Init()
+    private void Start()
     {
-        mainMenu.GetComponent<Canvas>().enabled = true;
-        selectLevel.GetComponent<Canvas>().enabled = false;
-        explain.GetComponent<Canvas>().enabled = false;
-        inGame.GetComponent<Canvas>().enabled = false;
+        SetInfo();
+    }
+
+    private void SetInfo()
+    {
+        UIManager.Instance.uiDirector = this;
+
+        mainMenuCanvas = mainMenuObject.GetComponent<Canvas>();
+        selectLevelCanvas = selectLevelObject.GetComponent<Canvas>();
+        explainCanvas = explainObject.GetComponent<Canvas>();
+        inGameCanvas = inGameObject.GetComponent<Canvas>();
+        resultCanvas = resultScreenObject.GetComponent<Canvas>();
+
+        explain = explainObject.GetComponent<ExplainScene>();
+        inGame = inGameObject.GetComponent<InGameScene>();
+
+        mainMenuCanvas.enabled = true;
+        selectLevelCanvas.enabled = false;
+        explainCanvas.enabled = false;
+        inGameCanvas.enabled = false;
+        resultCanvas.enabled = false;
     }
 
     public void ChangeUI(EUIType curUIType, EButtonType buttonType)
@@ -30,59 +50,84 @@ public class UIDirector : MonoBehaviour
         switch (curUIType)
         {
             case EUIType.MainMenu:
-                mainMenu.GetComponent<Canvas>().enabled = false;
+                mainMenuCanvas.enabled = false;
                 break;
             case EUIType.SelectLevel:
-                selectLevel.GetComponent<Canvas>().enabled = false;
+                selectLevelCanvas.enabled = false;
                 break;
             case EUIType.Explain:
-                explain.GetComponent<Canvas>().enabled = false;
+                explainCanvas.enabled = false;
                 break;
             case EUIType.InGame:
-                inGame.GetComponent<Canvas>().enabled = false;
+                inGameCanvas.enabled = false;
+                break;
+            case EUIType.Result:
+                resultCanvas.enabled = false;
                 break;
         }
 
         switch (buttonType)
         {
             case EButtonType.Start:
-                selectLevel.GetComponent<Canvas>().enabled = true;
+                selectLevelCanvas.enabled = true;
                 break;
             case EButtonType.SelectLevel:
-                explain.GetComponent<Canvas>().enabled = true;
-                explain.GetComponent<ExplainScene>().SetText(curLevel);
+                explainCanvas.enabled = true;
+                explain.SetText(curLevel);
                 break;
             case EButtonType.GameStart:
-                inGame.GetComponent<InGameScene>().Activate();
+                inGame.Activate();
                 break;
             case EButtonType.Retry:
+                // 게임내용 초기화 및 재실행
                 break;
             case EButtonType.MainMenu:
-                mainMenu.GetComponent<Canvas>().enabled = true;
+                inGame.enabled = false;
+                mainMenuCanvas.enabled = true;
+                // 게임내용 초기화 및 재실행
                 break;
         }
+    }
+
+    public void IncreaseScore(int playerNum, int score)
+    {
+        int num = playerNum - 1;
+        UIManager.Instance.scores[num] += score;
+        inGame.SetScore(num, UIManager.Instance.scores[num]);
+    }
+
+    public void ActivateFever()
+    {
+        inGame.ActivateFeverTime();
+    }
+
+    public void UpdateTimer()
+    {
+        inGame.DecreaseTime();
     }
 
     private void OnGUI()
     {
         if (GUI.Button(new Rect(0, 0, 100, 50), "디버깅"))
         {
-            isDebug = !isDebug;
+            bDebug = !bDebug;
         }
 
-        if(isDebug == true)
+        if(bDebug == true)
         {
             if(GUI.Button(new Rect(0, 50, 100, 50), "시간 감소"))
             {
-                inGame.GetComponent<InGameScene>().DecreaseTime();
+                UIManager.Instance.curTime--;
+                inGame.DecreaseTime();
             }
             if (GUI.Button(new Rect(0, 100, 100, 50), "점수 증가"))
             {
-                inGame.GetComponent<InGameScene>().InCreaseScore(10, 30);
+                IncreaseScore(1, 10);
+                IncreaseScore(2, 30);
             }
             if (GUI.Button(new Rect(0, 150, 100, 50), "피버 타임"))
             {
-                inGame.GetComponent<InGameScene>().ActivateFeverTime();
+                inGame.ActivateFeverTime();
             }
         }
     }

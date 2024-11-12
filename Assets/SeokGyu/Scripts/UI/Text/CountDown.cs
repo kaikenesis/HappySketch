@@ -1,33 +1,29 @@
 using TMPro;
 using UnityEngine;
 
-public class CountDown : BaseScene
+public class CountDown : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject textObject;
+    [SerializeField] private GameObject textObject;
     private TextMeshProUGUI countText;
-    [SerializeField]
-    private int maxCount = 3;
-    private int curCount;
-    public bool isActive = false;
-    private float timer = 0f;
+    private Canvas canvas;
+    [SerializeField] private int maxTime = 3;
+    private int curTime;
+    private float curFrame = 0f;
     private float waitngTime = 1f;
+    private bool isActive;
 
     private void Awake()
     {
         Init();
     }
 
-    protected override void Init()
+    private void Init()
     {
-        base.Init();
-
+        canvas = GetComponent<Canvas>();
         countText = textObject.GetComponent<TextMeshProUGUI>();
-        if (countText != null)
-        {
-            curCount = maxCount;
-            countText.text = curCount.ToString();
-        }
+        curTime = maxTime;
+        countText.text = curTime.ToString();
+        isActive = false;
     }
 
     private void Update()
@@ -38,31 +34,33 @@ public class CountDown : BaseScene
     private void CountTime()
     {
         if (isActive == false) return;
-
-        timer += Time.deltaTime;
-        if (timer >= waitngTime)
+        
+        curFrame += Time.deltaTime;
+        if (curFrame >= waitngTime)
         {
-            curCount--;
-            if (curCount <= 0)
+            Debug.Log(curTime);
+            if (curTime <= 0)
             {
                 isActive = false;
-                GetComponent<Canvas>().enabled = false;
+                canvas.enabled = false;
+                UIManager.Instance.bPlayGame = true;
+                NoteManager.instance.SetGameStart();
             }
             else
             {
-                countText.text = curCount.ToString();
+                countText.text = curTime.ToString();
+                curTime--;
             }
-            timer = 0f;
+            curFrame = 0f;
         }
     }
 
-    public override void Activate()
+    public void Activate()
     {
-        base.Activate();
-
-        transform.SetAsLastSibling();
+        canvas.enabled = true;
         isActive = true;
-        curCount = maxCount;
-        countText.text = curCount.ToString();
+        curTime = maxTime;
+        curFrame = 1.0f;
+        countText.text = curTime.ToString();
     }
 }

@@ -6,7 +6,6 @@ using UnityEngine;
 public class TimeProgress : MonoBehaviour
 {
     [SerializeField] private GameObject textObject;
-    [SerializeField] private float limitTime;
     private TextMeshProUGUI timeText;
     
 
@@ -17,16 +16,16 @@ public class TimeProgress : MonoBehaviour
 
     void Init()
     {
-        timeText = textObject.GetComponent<TextMeshProUGUI>();
-        timeText.text = limitTime.ToString() + "段";
+        timeText = textObject.GetComponentInChildren<TextMeshProUGUI>();
+        timeText.text = UIManager.Instance.maxTime.ToString() + "段";
     }
 
-    public void Decrease()
+    public void SetText()
     {
-        if (limitTime <= 0) return;
+        if (UIManager.Instance.bPlayGame == false) return;
+        if (UIManager.Instance.curTime < 0) return;
 
-        limitTime--;
-        timeText.text = limitTime.ToString() + "段";
+        timeText.text = UIManager.Instance.curTime.ToString() + "段";
     }
 
 }
