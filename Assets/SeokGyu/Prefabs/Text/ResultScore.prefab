@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4223775073660429561}
   - component: {fileID: 4151890751710810602}
   - component: {fileID: 2218076631946320086}
+  - component: {fileID: 4765964795493447063}
   m_Layer: 5
   m_Name: ResultScore
   m_TagString: Untagged
@@ -79,6 +80,20 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &4765964795493447063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 354497697429411719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e36d045478b23b4488fb5a7d2ef5905, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textObject: {fileID: 6439045690986632667}
+  scoreObject: {fileID: 8632337024144121222}
 --- !u!1 &2919389681376662818
 GameObject:
   m_ObjectHideFlags: 0
