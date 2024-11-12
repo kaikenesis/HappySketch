@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class InGameScene : BaseScene
 {
-    [SerializeField] private GameObject score;
+    [SerializeField] private GameObject scoreObject;
     [SerializeField] private Vector2 scorePosition;
     [SerializeField] private GameObject feverText;
     [SerializeField] private Vector2 feverTextPosition;
@@ -10,11 +10,17 @@ public class InGameScene : BaseScene
     [SerializeField] private Vector2[] nodesPosition;
     [SerializeField] private float nodeWidth;
     [SerializeField] private float nodeHeight;
-    [SerializeField] private GameObject countDown;
-    [SerializeField] private GameObject timer;
-    private Score[] scores;
+    [SerializeField] private GameObject countDownObject;
+    private CountDown countDown;
+    [SerializeField] private GameObject timerObject;
+    private TimeProgress timer;
+    private Score[] scoreTexts;
     private GameObject[] feverTexts;
-    
+    private Canvas[] feverCanvases;
+    [SerializeField] private float delayTime = 1.0f;
+    [SerializeField] private float maxTime = 60.0f;
+    private float curFrame = 1.0f;
+
 
     private void Start()
     {
@@ -25,20 +31,21 @@ public class InGameScene : BaseScene
     {
         int playerNum = UIManager.Instance.playerNum;
 
-        scores = new Score[playerNum];
+        scoreTexts = new Score[playerNum];
         feverTexts = new GameObject[playerNum];
+        feverCanvases = new Canvas[playerNum];
 
         // Score
         for (int i = 0; i < playerNum; i++)
         {
             float distance = 1600f * i;
-            GameObject scoreObject = Instantiate(score);
-            scoreObject.transform.SetParent(transform);
-            RectTransform scoreRect = scoreObject.GetComponent<RectTransform>();
-            scoreRect.transform.localPosition = scorePosition;
-            scoreRect.transform.localPosition = new Vector3(scorePosition.x + distance, scorePosition.y, 0);
+            GameObject gameObject = Instantiate(scoreObject);
+            gameObject.transform.SetParent(transform);
+            RectTransform Rect = gameObject.GetComponent<RectTransform>();
+            Rect.transform.localPosition = scorePosition;
+            Rect.transform.localPosition = new Vector3(scorePosition.x + distance, scorePosition.y, 0);
 
-            scores[i] = scoreObject.GetComponent<Score>();
+            scoreTexts[i] = gameObject.GetComponent<Score>();
         }
 
         // FeverText
@@ -46,43 +53,87 @@ public class InGameScene : BaseScene
         {
             float distance = 1000f * i;
 
-            GameObject feverTextObject = Instantiate(feverText);
-            feverTextObject.transform.SetParent(transform);
-            RectTransform feverTextRect = feverTextObject.GetComponent<RectTransform>();
-            feverTextRect.transform.localPosition = new Vector3(feverTextPosition.x + distance, feverTextPosition.y, 0);
-            feverTextObject.GetComponent<Canvas>().enabled = false;
+            GameObject gameObject = Instantiate(feverText);
+            gameObject.transform.SetParent(transform);
+            RectTransform Rect = gameObject.GetComponent<RectTransform>();
+            Rect.transform.localPosition = new Vector3(feverTextPosition.x + distance, feverTextPosition.y, 0);
 
-            feverTexts[i] = feverTextObject;
+            feverCanvases[i] = gameObject.GetComponent<Canvas>();
+            feverCanvases[i].enabled = false;
+
+            feverTexts[i] = gameObject;
+            
         }
 
         // CountDown
-        GameObject countDownObject = Instantiate(countDown);
-        countDownObject.transform.SetParent(transform);
+        {
+            countDown = countDownObject.GetComponent<CountDown>();
+        }
+
+        // Timer
+        {
+            timer = timerObject.GetComponent<TimeProgress>();
+        }
+
+        UIManager.Instance.maxTime = maxTime;
+        UIManager.Instance.curTime = maxTime;
+    }
+
+    private void Update()
+    {
+        UpdateGame();
+    }
+
+    private void UpdateGame()
+    {
+        if (UIManager.Instance.bPlayGame == true)
+        {
+            curFrame += Time.deltaTime;
+            if (curFrame >= delayTime)
+            {
+                if (UIManager.Instance.curTime < 0)
+                {
+                    StopGame();
+                    // InGame 진행멈추고 결과화면 띄우기
+                }
+                else
+                {
+                    DecreaseTime();
+                    UIManager.Instance.curTime--;
+                }
+                curFrame = 0f;
+            }
+        }
+    }
+
+    private void StopGame()
+    {
+        
     }
 
     public override void Activate()
     {
         base.Activate();
 
-        countDown.GetComponent<CountDown>().Activate();
+        countDown.Activate();
         // Canvas enabled true시 실행준비
     }
 
     public void DecreaseTime()
     {
-        timer.GetComponent<TimeProgress>().Decrease();
+        timer.SetText();
     }
 
     public void SetScore(int playerNum, int score)
     {
-        scores[playerNum].SetText(score);
+        scoreTexts[playerNum].SetText(score);
     }
 
     public void ActivateFeverTime()
     {
         for(int i =0;i< feverTexts.Length;i++)
         {
-            feverTexts[i].GetComponent<Canvas>().enabled = true;
+            feverCanvases[i].enabled = true;
         }
     }
 }
