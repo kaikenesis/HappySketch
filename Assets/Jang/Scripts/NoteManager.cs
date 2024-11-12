@@ -6,13 +6,13 @@ using UnityEngine.UI;
 
 public class NoteManager : Singleton<NoteManager>
 {
-    [SerializeField] private NoteTimeInfo noteTimeInfo;
+    [SerializeField] public NoteTimeInfo noteTimeInfo;
     [SerializeField] private GameObject noteEffect;
 
     private int level = 0;
     private int score = 0;
     private int outCircleWidth = 300;
-    private float curTime = 0;
+    public float curTime = 0;
 
     private bool canEnable = true;
     private bool isFever = false;
@@ -210,13 +210,14 @@ public class NoteManager : Singleton<NoteManager>
                 if (score != noteTimeInfo.BadScore)
                 {
                     GameController.Instance.MoveupPlayer(1, 1);
-                    // 스코어도 준다
+                    UIManager.Instance.uiDirector.IncreaseScore(1, score);                    
                 }
                 return;
             }
             if (score != noteTimeInfo.BadScore)
             {
                 GameController.Instance.MoveupPlayer(2, 1);
+                UIManager.Instance.uiDirector.IncreaseScore(2, score);
             }
         }
     }

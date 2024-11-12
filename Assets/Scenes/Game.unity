@@ -4334,25 +4334,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6047279301446450919, guid: 38d6bbbd88e8cc64c92368e21fe824ac, type: 3}
       propertyPath: m_IsActive
-<<<<<<< HEAD
-      value: 0
-      objectReference: {fileID: 0}
-=======
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 6142744011587214308, guid: 38d6bbbd88e8cc64c92368e21fe824ac, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7711208111597341205, guid: 38d6bbbd88e8cc64c92368e21fe824ac, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9144636063265313265, guid: 38d6bbbd88e8cc64c92368e21fe824ac, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
->>>>>>> origin/main_Copy
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -99,7 +99,8 @@ public class InGameScene : BaseScene
                 else
                 {
                     DecreaseTime();
-                    UIManager.Instance.curTime--;
+                    //UIManager.Instance.curTime--;
+                    UIManager.Instance.curTime = NoteManager.Instance.noteTimeInfo.PlayTime - NoteManager.Instance.curTime;
                 }
                 curFrame = 0f;
             }

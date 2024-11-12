@@ -25,7 +25,8 @@ public class TimeProgress : MonoBehaviour
         if (UIManager.Instance.bPlayGame == false) return;
         if (UIManager.Instance.curTime < 0) return;
 
-        timeText.text = UIManager.Instance.curTime.ToString() + "ÃÊ";
+        int time = (int)UIManager.Instance.curTime;
+        timeText.text = time.ToString() + "ÃÊ";
     }
 
 }
