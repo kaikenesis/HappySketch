@@ -14,7 +14,7 @@ public class InGameScene : BaseScene
     [SerializeField] private GameObject timer;
     private Score[] scores;
     private GameObject[] feverTexts;
-    private int playerNum = 2;
+    
 
     private void Start()
     {
@@ -23,6 +23,8 @@ public class InGameScene : BaseScene
 
     private void SetInfo()
     {
+        int playerNum = UIManager.Instance.playerNum;
+
         scores = new Score[playerNum];
         feverTexts = new GameObject[playerNum];
 
@@ -51,15 +53,6 @@ public class InGameScene : BaseScene
             feverTextObject.GetComponent<Canvas>().enabled = false;
 
             feverTexts[i] = feverTextObject;
-
-            //for (int j = 0; j < nodesPosition.Length; j++)
-            //{
-            //    GameObject nodeObject = Instantiate(decideNode);
-            //    nodeObject.transform.SetParent(transform);
-            //    RectTransform nodeRect = nodeObject.GetComponent<RectTransform>();
-            //    nodeRect.sizeDelta = new Vector2(nodeWidth, nodeHeight);
-            //    nodeRect.transform.localPosition = new Vector3(nodesPosition[j].x + distance, nodesPosition[j].y, 0);
-            //}
         }
 
         // CountDown
@@ -80,10 +73,9 @@ public class InGameScene : BaseScene
         timer.GetComponent<TimeProgress>().Decrease();
     }
 
-    public void InCreaseScore(int score1, int score2)
+    public void SetScore(int playerNum, int score)
     {
-        scores[0].SetText(score1);
-        scores[1].SetText(score2);
+        scores[playerNum].SetText(score);
     }
 
     public void ActivateFeverTime()

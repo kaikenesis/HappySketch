@@ -4,7 +4,7 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class NoteManager : MonoBehaviour
+public class NoteManager : Singleton<NoteManager>
 {
     [SerializeField] private NoteTimeInfo noteTimeInfo;
     [SerializeField] private GameObject noteEffect;
@@ -20,7 +20,7 @@ public class NoteManager : MonoBehaviour
 
     private bool canEnable = true;
     private bool isFever = false;
-    [SerializeField]private bool isPlay = false; // false로 하다가 set하는 방식으로 게임 시작
+    [SerializeField]private bool isPlay = false;
 
     Coroutine enableNote = null;
     Coroutine disableNote = null;
@@ -33,7 +33,7 @@ public class NoteManager : MonoBehaviour
     private Dictionary<KeyCode, int> keyDict = new();
     private readonly KeyCode[] keyCodes = { KeyCode.A, KeyCode.S, KeyCode.Z, KeyCode.X, KeyCode.J, KeyCode.K, KeyCode.N, KeyCode.M };
 
-    void Awake()
+    void Start()
     {
         SetKeys();
         GenerateNotes();
@@ -57,6 +57,21 @@ public class NoteManager : MonoBehaviour
         {
             enableNote = StartCoroutine(EnableNote());
         }
+
+        if (isFever)
+        {
+            for (int i = 0; i < inCircleNotes.Count; i++)
+            {
+                CircleGraphic inCircleCG = inCircleNotes[i].GetComponent<CircleGraphic>();
+                
+                inCircleCG.color = new Color(Random.Range(0, 255) / 255f, Random.Range(0, 255) / 255f, Random.Range(0, 255) / 255f);
+            }
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        
     }
 
     private void SetKeys()
@@ -75,6 +90,10 @@ public class NoteManager : MonoBehaviour
     {
         isPlay = true;
         curTime = 0;
+        correctCountP1 = 0;
+        correctCountP2 = 0;
+        curScoreP1 = 0;
+        curScoreP2 = 0;
     }
 
     public void SetLevel(int lv)
@@ -117,6 +136,8 @@ public class NoteManager : MonoBehaviour
         Debug.Log(curScoreP2);
 
         // 여기서 count를 넘겨
+        GameController.Instance.MoveupPlayer(1, correctCountP1);
+        GameController.Instance.MoveupPlayer(2, correctCountP2);
 
         correctCountP1 = 0;
         correctCountP2 = 0;
@@ -153,7 +174,7 @@ public class NoteManager : MonoBehaviour
             childRectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, outCircleWidth / 2);
             childRectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, outCircleWidth / 2);
             //color
-            inCircleCG.color = Color.blue;
+            inCircleCG.color = new Color32(185, 197, 238, 255);
             inCircleNotes.Add(insideCircle);
 
             GameObject obj = new GameObject();
@@ -167,7 +188,7 @@ public class NoteManager : MonoBehaviour
             note.SetNoteTimeInfo(noteTimeInfo);
             CircleGraphic cg = obj.AddComponent<CircleGraphic>();
             //color
-            cg.color = Color.red;
+            cg.color = new Color32(238,74,74,255);
             cg.SetMode(CircleGraphic.Mode.Edge);
             cg.SetEdgeThickness(10);
 
