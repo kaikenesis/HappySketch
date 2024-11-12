@@ -56,7 +56,7 @@ public class WallControl : MonoBehaviour
         }
         SetupWalls();
         for (int i = 0; i < treeBlocks.Count; i++)
-            treeBlocks[i].ResetTreeBlocks();
+            treeBlocks[i].ResetTreeBlock();
     }
 
     public void SetupWalls()

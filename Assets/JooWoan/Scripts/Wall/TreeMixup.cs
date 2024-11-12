@@ -5,52 +5,52 @@ using Random = UnityEngine.Random;
 
 public class TreeMixup : MonoBehaviour
 {
-    private List<GameObject> treeBlocks = new List<GameObject>();
-    private int currentBlockIdx;
+    private List<GameObject> treeChildBlocks = new List<GameObject>();
+    private int currentBlockIndex;
 
     void Start()
     {
         foreach (Transform treeTransform in transform)
-            treeBlocks.Add(treeTransform.gameObject);
+            treeChildBlocks.Add(treeTransform.gameObject);
 
-        if (treeBlocks.Count == 0)
+        if (treeChildBlocks.Count == 0)
             return;
 
-        treeBlocks[0].SetActive(true);
-        currentBlockIdx = 0;
+        treeChildBlocks[0].SetActive(true);
+        currentBlockIndex = 0;
     }
 
-    public void ResetTreeBlocks()
+    public void ResetTreeBlock()
     {
-        for (int i = 0; i < treeBlocks.Count; i++)
+        for (int i = 0; i < treeChildBlocks.Count; i++)
         {
-            treeBlocks[i].SetActive(false);
+            treeChildBlocks[i].SetActive(false);
 
-            foreach (Transform tree in treeBlocks[i].transform)
+            foreach (Transform tree in treeChildBlocks[i].transform)
                 tree.gameObject.SetActive(true);
         }
-        treeBlocks[0].SetActive(true);
-        currentBlockIdx = 0;
+        treeChildBlocks[0].SetActive(true);
+        currentBlockIndex = 0;
     }
 
     public void ChangeTreeObject()
     {
-        if (treeBlocks.Count == 0)
+        if (treeChildBlocks.Count == 0)
             return;
         
-        int randomIndex = Random.Range(0, treeBlocks.Count);
+        int randomIndex = Random.Range(0, treeChildBlocks.Count);
 
-        treeBlocks[currentBlockIdx].SetActive(false);
-        treeBlocks[randomIndex].SetActive(true);
+        treeChildBlocks[currentBlockIndex].SetActive(false);
+        treeChildBlocks[randomIndex].SetActive(true);
 
-        currentBlockIdx = randomIndex;
+        currentBlockIndex = randomIndex;
     }
 
     private void EnableTrees(int index)
     {
         int totalTreeCount = 0;
 
-        foreach (Transform treeTransform in treeBlocks[index].transform)
+        foreach (Transform treeTransform in treeChildBlocks[index].transform)
             totalTreeCount++;
 
         HashSet<int> treeIndexes = new HashSet<int>();
@@ -61,13 +61,13 @@ public class TreeMixup : MonoBehaviour
             int randomIndex = Random.Range(0, totalTreeCount);
             treeIndexes.Add(randomIndex);
         }
-        //foreach (int idx in treeBlocks[index].transform)
+        //foreach (int idx in treeChildBlocks[index].transform)
     }
 
     private void DisableTrees(int index)
     {
-        treeBlocks[index].SetActive(false);
-        foreach (Transform treeTransform in treeBlocks[index].transform)
+        treeChildBlocks[index].SetActive(false);
+        foreach (Transform treeTransform in treeChildBlocks[index].transform)
             treeTransform.gameObject.SetActive(true);
     }
 }
