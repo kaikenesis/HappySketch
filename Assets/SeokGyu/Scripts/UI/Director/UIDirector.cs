@@ -82,6 +82,7 @@ public class UIDirector : MonoBehaviour
                 // 게임내용 초기화 및 재실행
                 break;
             case EButtonType.MainMenu:
+                inGame.enabled = false;
                 mainMenuCanvas.enabled = true;
                 // 게임내용 초기화 및 재실행
                 break;

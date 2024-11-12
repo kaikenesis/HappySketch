@@ -14,7 +14,7 @@ public class UIManager : MonoBehaviour
     {
         get
         {
-            if(instance == null)
+            if (instance == null)
             {
                 GameObject newGameObject = new GameObject("UIManager");
                 instance = newGameObject.AddComponent<UIManager>();
