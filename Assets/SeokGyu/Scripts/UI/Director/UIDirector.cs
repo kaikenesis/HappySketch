@@ -89,6 +89,7 @@ public class UIDirector : MonoBehaviour
         int num = playerNum - 1;
         scoreList[num] += score;
         inGame.GetComponent<InGameScene>().SetScore(num, scoreList[num]);
+        GameController.Instance.TryDisableFirstFloor(scoreList);
     }
 
     public void ActivateFever()

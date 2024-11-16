@@ -57,20 +57,22 @@ public class GameController : MonoBehaviour
             playerInfo.Value.ClearAnimationRepeat();
     }
 
-    //public void TryDisableFirstFloor()
-    //{
-    //    bool canDisable = true;
-    //    foreach (KeyValuePair<int, Player> playerInfo in playerDict)
-    //    {
-    //        if (playerInfo.Value.CurrentHeight <= disableFirstFloorHeight)
-    //        {
-    //            canDisable = false;
-    //            break;
-    //        }
-    //    }
-    //    if (canDisable)
-    //        firstFloor.SetActive(false);
-    //}
+    // Check each player's height(score), if both are high enough disable first floor
+    public void TryDisableFirstFloor(int[] playerScores)
+    {
+        bool canDisable = true;
+
+        for (int i = 0; i < playerScores.Length; i++)
+        {
+            if (playerScores[i] < disableFirstFloorHeight)
+            {
+                canDisable = false;
+                break;
+            }
+        }
+        if (canDisable)
+            firstFloor.SetActive(false);
+    }
 
     public Camera GetPlayerCamera(int playerNumber)
     {
