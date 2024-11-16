@@ -51,6 +51,12 @@ public class GameController : MonoBehaviour
         playerDict[playerNumber].QueueAnimationRepeat();
     }
 
+    public void StopPlayerAnimation()
+    {
+        foreach (KeyValuePair<int, Player> playerInfo in playerDict)
+            playerInfo.Value.ClearAnimationRepeat();
+    }
+
     //public void TryDisableFirstFloor()
     //{
     //    bool canDisable = true;

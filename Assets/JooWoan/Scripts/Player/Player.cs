@@ -34,6 +34,11 @@ public class Player : MonoBehaviour
         animationRepeat++;
     }
 
+    public void ClearAnimationRepeat()
+    {
+        animationRepeat = 0;
+    }
+
     private void MoveUp()
     {
         if (isPlayingAnimation || animationRepeat <= 0)
