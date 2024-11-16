@@ -1455,7 +1455,6 @@ MonoBehaviour:
   - {fileID: 7400000, guid: d69aeb89feafb3848a5f820f6fb5ea24, type: 2}
   - {fileID: 7400000, guid: 4ed199e64539ede459f932cea93adcb1, type: 2}
   playerCam: {fileID: 171551464}
-  currentHeight: 0
 --- !u!4 &458408411 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8890356699427785745, guid: d5b8de414112a004a82d0437b5f7a780, type: 3}
@@ -3300,7 +3299,6 @@ MonoBehaviour:
   - {fileID: 7400000, guid: d69aeb89feafb3848a5f820f6fb5ea24, type: 2}
   - {fileID: 7400000, guid: 4ed199e64539ede459f932cea93adcb1, type: 2}
   playerCam: {fileID: 1592799533}
-  currentHeight: 0
 --- !u!1 &1144914375
 GameObject:
   m_ObjectHideFlags: 0
@@ -5913,6 +5911,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skyTextures:
+  - {fileID: 2800000, guid: dcf95742842d52b4da3c3fd482f2292e, type: 3}
   - {fileID: 2800000, guid: c9bdfdcb640cd894687833fb0339b313, type: 3}
   - {fileID: 2800000, guid: e8c601eeee3c31840be574a3eb84d14d, type: 3}
   - {fileID: 2800000, guid: 6b1b7a4aad987d142a5e08edb79f4b89, type: 3}
@@ -5936,7 +5935,6 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 9477366fcb1ad8b4887b46dd41547fcc, type: 3}
   - {fileID: 2800000, guid: 4eb306bc0db85d24b9392d450e1e9eda, type: 3}
   - {fileID: 2800000, guid: 4a0a142a2acfe4042ab4f10de6f61426, type: 3}
-  - {fileID: 2800000, guid: dcf95742842d52b4da3c3fd482f2292e, type: 3}
   - {fileID: 2800000, guid: 43590173475747447806bb73c18c44cf, type: 3}
   tintRenderers: []
 --- !u!1 &1302419368363239623
@@ -6134,12 +6132,12 @@ SceneRoots:
   m_Roots:
   - {fileID: 12161238}
   - {fileID: 1515299014}
+  - {fileID: 326337683}
   - {fileID: 1524618285}
   - {fileID: 2441632773219905771}
+  - {fileID: 2014678138}
   - {fileID: 1799713993}
   - {fileID: 584694563}
   - {fileID: 2031691029}
-  - {fileID: 2014678138}
   - {fileID: 1737740986}
-  - {fileID: 326337683}
   - {fileID: 1034828486}
