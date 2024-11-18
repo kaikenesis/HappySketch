@@ -1,8 +1,6 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
+using HappySketch;
 
 public class GameController : MonoBehaviour
 {
@@ -33,11 +31,14 @@ public class GameController : MonoBehaviour
     [SerializeField] private int blocksPerTreeDecrease;
 
     private IDictionary<int, Player> playerDict = new Dictionary<int, Player>();
-    private GameObject firstFloor;
+    private GameObject firstFloor, bgRealDome, bgToonDome;
 
     void Start()
     {
         firstFloor = GameObject.FindGameObjectWithTag("GameFirstFloor");
+        bgRealDome = GameObject.FindGameObjectWithTag("BgDomeRealistic");
+        bgToonDome = GameObject.FindGameObjectWithTag("BgDomeToon");
+        bgRealDome.SetActive(false);
     }
 
     public void RegisterPlayer(int playerNumber, Player newPlayer)
@@ -84,4 +85,27 @@ public class GameController : MonoBehaviour
         Debug.LogWarning($"Player {playerNumber} does not exist");
         return null;
     }
+
+    public void SetBackgroundDome(BgDomeType type, bool state)
+    {
+        switch (type)
+        {
+            case BgDomeType.REALISTIC:
+                bgRealDome.SetActive(state);
+                break;
+
+            case BgDomeType.TOON:
+                bgToonDome.SetActive(state);
+                break;
+
+            default:
+                return;
+        }
+    }
+}
+
+public enum BgDomeType
+{
+    REALISTIC,
+    TOON
 }

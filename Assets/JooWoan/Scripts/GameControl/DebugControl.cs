@@ -7,7 +7,6 @@ public class DebugControl : MonoBehaviour
     [SerializeField] private PostProcessingControl postProcessingControl;
     [SerializeField] private NoteManager noteManager;
     [SerializeField] private UIDirector uIDirector;
-    [SerializeField] private GameObject bgRealDome, bgToonDome;
 
     private bool isFeverEffect = false;
 
@@ -32,7 +31,7 @@ public class DebugControl : MonoBehaviour
         noteManager.gameObject.SetActive(false);
         uIDirector.gameObject.SetActive(false);
 
-        bgRealDome.SetActive(true);
-        bgToonDome.SetActive(false);
+        GameController.Instance.SetBackgroundDome(BgDomeType.TOON, false);
+        GameController.Instance.SetBackgroundDome(BgDomeType.REALISTIC, true);
     }
 }

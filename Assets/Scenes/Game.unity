@@ -3457,11 +3457,11 @@ GameObject:
   - component: {fileID: 1144914376}
   m_Layer: 0
   m_Name: DomePrefab_Realistic
-  m_TagString: Untagged
+  m_TagString: BgDomeRealistic
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1144914376
 Transform:
   m_ObjectHideFlags: 0
@@ -5816,8 +5816,6 @@ MonoBehaviour:
   postProcessingControl: {fileID: 252267051}
   noteManager: {fileID: 2441632773219905772}
   uIDirector: {fileID: 1524618286}
-  bgRealDome: {fileID: 1144914375}
-  bgToonDome: {fileID: 530280459412756418}
 --- !u!1 &2031691028
 GameObject:
   m_ObjectHideFlags: 0
@@ -6115,7 +6113,7 @@ GameObject:
   - component: {fileID: 530280459412756446}
   m_Layer: 0
   m_Name: DomePrefab_Toon
-  m_TagString: Untagged
+  m_TagString: BgDomeToon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
