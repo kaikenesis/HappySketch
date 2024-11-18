@@ -536,6 +536,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UIDirector
       objectReference: {fileID: 0}
+    - target: {fileID: 7711208111597341205, guid: 38d6bbbd88e8cc64c92368e21fe824ac, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9144636063265313265, guid: 38d6bbbd88e8cc64c92368e21fe824ac, type: 3}
       propertyPath: m_Enabled
       value: 0

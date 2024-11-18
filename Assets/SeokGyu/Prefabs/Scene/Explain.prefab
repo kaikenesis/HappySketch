@@ -189,6 +189,18 @@ PrefabInstance:
       propertyPath: curUIType
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 4635100151647390559, guid: 2ee40d0db2063734dac3dcd47fecf89e, type: 3}
+      propertyPath: m_fontSize
+      value: 72
+      objectReference: {fileID: 0}
+    - target: {fileID: 4635100151647390559, guid: 2ee40d0db2063734dac3dcd47fecf89e, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 72
+      objectReference: {fileID: 0}
+    - target: {fileID: 4635100151647390559, guid: 2ee40d0db2063734dac3dcd47fecf89e, type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5397973960103725200, guid: 2ee40d0db2063734dac3dcd47fecf89e, type: 3}
       propertyPath: m_Name
       value: GameStartButton
@@ -241,7 +253,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 73106773425175121, guid: df853e83b14823e498d7f2ff2323dcaa, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 260
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 73106773425175121, guid: df853e83b14823e498d7f2ff2323dcaa, type: 3}
       propertyPath: m_LocalPosition.x
@@ -273,11 +285,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 73106773425175121, guid: df853e83b14823e498d7f2ff2323dcaa, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 290
+      value: 350
       objectReference: {fileID: 0}
     - target: {fileID: 73106773425175121, guid: df853e83b14823e498d7f2ff2323dcaa, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -60
+      value: -130
       objectReference: {fileID: 0}
     - target: {fileID: 73106773425175121, guid: df853e83b14823e498d7f2ff2323dcaa, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -449,11 +461,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2106088969829733215, guid: 52889495a5042e34d93e919364eb339d, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 900
+      value: 750
       objectReference: {fileID: 0}
     - target: {fileID: 2106088969829733215, guid: 52889495a5042e34d93e919364eb339d, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 300
+      value: 350
       objectReference: {fileID: 0}
     - target: {fileID: 2106088969829733215, guid: 52889495a5042e34d93e919364eb339d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -485,11 +497,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2106088969829733215, guid: 52889495a5042e34d93e919364eb339d, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -300
+      value: -200
       objectReference: {fileID: 0}
     - target: {fileID: 2106088969829733215, guid: 52889495a5042e34d93e919364eb339d, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -35
       objectReference: {fileID: 0}
     - target: {fileID: 2106088969829733215, guid: 52889495a5042e34d93e919364eb339d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -712,6 +724,10 @@ PrefabInstance:
       value: Sub Title
       objectReference: {fileID: 0}
     - target: {fileID: 7289602130950133349, guid: 8db820b9b42d9544c8d7a9beff5062cf, type: 3}
+      propertyPath: m_fontSize
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 7289602130950133349, guid: 8db820b9b42d9544c8d7a9beff5062cf, type: 3}
       propertyPath: m_fontAsset
       value: 
       objectReference: {fileID: 11400000, guid: 649910cabd5e8434b95c1311908d289a, type: 2}
@@ -726,6 +742,10 @@ PrefabInstance:
     - target: {fileID: 7289602130950133349, guid: 8db820b9b42d9544c8d7a9beff5062cf, type: 3}
       propertyPath: m_fontColor.r
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7289602130950133349, guid: 8db820b9b42d9544c8d7a9beff5062cf, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 7289602130950133349, guid: 8db820b9b42d9544c8d7a9beff5062cf, type: 3}
       propertyPath: m_sharedMaterial
