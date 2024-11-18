@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-using HappySketch;
+using Player = HappySketch.Player;
 
 public class GameController : MonoBehaviour
 {
