@@ -4,8 +4,8 @@ using Player = HappySketch.Player;
 
 public class GameController : MonoBehaviour
 {
+    #region Singleton
     private static GameController instance = null;
-    public static GameController Instance => instance;
     void Awake()
     {
         if (instance == null)
@@ -19,19 +19,30 @@ public class GameController : MonoBehaviour
             return;
         }
     }
-
+    #endregion
+    
+    #region Public Lambdas
+    
+    public static GameController Instance => instance;
     public IDictionary<int, Player> PlayerDict => playerDict;
     public int EnableCloudBlockIndex => enableCloudBlockIndex;
+    public int EnableBirdBlockIndex => enableBirdBlockIndex;
     public int DecreaseTreeBlockIndex => decreaseTreeBlockIndex;
     public int BlocksPerTreeDecrease => blocksPerTreeDecrease;
+    public float BirdSpawnProbability => birdSpawnProbability;
+    #endregion
 
     [SerializeField] private float disableFirstFloorHeight;
     [SerializeField] private int enableCloudBlockIndex;
+    [SerializeField] private int enableBirdBlockIndex;
     [SerializeField] private int decreaseTreeBlockIndex;
-    [SerializeField] private int blocksPerTreeDecrease;
+
+    [Range(0.0f, 100.0f)]
+    [SerializeField] private float birdSpawnProbability;
 
     private IDictionary<int, Player> playerDict = new Dictionary<int, Player>();
     private GameObject firstFloor, bgRealDome, bgToonDome;
+    private int blocksPerTreeDecrease = 1;
 
     void Start()
     {

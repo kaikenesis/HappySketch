@@ -18,6 +18,7 @@ public class WallControl : MonoBehaviour
     [SerializeField] private List<Transform> playerTransforms;
     [SerializeField] private List<Transform> blocks = new List<Transform>();
     [SerializeField] private List<TreeMixup> treeBlocks = new List<TreeMixup>();
+    [SerializeField] private List<BirdSpawner> birdBlocks = new List<BirdSpawner>();
     [SerializeField] private List<GameObject> cloudBlocks = new List<GameObject>();
     [SerializeField] private MeshRenderer wallRenderer;
 
@@ -61,7 +62,7 @@ public class WallControl : MonoBehaviour
 
     public void SetupWalls()
     {
-        MoveWall(0, 0);
+        MoveWall(0,  0);
         MoveWall(1, -1);
         MoveWall(2, -2);
         MoveWall(3, -3);
@@ -120,6 +121,8 @@ public class WallControl : MonoBehaviour
 
         bool enableCloud = blockIndex >= GameController.Instance.EnableCloudBlockIndex;
         cloudBlocks[wallIndex].SetActive(enableCloud);
+
+        birdBlocks[wallIndex].TrySpawnBirds(blockIndex);
     }
 
     private void UpdatePlayerBlock(int wallIndex, int blockIndex)
