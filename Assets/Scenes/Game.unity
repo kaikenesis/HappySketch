@@ -923,7 +923,7 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: -0.51
+    x: -0.5
     y: 0
     width: 1
     height: 1
@@ -1250,7 +1250,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bff2fcc96380c904a80f15cc0685b5e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anim: {fileID: 0}
 --- !u!1001 &263558907
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1601,6 +1600,7 @@ MonoBehaviour:
   - {fileID: 7400000, guid: d69aeb89feafb3848a5f820f6fb5ea24, type: 2}
   - {fileID: 7400000, guid: 4ed199e64539ede459f932cea93adcb1, type: 2}
   playerCam: {fileID: 171551464}
+  moveKey: 113
 --- !u!4 &458408411 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8890356699427785745, guid: d5b8de414112a004a82d0437b5f7a780, type: 3}
@@ -3445,6 +3445,7 @@ MonoBehaviour:
   - {fileID: 7400000, guid: d69aeb89feafb3848a5f820f6fb5ea24, type: 2}
   - {fileID: 7400000, guid: 4ed199e64539ede459f932cea93adcb1, type: 2}
   playerCam: {fileID: 1592799533}
+  moveKey: 119
 --- !u!1 &1144914375
 GameObject:
   m_ObjectHideFlags: 0
@@ -4577,7 +4578,7 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.51
+    x: 0.5
     y: 0
     width: 1
     height: 1

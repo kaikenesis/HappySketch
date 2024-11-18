@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float animationSpeed;
     [SerializeField] private List<AnimationClip> climbAnimClips;
     [SerializeField] private Camera playerCam;
+    [SerializeField] private KeyCode moveKey;
     public Camera PlayerCam => playerCam;
 
     private Animator playerAnim;
@@ -27,6 +28,12 @@ public class Player : MonoBehaviour
     void Update()
     {
         MoveUp();
+
+        ////////////
+        if (Input.GetKeyDown(moveKey))
+            QueueAnimationRepeat();
+
+        ////////////
     }
 
     public void QueueAnimationRepeat()
