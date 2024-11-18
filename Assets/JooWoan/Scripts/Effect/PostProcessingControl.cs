@@ -26,15 +26,6 @@ public class PostProcessingControl : MonoBehaviour
             Debug.LogWarning("Post processing animator is not properly initialized");
     }
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-            PlayFeverEffect();
-
-        else if (Input.GetKeyDown(KeyCode.Backspace))
-            StopFeverEffect();
-    }
-
     public void PlayFeverEffect()
     {
         vignette.enabled.Override(true);
