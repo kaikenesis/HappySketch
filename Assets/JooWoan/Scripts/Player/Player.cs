@@ -12,27 +12,28 @@ public class Player : MonoBehaviour
     [SerializeField] private KeyCode moveKey;
     public Camera PlayerCam => playerCam;
 
+    private WaitForEndOfFrame waitEndOfFrame = new WaitForEndOfFrame();
     private Animator playerAnim;
-    private int animIndex = 0;
-    private bool isPlayingAnimation = false;
 
+    private int animIndex = 0;
     int animationRepeat = 0;
+
+    private bool isPlayingAnimation = false;
 
     void Start()
     {
         playerAnim = GetComponent<Animator>();
         playerAnim.speed = animationSpeed;
         GameController.Instance.RegisterPlayer(playerNumber, this);
+
+        StartCoroutine(MoveUp());
     }
 
     void Update()
     {
-        MoveUp();
-
         ////////////
         if (Input.GetKeyDown(moveKey))
             QueueAnimationRepeat();
-
         ////////////
     }
 
@@ -46,19 +47,27 @@ public class Player : MonoBehaviour
         animationRepeat = 0;
     }
 
-    private void MoveUp()
+    private IEnumerator MoveUp()
     {
-        if (isPlayingAnimation || animationRepeat <= 0)
-            return;
+        while (true)
+        {
+            if (isPlayingAnimation || animationRepeat <= 0)
+            {
+                yield return waitEndOfFrame;
+                continue;
+            }
+            animationRepeat--;
+            isPlayingAnimation = true;
 
-        animationRepeat--;
-        isPlayingAnimation = true;
+            float animDuration = climbAnimClips[animIndex].length / playerAnim.speed;
+            playerAnim.Play(climbAnimClips[animIndex].name, -1, 0f);
+            animIndex = (animIndex + 1) % climbAnimClips.Count;
 
-        float animDuration = climbAnimClips[animIndex].length / playerAnim.speed;
-        Invoke("DisableIsPlayingAnimation", animDuration);
+            yield return new WaitForSeconds(animDuration);
+            yield return waitEndOfFrame;
 
-        playerAnim.Play(climbAnimClips[animIndex].name, -1, 0f);
-        animIndex = (animIndex + 1) % climbAnimClips.Count;
+            isPlayingAnimation = false;
+        }
     }
 
     private void DisableIsPlayingAnimation()

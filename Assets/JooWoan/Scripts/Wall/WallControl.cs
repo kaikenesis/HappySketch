@@ -116,7 +116,7 @@ public class WallControl : MonoBehaviour
             blocks[wallIndex].position.z
         );
         wallBlocks[wallIndex] = blockIndex;
-        treeBlocks[wallIndex].ChangeTreeObject();
+        treeBlocks[wallIndex].ChangeTreeObject(blockIndex);
 
         bool enableCloud = blockIndex >= GameController.Instance.EnableCloudBlockIndex;
         cloudBlocks[wallIndex].SetActive(enableCloud);

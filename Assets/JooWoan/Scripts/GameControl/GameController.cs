@@ -23,12 +23,14 @@ public class GameController : MonoBehaviour
     }
 
     public IDictionary<int, Player> PlayerDict => playerDict;
-    public float HeightPerIncrease => heightPerIncrease;
     public int EnableCloudBlockIndex => enableCloudBlockIndex;
+    public int DecreaseTreeBlockIndex => decreaseTreeBlockIndex;
+    public int BlocksPerTreeDecrease => blocksPerTreeDecrease;
 
-    [SerializeField] private float heightPerIncrease;
     [SerializeField] private float disableFirstFloorHeight;
     [SerializeField] private int enableCloudBlockIndex;
+    [SerializeField] private int decreaseTreeBlockIndex;
+    [SerializeField] private int blocksPerTreeDecrease;
 
     private IDictionary<int, Player> playerDict = new Dictionary<int, Player>();
     private GameObject firstFloor;
