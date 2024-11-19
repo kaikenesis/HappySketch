@@ -5837,11 +5837,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 729583b9b4dae8a4b96799eb982a5a76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  disableFirstFloorHeight: 2500
-  enableCloudBlockIndex: 2
+  disableFirstLevelBlockIndex: 1
+  enableCloudBlockIndex: 0
   enableBirdBlockIndex: 1
-  decreaseTreeBlockIndex: 2
-  birdSpawnProbability: 70
+  decreaseTreeBlockIndex: 1
+  birdSpawnProbability: 100
 --- !u!4 &2014678138
 Transform:
   m_ObjectHideFlags: 0

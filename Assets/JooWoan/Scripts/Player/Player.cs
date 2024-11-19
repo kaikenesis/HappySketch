@@ -82,6 +82,7 @@ namespace HappySketch
                 yield return new WaitForSeconds(animDuration);
                 yield return waitEndOfFrame;
 
+                GameController.Instance.TryDisableFirstFloor();
                 isPlayingAnimation = false;
             }
         }

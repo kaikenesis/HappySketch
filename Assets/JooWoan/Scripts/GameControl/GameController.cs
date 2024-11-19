@@ -36,7 +36,7 @@ public class GameController : MonoBehaviour
     private PostProcessingControl postProcessingControl;
     private WallControl wallControl;
 
-    [SerializeField] private float disableFirstFloorHeight;
+    [SerializeField] private float disableFirstLevelBlockIndex;
     [SerializeField] private int enableCloudBlockIndex;
     [SerializeField] private int enableBirdBlockIndex;
     [SerializeField] private int decreaseTreeBlockIndex;
@@ -76,17 +76,20 @@ public class GameController : MonoBehaviour
     }
 
     // Check each player's height(score), if both are high enough disable first floor
-    public void TryDisableFirstFloor(int[] playerScores)
+    public void TryDisableFirstFloor()
     {
+        if (!firstFloor.activeSelf)
+            return;
+
         bool canDisable = true;
 
-        for (int i = 0; i < playerScores.Length; i++)
+        for (int i = 0; i < wallControl.PlayerBlocks.Count; i++)
         {
-            if (playerScores[i] < disableFirstFloorHeight)
+            if (wallControl.PlayerBlocks[i] < disableFirstLevelBlockIndex)
             {
                 canDisable = false;
                 break;
-            }
+            }    
         }
         if (canDisable)
             firstFloor.SetActive(false);
