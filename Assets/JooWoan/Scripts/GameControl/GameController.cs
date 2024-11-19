@@ -33,7 +33,9 @@ public class GameController : MonoBehaviour
     public float BirdSpawnProbability => birdSpawnProbability;
     #endregion
 
-    [SerializeField] private PostProcessingControl postProcessingControl;
+    private PostProcessingControl postProcessingControl;
+    private WallControl wallControl;
+
     [SerializeField] private float disableFirstFloorHeight;
     [SerializeField] private int enableCloudBlockIndex;
     [SerializeField] private int enableBirdBlockIndex;
@@ -114,6 +116,27 @@ public class GameController : MonoBehaviour
             default:
                 return;
         }
+    }
+
+    public void InitWallControl(WallControl wallControl)
+    {
+        this.wallControl = wallControl;
+    }
+
+    public void InitPostprocessing(PostProcessingControl postProcessingControl)
+    {
+        this.postProcessingControl = postProcessingControl;
+    }
+
+    public void ResetLevel()
+    {
+        foreach (Player player in playerDict.Values)
+        {
+            player.ResetAnimation();
+            player.ResetTransform();
+            player.CameraControl.ResetPosition();
+        }
+        wallControl.ResetBlockStates();
     }
 }
 

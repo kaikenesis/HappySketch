@@ -31,6 +31,8 @@ public class WallControl : MonoBehaviour
 
     void Start()
     {
+        GameController.Instance.InitWallControl(this);
+
         for (int i = 0; i < blocks.Count; i++)
         {
             wallBlocks.Add(0);

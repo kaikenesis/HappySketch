@@ -16,12 +16,16 @@ public class DebugControl : MonoBehaviour
             Debug_GotoGameScene();
 
         if (Input.GetKeyDown(KeyCode.F2))
+        {
             isFeverEffect = !isFeverEffect;
+            if (isFeverEffect)
+                postProcessingControl.PlayFeverEffect();
+            else
+                postProcessingControl.StopFeverEffect();
+        }
 
-        if (isFeverEffect)
-            postProcessingControl.PlayFeverEffect();
-        else
-            postProcessingControl.StopFeverEffect();
+        if (Input.GetKeyDown(KeyCode.F3))
+            GameController.Instance.ResetLevel();
     }
     private void Debug_GotoGameScene()
     {

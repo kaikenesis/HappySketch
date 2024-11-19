@@ -1607,6 +1607,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerNumber: 1
   animationSpeed: 2
+  idleClip: {fileID: 7400000, guid: 2721c26db4f48914fb921dfc7896d67f, type: 2}
   climbAnimClips:
   - {fileID: 7400000, guid: d69aeb89feafb3848a5f820f6fb5ea24, type: 2}
   - {fileID: 7400000, guid: 4ed199e64539ede459f932cea93adcb1, type: 2}
@@ -3463,6 +3464,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerNumber: 2
   animationSpeed: 2
+  idleClip: {fileID: 7400000, guid: 2721c26db4f48914fb921dfc7896d67f, type: 2}
   climbAnimClips:
   - {fileID: 7400000, guid: d69aeb89feafb3848a5f820f6fb5ea24, type: 2}
   - {fileID: 7400000, guid: 4ed199e64539ede459f932cea93adcb1, type: 2}
@@ -5835,7 +5837,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 729583b9b4dae8a4b96799eb982a5a76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  postProcessingControl: {fileID: 252267051}
   disableFirstFloorHeight: 2500
   enableCloudBlockIndex: 2
   enableBirdBlockIndex: 1
@@ -5863,7 +5864,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2014678136}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a5e64485f0afbff499b51f8c9497518c, type: 3}
   m_Name: 
