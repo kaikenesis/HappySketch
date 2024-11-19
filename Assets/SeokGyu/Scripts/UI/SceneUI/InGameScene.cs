@@ -95,12 +95,13 @@ public class InGameScene : BaseScene
                 {
                     DecreaseTime();
                     StopGame();
-                    // InGame ÁøÇà¸ØÃß°í °á°úÈ­¸é ¶ç¿ì±â
+                    // InGame ì§„í–‰ë©ˆì¶”ê³  ê²°ê³¼í™”ë©´ ë„ìš°ê¸°
                 }
                 else
                 {
                     DecreaseTime();
-                    UIManager.Instance.curTime--;
+                    //UIManager.Instance.curTime--;
+                    UIManager.Instance.curTime = NoteManager.Instance.noteTimeInfo.PlayTime - NoteManager.Instance.curTime;
                 }
                 curFrame = 0f;
             }

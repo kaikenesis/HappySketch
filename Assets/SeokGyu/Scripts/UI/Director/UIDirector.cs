@@ -88,6 +88,7 @@ public class UIDirector : MonoBehaviour
                 inGame.ResetGame();
                 inGameCanvas.enabled = false;
                 mainMenuCanvas.enabled = true;
+                // ���ӳ��� �ʱ�ȭ �� �����
                 break;
         }
     }
@@ -104,7 +105,6 @@ public class UIDirector : MonoBehaviour
     public void ActivateFever()
     {
         if (UIManager.Instance.bPlayGame == false) return;
-
         inGame.ActivateFeverTime();
     }
 

@@ -16,7 +16,7 @@ public class TimeProgress : MonoBehaviour
     void Init()
     {
         timeText = textObject.GetComponentInChildren<TextMeshProUGUI>();
-        timeText.text = UIManager.Instance.maxTime.ToString() + "√ ";
+        timeText.text = UIManager.Instance.maxTime.ToString() + "Ï¥à";
         progressImg = GetComponent<Image>();
     }
 
@@ -25,11 +25,11 @@ public class TimeProgress : MonoBehaviour
         if (UIManager.Instance.bPlayGame == false) return;
         if (UIManager.Instance.curTime < 0) return;
 
-        timeText.text = UIManager.Instance.curTime.ToString() + "√ ";
+        timeText.text = UIManager.Instance.curTime.ToString() + "Ï¥à";
     }
 
     public void SetProgressColor()
     {
-        // ««πˆ≈∏¿”∂ß π´¡ˆ∞≥ªˆ¿∏∑Œ ∫Ø∞Ê
+        // ÌîºÎ≤ÑÌÉÄÏûÑÎïå Î¨¥ÏßÄÍ∞úÏÉâÏúºÎ°ú Î≥ÄÍ≤Ω
     }
 }

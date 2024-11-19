@@ -6,17 +6,13 @@ using UnityEngine.UI;
 
 public class NoteManager : Singleton<NoteManager>
 {
-    [SerializeField] private NoteTimeInfo noteTimeInfo;
+    [SerializeField] public NoteTimeInfo noteTimeInfo;
     [SerializeField] private GameObject noteEffect;
 
     private int level = 0;
     private int score = 0;
-    private int curScoreP1 = 0;
-    private int correctCountP1 = 0;
-    private int curScoreP2 = 0;
-    private int correctCountP2 = 0;
     private int outCircleWidth = 300;
-    private float curTime = 0;
+    public float curTime = 0;
 
     private bool canEnable = true;
     private bool isFever = false;
@@ -90,10 +86,6 @@ public class NoteManager : Singleton<NoteManager>
     {
         isPlay = true;
         curTime = 0;
-        correctCountP1 = 0;
-        correctCountP2 = 0;
-        curScoreP1 = 0;
-        curScoreP2 = 0;
     }
 
     public void SetLevel(int lv)
@@ -108,10 +100,14 @@ public class NoteManager : Singleton<NoteManager>
     IEnumerator EnableNote()
     {
         canEnable = false;
-        Debug.Log("ª˝º∫");
+        Debug.Log("ÏÉùÏÑ±");
         for (int i = 0; i < notes.Count; i++)
         {
             float rand = Random.Range(0, 100);
+
+            //  1 2 3 : 40 40 20
+            //  Ï¥ù Ï†êÏàò Í∞ôÏùå
+            //  25Ìçº 50Ìçº 80Ìçº
             if (rand >= 30)
             { 
                 inCircleNotes[i].SetActive(true);
@@ -125,34 +121,27 @@ public class NoteManager : Singleton<NoteManager>
             }
         }
         yield return new WaitForSeconds(noteTimeInfo.TotalTime[level]);
+        enableNote = null;
         disableNote = StartCoroutine(DisableNote());
     }
 
     IEnumerator DisableNote()
     {
-        Debug.Log(correctCountP1);
-        Debug.Log(correctCountP2);
-        Debug.Log(curScoreP1);
-        Debug.Log(curScoreP2);
-
-        correctCountP1 = 0;
-        correctCountP2 = 0;
-        curScoreP1 = 0;
-        curScoreP2 = 0;
-
-        Debug.Log("≈œ ¡æ∑·");
+        Debug.Log("ÌÑ¥ Ï¢ÖÎ£å");
         for (int i = 0; i < notes.Count; i++)
         {
             inCircleNotes[i].SetActive(false);
         }
+        disableNote = null;
         yield return waitRecreate = StartCoroutine(WaitRecreate());
     }
 
     IEnumerator WaitRecreate()
     {
         float rand = Random.Range(noteTimeInfo.MinRecreateTime, noteTimeInfo.MaxRecreateTime);
-        Debug.Log($"¿Áª˝º∫ Ω√∞£ : {rand}");
+        Debug.Log($"Ïû¨ÏÉùÏÑ± ÏãúÍ∞Ñ : {rand}");
         yield return new WaitForSeconds(rand);
+        waitRecreate = null;
         canEnable = true;
     }
 
@@ -218,17 +207,17 @@ public class NoteManager : Singleton<NoteManager>
             score = note.Check();
             if (i < 4)
             {
-                curScoreP1 += score;
                 if (score != noteTimeInfo.BadScore)
                 {
                     GameController.Instance.MoveupPlayer(1);
+                    UIManager.Instance.uiDirector.IncreaseScore(1, score);
                 }
                 return;
             }
-            curScoreP2 += score;
             if (score != noteTimeInfo.BadScore)
             {
                 GameController.Instance.MoveupPlayer(2);
+                UIManager.Instance.uiDirector.IncreaseScore(2, score);
             }
         }
     }
@@ -245,9 +234,12 @@ public class NoteManager : Singleton<NoteManager>
                 notes[i].GetComponent<Note>().SetFever(true);
             }
 
-            StopCoroutine(enableNote);
-            StopCoroutine(disableNote);
-            StopCoroutine(waitRecreate);
+            if (enableNote != null)
+                StopCoroutine(enableNote);
+            if (disableNote != null)
+                StopCoroutine(disableNote);
+            if (waitRecreate != null)
+                StopCoroutine(waitRecreate);
 
             for (int i = 0; i < notes.Count; i++)
             {
@@ -260,7 +252,7 @@ public class NoteManager : Singleton<NoteManager>
     {
         if(curTime >= noteTimeInfo.PlayTime)
         {
-            Debug.Log("∞‘¿” ¡æ∑·");
+            Debug.Log("Í≤åÏûÑ Ï¢ÖÎ£å");
             isPlay = false;
             GameController.Instance.StopPlayerAnimation();
             for (int i = 0; i < notes.Count; i++)
