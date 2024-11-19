@@ -92,10 +92,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 934077b344bb2ae4484f0af7761c5fb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonObjects:
-  - {fileID: 4199688070167155072}
-  - {fileID: 5922521764388339532}
   resultScoreObject: {fileID: 354497697429411719, guid: b7bfdba496572e544b0e8d1e13dbad61, type: 3}
+  backImgObject: {fileID: 5144128126353474471, guid: 87cb21b0c0830e84fab9946e258cf5f8, type: 3}
   distance: 500
 --- !u!1001 &2848620460131109371
 PrefabInstance:
@@ -194,11 +192,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 27f9742d30f015040b9f4d1a4a4de3e4, type: 3}
---- !u!1 &5922521764388339532 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8482902758069155511, guid: 27f9742d30f015040b9f4d1a4a4de3e4, type: 3}
-  m_PrefabInstance: {fileID: 2848620460131109371}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &8213757646484895620 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6230013447294631551, guid: 27f9742d30f015040b9f4d1a4a4de3e4, type: 3}
@@ -301,11 +294,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 606dcb2e2a3f6bb459d9772334a2d108, type: 3}
---- !u!1 &4199688070167155072 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7656868369489972473, guid: 606dcb2e2a3f6bb459d9772334a2d108, type: 3}
-  m_PrefabInstance: {fileID: 5767672112435010937}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &8788124695142572174 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3026229709396655607, guid: 606dcb2e2a3f6bb459d9772334a2d108, type: 3}

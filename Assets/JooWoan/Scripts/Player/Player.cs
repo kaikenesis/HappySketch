@@ -2,53 +2,78 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+namespace HappySketch
 {
-    [SerializeField] private int playerNumber;
-    [SerializeField] private float animationSpeed;
-    [SerializeField] private List<AnimationClip> climbAnimClips;
-    [SerializeField] private Camera playerCam;
-    public Camera PlayerCam => playerCam;
-
-    private Animator playerAnim;
-    private int animIndex = 0;
-    private bool isPlayingAnimation = false;
-
-    ////////////////////////////////////////////////
-    [SerializeField] private float currentHeight = 0;
-    public float CurrentHeight => currentHeight;
-    ////////////////////////////////////////////////
-
-    void Start()
+    public class Player : MonoBehaviour
     {
-        playerAnim = GetComponent<Animator>();
-        playerAnim.speed = animationSpeed;
-        GameController.Instance.RegisterPlayer(playerNumber, this);
-    }
+        [SerializeField] private int playerNumber;
+        [SerializeField] private float animationSpeed;
+        [SerializeField] private List<AnimationClip> climbAnimClips;
+        [SerializeField] private Camera playerCam;
+        [SerializeField] private KeyCode moveKey;
+        public Camera PlayerCam => playerCam;
 
-    public IEnumerator MoveUp(int repeat)
-    {
-        if (isPlayingAnimation)
-            yield break;
-        
-        IncreaseHeight(repeat);
+        private WaitForEndOfFrame waitEndOfFrame = new WaitForEndOfFrame();
+        private Animator playerAnim;
 
-        isPlayingAnimation = true;
-        for (int i = 0; i < repeat; i++)
+        private int animIndex = 0;
+        int animationRepeat = 0;
+
+        private bool isPlayingAnimation = false;
+
+        void Start()
         {
-            float animDuration = climbAnimClips[animIndex].length / playerAnim.speed;
+            playerAnim = GetComponent<Animator>();
+            playerAnim.speed = animationSpeed;
+            GameController.Instance.RegisterPlayer(playerNumber, this);
 
-            playerAnim.Play(climbAnimClips[animIndex].name, -1, 0f);
-            animIndex = (animIndex + 1) % climbAnimClips.Count;
-            
-            yield return new WaitForSeconds(animDuration);
+            StartCoroutine(MoveUp());
         }
-        isPlayingAnimation = false;
-    }
 
-    private void IncreaseHeight(int repeat)
-    {
-        currentHeight += GameController.Instance.HeightPerIncrease * repeat;
-        GameController.Instance.TryDisableFirstFloor();
+        void Update()
+        {
+            ////////////
+            if (Input.GetKeyDown(moveKey))
+                QueueAnimationRepeat();
+            ////////////
+        }
+
+        public void QueueAnimationRepeat()
+        {
+            animationRepeat++;
+        }
+
+        public void ClearAnimationRepeat()
+        {
+            animationRepeat = 0;
+        }
+
+        private IEnumerator MoveUp()
+        {
+            while (true)
+            {
+                if (isPlayingAnimation || animationRepeat <= 0)
+                {
+                    yield return waitEndOfFrame;
+                    continue;
+                }
+                animationRepeat--;
+                isPlayingAnimation = true;
+
+                float animDuration = climbAnimClips[animIndex].length / playerAnim.speed;
+                playerAnim.Play(climbAnimClips[animIndex].name, -1, 0f);
+                animIndex = (animIndex + 1) % climbAnimClips.Count;
+
+                yield return new WaitForSeconds(animDuration);
+                yield return waitEndOfFrame;
+
+                isPlayingAnimation = false;
+            }
+        }
+
+        private void DisableIsPlayingAnimation()
+        {
+            isPlayingAnimation = false;
+        }
     }
 }

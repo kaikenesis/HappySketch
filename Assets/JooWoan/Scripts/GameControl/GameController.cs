@@ -1,13 +1,11 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
+using Player = HappySketch.Player;
 
 public class GameController : MonoBehaviour
 {
+    #region Singleton
     private static GameController instance = null;
-    public static GameController Instance => instance;
     void Awake()
     {
         if (instance == null)
@@ -21,21 +19,37 @@ public class GameController : MonoBehaviour
             return;
         }
     }
-
+    #endregion
+    
+    #region Public Lambdas
+    
+    public static GameController Instance => instance;
     public IDictionary<int, Player> PlayerDict => playerDict;
-    public float HeightPerIncrease => heightPerIncrease;
     public int EnableCloudBlockIndex => enableCloudBlockIndex;
+    public int EnableBirdBlockIndex => enableBirdBlockIndex;
+    public int DecreaseTreeBlockIndex => decreaseTreeBlockIndex;
+    public int BlocksPerTreeDecrease => blocksPerTreeDecrease;
+    public float BirdSpawnProbability => birdSpawnProbability;
+    #endregion
 
-    [SerializeField] private float heightPerIncrease;
     [SerializeField] private float disableFirstFloorHeight;
     [SerializeField] private int enableCloudBlockIndex;
+    [SerializeField] private int enableBirdBlockIndex;
+    [SerializeField] private int decreaseTreeBlockIndex;
+
+    [Range(0.0f, 100.0f)]
+    [SerializeField] private float birdSpawnProbability;
 
     private IDictionary<int, Player> playerDict = new Dictionary<int, Player>();
-    private GameObject firstFloor;
+    private GameObject firstFloor, bgRealDome, bgToonDome;
+    private int blocksPerTreeDecrease = 1;
 
     void Start()
     {
         firstFloor = GameObject.FindGameObjectWithTag("GameFirstFloor");
+        bgRealDome = GameObject.FindGameObjectWithTag("BgDomeRealistic");
+        bgToonDome = GameObject.FindGameObjectWithTag("BgDomeToon");
+        bgRealDome.SetActive(false);
     }
 
     public void RegisterPlayer(int playerNumber, Player newPlayer)
@@ -46,17 +60,25 @@ public class GameController : MonoBehaviour
         playerDict.Add(playerNumber, newPlayer);
     }
 
-    public void MoveupPlayer(int playerNumber, int repeat)
+    public void MoveupPlayer(int playerNumber)
     {
-        StartCoroutine(playerDict[playerNumber].MoveUp(repeat));
+        playerDict[playerNumber].QueueAnimationRepeat();
     }
 
-    public void TryDisableFirstFloor()
+    public void StopPlayerAnimation()
+    {
+        foreach (KeyValuePair<int, Player> playerInfo in playerDict)
+            playerInfo.Value.ClearAnimationRepeat();
+    }
+
+    // Check each player's height(score), if both are high enough disable first floor
+    public void TryDisableFirstFloor(int[] playerScores)
     {
         bool canDisable = true;
-        foreach (KeyValuePair<int, Player> playerInfo in playerDict)
+
+        for (int i = 0; i < playerScores.Length; i++)
         {
-            if (playerInfo.Value.CurrentHeight <= disableFirstFloorHeight)
+            if (playerScores[i] < disableFirstFloorHeight)
             {
                 canDisable = false;
                 break;
@@ -74,4 +96,27 @@ public class GameController : MonoBehaviour
         Debug.LogWarning($"Player {playerNumber} does not exist");
         return null;
     }
+
+    public void SetBackgroundDome(BgDomeType type, bool state)
+    {
+        switch (type)
+        {
+            case BgDomeType.REALISTIC:
+                bgRealDome.SetActive(state);
+                break;
+
+            case BgDomeType.TOON:
+                bgToonDome.SetActive(state);
+                break;
+
+            default:
+                return;
+        }
+    }
+}
+
+public enum BgDomeType
+{
+    REALISTIC,
+    TOON
 }

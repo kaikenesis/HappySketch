@@ -221,7 +221,7 @@ GameObject:
   - component: {fileID: 8064323519156478458}
   - component: {fileID: 5988822085552066835}
   - component: {fileID: 7008685268279379520}
-  - component: {fileID: 4276850160769640134}
+  - component: {fileID: 1741883049018432724}
   m_Layer: 5
   m_Name: ReturnButton
   m_TagString: Untagged
@@ -332,7 +332,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &4276850160769640134
+--- !u!114 &1741883049018432724
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -341,9 +341,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8482902758069155511}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae37fabee32b3b442967a458617f4fd6, type: 3}
+  m_Script: {fileID: 11500000, guid: 7f3f3bb1f7c1a8a4cb2e9b690230fa23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   buttonType: 4
   curUIType: 4
   uiDirectorObject: {fileID: 0}
+  mainMenuCamera: {fileID: 0}

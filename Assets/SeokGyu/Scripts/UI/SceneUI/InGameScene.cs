@@ -14,7 +14,7 @@ public class InGameScene : BaseScene
     private CountDown countDown;
     [SerializeField] private GameObject timerObject;
     private TimeProgress timer;
-    private Score[] scoreTexts;
+    private InGameScore[] scoreTexts;
     private GameObject[] feverTexts;
     private Canvas[] feverCanvases;
     [SerializeField] private float delayTime = 1.0f;
@@ -31,7 +31,7 @@ public class InGameScene : BaseScene
     {
         int playerNum = UIManager.Instance.playerNum;
 
-        scoreTexts = new Score[playerNum];
+        scoreTexts = new InGameScore[playerNum];
         feverTexts = new GameObject[playerNum];
         feverCanvases = new Canvas[playerNum];
 
@@ -45,7 +45,7 @@ public class InGameScene : BaseScene
             Rect.transform.localPosition = scorePosition;
             Rect.transform.localPosition = new Vector3(scorePosition.x + distance, scorePosition.y, 0);
 
-            scoreTexts[i] = gameObject.GetComponent<Score>();
+            scoreTexts[i] = gameObject.GetComponent<InGameScore>();
         }
 
         // FeverText
@@ -91,10 +91,11 @@ public class InGameScene : BaseScene
             curFrame += Time.deltaTime;
             if (curFrame >= delayTime)
             {
-                if (UIManager.Instance.curTime < 0)
+                if (UIManager.Instance.curTime <= 0)
                 {
+                    DecreaseTime();
                     StopGame();
-                    // InGame ÁøÇà¸ØÃß°í °á°úÈ­¸é ¶ç¿ì±â
+                    // InGame ì§„í–‰ë©ˆì¶”ê³  ê²°ê³¼í™”ë©´ ë„ìš°ê¸°
                 }
                 else
                 {
@@ -109,7 +110,8 @@ public class InGameScene : BaseScene
 
     private void StopGame()
     {
-        
+        UIManager.Instance.bPlayGame = false;
+        UIManager.Instance.uiDirector.FinishGame();
     }
 
     public override void Activate()
@@ -117,7 +119,16 @@ public class InGameScene : BaseScene
         base.Activate();
 
         countDown.Activate();
-        // Canvas enabled true½Ã ½ÇÇàÁØºñ
+    }
+
+    public void ResetGame()
+    {
+        int playerNum = UIManager.Instance.playerNum;
+        for (int i = 0; i < playerNum; i++)
+        {
+            UIManager.Instance.scores[i] = 0;
+            scoreTexts[i].SetText(UIManager.Instance.scores[i]);
+        }
     }
 
     public void DecreaseTime()

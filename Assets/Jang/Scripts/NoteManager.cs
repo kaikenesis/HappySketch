@@ -100,14 +100,14 @@ public class NoteManager : Singleton<NoteManager>
     IEnumerator EnableNote()
     {
         canEnable = false;
-        Debug.Log("ª˝º∫");
+        Debug.Log("ÏÉùÏÑ±");
         for (int i = 0; i < notes.Count; i++)
         {
             float rand = Random.Range(0, 100);
 
             //  1 2 3 : 40 40 20
-            //  √— ¡°ºˆ ∞∞¿Ω
-            //  25∆€ 50∆€ 80∆€
+            //  Ï¥ù Ï†êÏàò Í∞ôÏùå
+            //  25Ìçº 50Ìçº 80Ìçº
             if (rand >= 30)
             { 
                 inCircleNotes[i].SetActive(true);
@@ -127,7 +127,7 @@ public class NoteManager : Singleton<NoteManager>
 
     IEnumerator DisableNote()
     {
-        Debug.Log("≈œ ¡æ∑·");
+        Debug.Log("ÌÑ¥ Ï¢ÖÎ£å");
         for (int i = 0; i < notes.Count; i++)
         {
             inCircleNotes[i].SetActive(false);
@@ -139,7 +139,7 @@ public class NoteManager : Singleton<NoteManager>
     IEnumerator WaitRecreate()
     {
         float rand = Random.Range(noteTimeInfo.MinRecreateTime, noteTimeInfo.MaxRecreateTime);
-        Debug.Log($"¿Áª˝º∫ Ω√∞£ : {rand}");
+        Debug.Log($"Ïû¨ÏÉùÏÑ± ÏãúÍ∞Ñ : {rand}");
         yield return new WaitForSeconds(rand);
         waitRecreate = null;
         canEnable = true;
@@ -210,7 +210,7 @@ public class NoteManager : Singleton<NoteManager>
                 if (score != noteTimeInfo.BadScore)
                 {
                     GameController.Instance.MoveupPlayer(1);
-                    UIManager.Instance.uiDirector.IncreaseScore(1, score);                    
+                    UIManager.Instance.uiDirector.IncreaseScore(1, score);
                 }
                 return;
             }
@@ -252,8 +252,9 @@ public class NoteManager : Singleton<NoteManager>
     {
         if(curTime >= noteTimeInfo.PlayTime)
         {
-            Debug.Log("∞‘¿” ¡æ∑·");
+            Debug.Log("Í≤åÏûÑ Ï¢ÖÎ£å");
             isPlay = false;
+            GameController.Instance.StopPlayerAnimation();
             for (int i = 0; i < notes.Count; i++)
             {
                 notes[i].GetComponent<Note>().SetFever(false);
