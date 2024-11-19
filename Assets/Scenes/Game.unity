@@ -6408,14 +6408,6 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 12161237}
-    - target: {fileID: 8924110323756138539, guid: fb1e338a55130b24b9cf191fc41761bc, type: 3}
-      propertyPath: isPlay
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8924110323756138539, guid: fb1e338a55130b24b9cf191fc41761bc, type: 3}
-      propertyPath: rainbowMaterial
-      value: 
-      objectReference: {fileID: 2100000, guid: 5954bf1d293918643ac59527e847a549, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

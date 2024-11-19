@@ -7,7 +7,7 @@ public class Note : MonoBehaviour
     private int level = 0;
     private bool isFever = false;
     private float lastCheckTime = 0;
-    private float noteWidth = 300;
+    private float noteWidth = 150;
     private RectTransform rectTran;
 
     public void SetLevel(int lv)
@@ -20,8 +20,8 @@ public class Note : MonoBehaviour
         curTime = noteTimeInfo.FeverStartTime;
         if (rectTran == null)
             rectTran = GetComponent<RectTransform>();
-        rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, noteWidth / 2f);
-        rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, noteWidth / 2f);
+        rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 0);
+        rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
     }
 
     void SetLastCheckTime()
@@ -42,18 +42,15 @@ public class Note : MonoBehaviour
             if (curTime - lastCheckTime < noteTimeInfo.FeverCheckTime)
             {
                 Debug.Log(curTime);
-                return 0;
+                return -1;
             }
             SetLastCheckTime();
             Debug.Log("Perfect");
-            //GameController.Instance.MoveupPlayer(1, 1);
-            //GameController.Instance.MoveupPlayer(2, 1);
             return noteTimeInfo.PerfectScore;
         }
 
         Debug.Log(curTime);
         transform.parent.gameObject.SetActive(false);
-        //gameObject.SetActive(false);
 
         if (curTime > noteTimeInfo.TotalTime[level] / 2 + noteTimeInfo.PerfectTime[level] + noteTimeInfo.GoodTime[level])
         {
