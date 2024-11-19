@@ -262,6 +262,7 @@ public class NoteManager : Singleton<NoteManager>
         {
             Debug.Log("게임 종료");
             isPlay = false;
+            GameController.Instance.StopPlayerAnimation();
             for (int i = 0; i < notes.Count; i++)
             {
                 notes[i].GetComponent<Note>().SetFever(false);

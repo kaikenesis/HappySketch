@@ -139,34 +139,34 @@ public class UIDirector : MonoBehaviour
 
     private void OnGUI()
     {
-        if (GUI.Button(new Rect(0, 0, 100, 50), "µğ¹ö±ë"))
+        if (GUI.Button(new Rect(0, 0, 100, 50), "ë””ë²„ê¹…"))
         {
             bDebug = !bDebug;
         }
 
         if(bDebug == true)
         {
-            if(GUI.Button(new Rect(0, 50, 100, 50), "½Ã°£ °¨¼Ò"))
+            if(GUI.Button(new Rect(0, 50, 100, 50), "ì‹œê°„ ê°ì†Œ"))
             {
                 UIManager.Instance.curTime--;
                 inGame.DecreaseTime();
             }
-            if (GUI.Button(new Rect(0, 100, 100, 50), "Á¡¼ö Áõ°¡"))
+            if (GUI.Button(new Rect(0, 100, 100, 50), "ì ìˆ˜ ì¦ê°€"))
             {
                 IncreaseScore(1, 10);
                 IncreaseScore(2, 30);
             }
-            if (GUI.Button(new Rect(0, 150, 100, 50), "ÇÇ¹ö Å¸ÀÓ"))
+            if (GUI.Button(new Rect(0, 150, 100, 50), "í”¼ë²„ íƒ€ì„"))
             {
                 inGame.ActivateFeverTime();
             }
-            if (GUI.Button(new Rect(0, 200, 100, 50), "1p½Â¸®"))
+            if (GUI.Button(new Rect(0, 200, 100, 50), "1pìŠ¹ë¦¬"))
             {
                 UIManager.Instance.curTime = 5;
                 IncreaseScore(1, 1000);
                 inGame.DecreaseTime();
             }
-            if (GUI.Button(new Rect(0, 250, 100, 50), "2p½Â¸®"))
+            if (GUI.Button(new Rect(0, 250, 100, 50), "2pìŠ¹ë¦¬"))
             {
                 UIManager.Instance.curTime = 5;
                 IncreaseScore(2, 1000);

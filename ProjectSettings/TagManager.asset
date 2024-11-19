@@ -5,11 +5,15 @@ TagManager:
   serializedVersion: 2
   tags:
   - GameFirstFloor
+  - FxTemporaire
+  - BgDomeToon
+  - BgDomeRealistic
+  - BirdDisableTrigger
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - PostProcessing
   - Water
   - UI
   - Player1
