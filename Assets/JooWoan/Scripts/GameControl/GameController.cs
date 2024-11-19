@@ -25,6 +25,7 @@ public class GameController : MonoBehaviour
     
     public static GameController Instance => instance;
     public PostProcessingControl PostProcessControl => postProcessingControl;
+    public FireEffects FireEffectControl => fireEffects;
     public IDictionary<int, Player> PlayerDict => playerDict;
     public int EnableCloudBlockIndex => enableCloudBlockIndex;
     public int EnableBirdBlockIndex => enableBirdBlockIndex;
@@ -35,6 +36,7 @@ public class GameController : MonoBehaviour
 
     private PostProcessingControl postProcessingControl;
     private WallControl wallControl;
+    private FireEffects fireEffects;
 
     [SerializeField] private float disableFirstLevelBlockIndex;
     [SerializeField] private int enableCloudBlockIndex;
@@ -131,6 +133,11 @@ public class GameController : MonoBehaviour
         this.postProcessingControl = postProcessingControl;
     }
 
+    public void InitFireEffectControl(FireEffects fireEffects)
+    {
+        this.fireEffects = fireEffects;
+    }
+
     public void ResetLevel()
     {
         foreach (Player player in playerDict.Values)
@@ -140,6 +147,7 @@ public class GameController : MonoBehaviour
             player.CameraControl.ResetPosition();
         }
         wallControl.ResetBlockStates();
+        firstFloor.SetActive(true);
     }
 }
 
