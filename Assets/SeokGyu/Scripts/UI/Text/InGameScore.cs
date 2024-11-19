@@ -9,6 +9,11 @@ public class InGameScore : MonoBehaviour
 
     private void Awake()
     {
+        Init();
+    }
+
+    private void Init()
+    {
         scoreText = scoreTextObject.GetComponent<TextMeshProUGUI>();
         scoreText.text = defaultScore + "M";
     }

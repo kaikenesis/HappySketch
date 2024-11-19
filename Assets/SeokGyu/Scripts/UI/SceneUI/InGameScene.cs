@@ -136,6 +136,7 @@ public class InGameScene : BaseScene
         base.Activate();
 
         countDown.Activate();
+        timer.ResetText();
     }
 
     public void ResetGame()
@@ -146,6 +147,8 @@ public class InGameScene : BaseScene
             UIManager.Instance.scores[i] = 0;
             scoreTexts[i].SetText(UIManager.Instance.scores[i]);
         }
+
+        DeactivateFeverTime();
     }
 
     public void DecreaseTime()
@@ -163,6 +166,14 @@ public class InGameScene : BaseScene
         for(int i =0;i< feverTexts.Length;i++)
         {
             feverCanvases[i].enabled = true;
+        }
+    }
+
+    public void DeactivateFeverTime()
+    {
+        for (int i = 0; i < feverTexts.Length; i++)
+        {
+            feverCanvases[i].enabled = false;
         }
     }
 }
