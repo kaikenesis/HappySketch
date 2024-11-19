@@ -6,7 +6,7 @@ public class ResultScore : MonoBehaviour
     [SerializeField] private GameObject textObject;
     [SerializeField] private GameObject scoreObject;
     private TextMeshProUGUI resultText;
-    private TextMeshProUGUI score;
+    private TextMeshProUGUI scoreText;
 
 
     private void Start()
@@ -17,7 +17,7 @@ public class ResultScore : MonoBehaviour
     private void SetInfo()
     {
         resultText = textObject.GetComponent<TextMeshProUGUI>();
-        score = scoreObject.GetComponent<TextMeshProUGUI>();
+        scoreText = scoreObject.GetComponent<TextMeshProUGUI>();
     }
 
     public void SetText(bool bWinner, int playerNum)
@@ -25,12 +25,12 @@ public class ResultScore : MonoBehaviour
         if(bWinner == true)
         {
             resultText.text = "WIN!";
-            score.text = UIManager.Instance.scores[playerNum].ToString() + "점";
+            scoreText.text = UIManager.Instance.scores[playerNum].ToString() + "점";
         }
         else
         {
             resultText.text = "LOSE";
-            score.text = UIManager.Instance.scores[playerNum].ToString() + "점";
+            scoreText.text = UIManager.Instance.scores[playerNum].ToString() + "점";
         }
     }
 }
