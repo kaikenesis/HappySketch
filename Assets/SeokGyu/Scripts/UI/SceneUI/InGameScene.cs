@@ -1,25 +1,23 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InGameScene : BaseScene
 {
-    [SerializeField] private GameObject scoreObject;
+    [SerializeField] private GameObject scorePrefab;
     [SerializeField] private Vector2 scorePosition;
-    [SerializeField] private GameObject feverText;
+    [SerializeField] private GameObject feverTextPrefab;
     [SerializeField] private Vector2 feverTextPosition;
-    [SerializeField] private GameObject decideNode;
-    [SerializeField] private Vector2[] nodesPosition;
-    [SerializeField] private float nodeWidth;
-    [SerializeField] private float nodeHeight;
-    [SerializeField] private GameObject countDownObject;
+    [SerializeField] private GameObject countDownPrefab;
     private CountDown countDown;
-    [SerializeField] private GameObject timerObject;
+    [SerializeField] private GameObject timerPrefab;
     private TimeProgress timer;
     private InGameScore[] scoreTexts;
     private GameObject[] feverTexts;
     private Canvas[] feverCanvases;
+    [SerializeField] private string[] feverTextStrings;
     [SerializeField] private float delayTime = 1.0f;
-    [SerializeField] private float maxTime = 60.0f;
     private float curFrame = 1.0f;
+    [SerializeField] private GameObject linePrefab;
 
 
     private void Start()
@@ -39,11 +37,11 @@ public class InGameScene : BaseScene
         for (int i = 0; i < playerNum; i++)
         {
             float distance = 1600f * i;
-            GameObject gameObject = Instantiate(scoreObject);
+            GameObject gameObject = Instantiate(scorePrefab);
             gameObject.transform.SetParent(transform);
-            RectTransform Rect = gameObject.GetComponent<RectTransform>();
-            Rect.transform.localPosition = scorePosition;
-            Rect.transform.localPosition = new Vector3(scorePosition.x + distance, scorePosition.y, 0);
+            RectTransform rect = gameObject.GetComponent<RectTransform>();
+            rect.transform.localPosition = scorePosition;
+            rect.transform.localPosition = new Vector3(scorePosition.x + distance, scorePosition.y, 0);
 
             scoreTexts[i] = gameObject.GetComponent<InGameScore>();
         }
@@ -53,10 +51,13 @@ public class InGameScene : BaseScene
         {
             float distance = 1000f * i;
 
-            GameObject gameObject = Instantiate(feverText);
+            GameObject gameObject = Instantiate(feverTextPrefab);
             gameObject.transform.SetParent(transform);
-            RectTransform Rect = gameObject.GetComponent<RectTransform>();
-            Rect.transform.localPosition = new Vector3(feverTextPosition.x + distance, feverTextPosition.y, 0);
+            RectTransform rect = gameObject.GetComponent<RectTransform>();
+            rect.transform.localPosition = new Vector3(feverTextPosition.x + distance, feverTextPosition.y, 0);
+
+            ExplainFeverText explainFeverText = gameObject.GetComponentInChildren<ExplainFeverText>();
+            explainFeverText.SetText(feverTextStrings[i]);
 
             feverCanvases[i] = gameObject.GetComponent<Canvas>();
             feverCanvases[i].enabled = false;
@@ -67,16 +68,33 @@ public class InGameScene : BaseScene
 
         // CountDown
         {
-            countDown = countDownObject.GetComponent<CountDown>();
+            countDown = countDownPrefab.GetComponent<CountDown>();
         }
 
         // Timer
         {
-            timer = timerObject.GetComponent<TimeProgress>();
+            timer = timerPrefab.GetComponent<TimeProgress>();
         }
 
-        UIManager.Instance.maxTime = maxTime;
-        UIManager.Instance.curTime = maxTime;
+        // Line
+        int dist = Screen.width / playerNum;
+        int posX = 0;
+
+        for (int i = 0; i < playerNum - 1; i++)
+        {
+            GameObject gameObject = Instantiate(linePrefab, transform);
+
+            gameObject.transform.SetAsFirstSibling();
+            RectTransform rect = gameObject.GetComponent<RectTransform>();
+            rect.anchorMin = new Vector2(0, 0.5f);
+            rect.anchorMax = new Vector2(0, 0.5f);
+            posX += dist;
+            rect.transform.localPosition = new Vector3(0, 0, 0);
+            rect.sizeDelta = new Vector2(6, Screen.height);
+
+            Image img = gameObject.GetComponent<Image>();
+            img.color = new Color(0, 0, 0, 1);
+        }
     }
 
     private void Update()
