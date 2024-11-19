@@ -86,6 +86,7 @@ public class NoteManager : Singleton<NoteManager>
     {
         isPlay = true;
         curTime = 0;
+        isFever = false;
     }
 
     public void SetLevel(int lv)
@@ -229,6 +230,10 @@ public class NoteManager : Singleton<NoteManager>
         {
             isFever = true;
             Debug.Log("FEVER!");
+
+            GameController.Instance.PostProcessControl.PlayFeverEffect();
+            UIManager.Instance.uiDirector.ActivateFever();
+
             for (int i = 0; i < notes.Count; i++)
             {
                 notes[i].GetComponent<Note>().SetFever(true);
@@ -254,7 +259,10 @@ public class NoteManager : Singleton<NoteManager>
         {
             Debug.Log("게임 종료");
             isPlay = false;
+
             GameController.Instance.StopPlayerAnimation();
+            GameController.Instance.PostProcessControl.StopFeverEffect();
+
             for (int i = 0; i < notes.Count; i++)
             {
                 notes[i].GetComponent<Note>().SetFever(false);

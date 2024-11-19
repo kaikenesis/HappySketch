@@ -79,16 +79,18 @@ public class UIDirector : MonoBehaviour
                 break;
             case EButtonType.GameStart:
                 inGame.Activate();
+                GameController.Instance.SetBackgroundDome(BgDomeType.REALISTIC, true);
+                GameController.Instance.SetBackgroundDome(BgDomeType.TOON, false);
                 break;
             case EButtonType.Retry:
                 inGame.ResetGame();
                 inGame.Activate();
+                NoteManager.instance.SetGameStart();
                 break;
             case EButtonType.MainMenu:
                 inGame.ResetGame();
                 inGameCanvas.enabled = false;
                 mainMenuCanvas.enabled = true;
-                // ���ӳ��� �ʱ�ȭ �� �����
                 break;
         }
     }
@@ -148,7 +150,7 @@ public class UIDirector : MonoBehaviour
         {
             if(GUI.Button(new Rect(0, 50, 100, 50), "시간 감소"))
             {
-                UIManager.Instance.curTime--;
+                NoteManager.Instance.curTime++;
                 inGame.DecreaseTime();
             }
             if (GUI.Button(new Rect(0, 100, 100, 50), "점수 증가"))
@@ -162,13 +164,13 @@ public class UIDirector : MonoBehaviour
             }
             if (GUI.Button(new Rect(0, 200, 100, 50), "1p승리"))
             {
-                UIManager.Instance.curTime = 5;
+                NoteManager.Instance.curTime = 55;
                 IncreaseScore(1, 1000);
                 inGame.DecreaseTime();
             }
             if (GUI.Button(new Rect(0, 250, 100, 50), "2p승리"))
             {
-                UIManager.Instance.curTime = 5;
+                NoteManager.Instance.curTime = 55;
                 IncreaseScore(2, 1000);
                 inGame.DecreaseTime();
             }

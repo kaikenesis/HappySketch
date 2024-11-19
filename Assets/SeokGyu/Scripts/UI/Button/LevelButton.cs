@@ -43,12 +43,15 @@ public class LevelButton : ChangeUIButton
         {
             case ELevel.Easy:
                 subTitleText.text = "쉬움";
+                NoteManager.instance.SetLevel(0);
                 break;
             case ELevel.Normal:
                 subTitleText.text = "보통";
+                NoteManager.instance.SetLevel(1);
                 break;
             case ELevel.Hard:
                 subTitleText.text = "어려움";
+                NoteManager.instance.SetLevel(2);
                 break;
         }
     }

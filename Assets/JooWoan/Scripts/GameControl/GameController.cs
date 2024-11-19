@@ -24,6 +24,7 @@ public class GameController : MonoBehaviour
     #region Public Lambdas
     
     public static GameController Instance => instance;
+    public PostProcessingControl PostProcessControl => postProcessingControl;
     public IDictionary<int, Player> PlayerDict => playerDict;
     public int EnableCloudBlockIndex => enableCloudBlockIndex;
     public int EnableBirdBlockIndex => enableBirdBlockIndex;
@@ -32,6 +33,7 @@ public class GameController : MonoBehaviour
     public float BirdSpawnProbability => birdSpawnProbability;
     #endregion
 
+    [SerializeField] private PostProcessingControl postProcessingControl;
     [SerializeField] private float disableFirstFloorHeight;
     [SerializeField] private int enableCloudBlockIndex;
     [SerializeField] private int enableBirdBlockIndex;

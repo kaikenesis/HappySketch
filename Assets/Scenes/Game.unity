@@ -1187,8 +1187,8 @@ GameObject:
   m_Component:
   - component: {fileID: 252267049}
   - component: {fileID: 252267048}
-  - component: {fileID: 252267050}
   - component: {fileID: 252267051}
+  - component: {fileID: 252267052}
   m_Layer: 3
   m_Name: PostProcessing
   m_TagString: Untagged
@@ -1228,7 +1228,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &252267050
+--- !u!114 &252267051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 252267047}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bff2fcc96380c904a80f15cc0685b5e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!95 &252267052
 Animator:
   serializedVersion: 5
   m_ObjectHideFlags: 0
@@ -1249,18 +1261,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &252267051
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 252267047}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bff2fcc96380c904a80f15cc0685b5e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &263558907
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5835,6 +5835,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 729583b9b4dae8a4b96799eb982a5a76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  postProcessingControl: {fileID: 252267051}
   disableFirstFloorHeight: 2500
   enableCloudBlockIndex: 2
   enableBirdBlockIndex: 1
@@ -5862,7 +5863,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2014678136}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a5e64485f0afbff499b51f8c9497518c, type: 3}
   m_Name: 

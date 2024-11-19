@@ -91,7 +91,8 @@ public class InGameScene : BaseScene
             curFrame += Time.deltaTime;
             if (curFrame >= delayTime)
             {
-                if (UIManager.Instance.curTime <= 0)
+                float time = NoteManager.Instance.noteTimeInfo.PlayTime - NoteManager.Instance.curTime;
+                if (time <= 0)
                 {
                     DecreaseTime();
                     StopGame();
@@ -100,8 +101,6 @@ public class InGameScene : BaseScene
                 else
                 {
                     DecreaseTime();
-                    //UIManager.Instance.curTime--;
-                    UIManager.Instance.curTime = NoteManager.Instance.noteTimeInfo.PlayTime - NoteManager.Instance.curTime;
                 }
                 curFrame = 0f;
             }

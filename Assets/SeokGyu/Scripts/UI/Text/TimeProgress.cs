@@ -16,16 +16,26 @@ public class TimeProgress : MonoBehaviour
     void Init()
     {
         timeText = textObject.GetComponentInChildren<TextMeshProUGUI>();
-        timeText.text = UIManager.Instance.maxTime.ToString() + "초";
         progressImg = GetComponent<Image>();
+    }
+
+    private void Start()
+    {
+        SetInfo();
+    }
+
+    private void SetInfo()
+    {
+        timeText.text = NoteManager.Instance.noteTimeInfo.PlayTime.ToString("F0") + "초";
     }
 
     public void SetText()
     {
+        float time = NoteManager.Instance.noteTimeInfo.PlayTime - NoteManager.instance.curTime;
         if (UIManager.Instance.bPlayGame == false) return;
-        if (UIManager.Instance.curTime < 0) return;
+        if (time < 0) return;
 
-        timeText.text = UIManager.Instance.curTime.ToString() + "초";
+        timeText.text = time.ToString("F0") + "초";
     }
 
     public void SetProgressColor()
