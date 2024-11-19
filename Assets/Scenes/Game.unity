@@ -4533,6 +4533,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8509787068088838305, guid: 38d6bbbd88e8cc64c92368e21fe824ac, type: 3}
+      propertyPath: mainMenuCamera
+      value: 
+      objectReference: {fileID: 1034828483}
     - target: {fileID: 9144636063265313265, guid: 38d6bbbd88e8cc64c92368e21fe824ac, type: 3}
       propertyPath: m_Enabled
       value: 1

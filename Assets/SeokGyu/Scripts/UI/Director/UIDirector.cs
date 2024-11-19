@@ -2,20 +2,23 @@ using UnityEngine;
 
 public class UIDirector : MonoBehaviour
 {
-    [SerializeField] private GameObject mainMenu;
-    [SerializeField] private GameObject selectLevel;
-    [SerializeField] private GameObject explain;
-    [SerializeField] private GameObject inGame;
-    [SerializeField] private GameObject resultScreen;
-    private bool isDebug = false;
+    [SerializeField] private GameObject mainMenuObject;
+    [SerializeField] private GameObject selectLevelObject;
+    [SerializeField] private GameObject explainObject;
+    [SerializeField] private GameObject inGameObject;
+    [SerializeField] private GameObject resultScreenObject;
+    private bool bDebug = false;
 
     private Canvas mainMenuCanvas;
     private Canvas selectLevelCanvas;
     private Canvas explainCanvas;
     private Canvas inGameCanvas;
-    private Canvas resultScreenCanvas;
+    private Canvas resultCanvas;
 
-    public int[] scoreList { get; private set; }
+    private ExplainScene explain;
+    private InGameScene inGame;
+    private ResultScene resultScene;
+
     public ELevel curLevel;
 
     private void Start()
@@ -27,23 +30,21 @@ public class UIDirector : MonoBehaviour
     {
         UIManager.Instance.uiDirector = this;
 
-        mainMenuCanvas = mainMenu.GetComponent<Canvas>();
-        selectLevelCanvas = selectLevel.GetComponent<Canvas>();
-        explainCanvas = explain.GetComponent<Canvas>();
-        inGameCanvas = inGame.GetComponent<Canvas>();
-        resultScreenCanvas = resultScreen.GetComponent<Canvas>();
+        mainMenuCanvas = mainMenuObject.GetComponent<Canvas>();
+        selectLevelCanvas = selectLevelObject.GetComponent<Canvas>();
+        explainCanvas = explainObject.GetComponent<Canvas>();
+        inGameCanvas = inGameObject.GetComponent<Canvas>();
+        resultCanvas = resultScreenObject.GetComponent<Canvas>();
+
+        explain = explainObject.GetComponent<ExplainScene>();
+        inGame = inGameObject.GetComponent<InGameScene>();
+        resultScene = resultScreenObject.GetComponent<ResultScene>();
 
         mainMenuCanvas.enabled = true;
         selectLevelCanvas.enabled = false;
         explainCanvas.enabled = false;
         inGameCanvas.enabled = false;
-        resultScreenCanvas.enabled = false;
-
-        scoreList = new int[UIManager.Instance.playerNum];
-        for (int i = 0; i < scoreList.Length; i++)
-        {
-            scoreList[i] = 0;
-        }
+        resultCanvas.enabled = false;
     }
 
     public void ChangeUI(EUIType curUIType, EButtonType buttonType)
@@ -62,6 +63,9 @@ public class UIDirector : MonoBehaviour
             case EUIType.InGame:
                 inGameCanvas.enabled = false;
                 break;
+            case EUIType.Result:
+                resultCanvas.enabled = false;
+                break;
         }
 
         switch (buttonType)
@@ -71,14 +75,18 @@ public class UIDirector : MonoBehaviour
                 break;
             case EButtonType.SelectLevel:
                 explainCanvas.enabled = true;
-                explain.GetComponent<ExplainScene>().SetText(curLevel);
+                explain.SetText(curLevel);
                 break;
             case EButtonType.GameStart:
-                inGame.GetComponent<InGameScene>().Activate();
+                inGame.Activate();
                 break;
             case EButtonType.Retry:
+                inGame.ResetGame();
+                inGame.Activate();
                 break;
             case EButtonType.MainMenu:
+                inGame.ResetGame();
+                inGameCanvas.enabled = false;
                 mainMenuCanvas.enabled = true;
                 break;
         }
@@ -86,43 +94,83 @@ public class UIDirector : MonoBehaviour
 
     public void IncreaseScore(int playerNum, int score)
     {
+        if (UIManager.Instance.bPlayGame == false) return;
+
         int num = playerNum - 1;
-        scoreList[num] += score;
-        inGame.GetComponent<InGameScene>().SetScore(num, scoreList[num]);
-        GameController.Instance.TryDisableFirstFloor(scoreList);
+        UIManager.Instance.scores[num] += score;
+        inGame.SetScore(num, UIManager.Instance.scores[num]);
     }
 
     public void ActivateFever()
     {
-        inGame.GetComponent<InGameScene>().ActivateFeverTime();
+        if (UIManager.Instance.bPlayGame == false) return;
+
+        inGame.ActivateFeverTime();
     }
 
     public void UpdateTimer()
     {
-        inGame.GetComponent<InGameScene>().DecreaseTime();
+        if (UIManager.Instance.bPlayGame == false) return;
+
+        inGame.DecreaseTime();
+    }
+
+    public void FinishGame()
+    {
+        resultCanvas.enabled = true;
+        CompareScore();
+    }
+
+    void CompareScore()
+    {
+        int max = UIManager.Instance.scores[0];
+        int playerNum = 0;
+        for(int i =1;i<UIManager.Instance.playerNum;i++)
+        {
+            if(max < UIManager.Instance.scores[i])
+            {
+                max = UIManager.Instance.scores[i];
+                playerNum = i;
+            }
+        }
+
+        resultScene.SetWinner(playerNum);
     }
 
     private void OnGUI()
     {
-        if (GUI.Button(new Rect(0, 0, 100, 50), "µπˆ±Î"))
+        if (GUI.Button(new Rect(0, 0, 100, 50), "ÎîîÎ≤ÑÍπÖ"))
         {
-            isDebug = !isDebug;
+            bDebug = !bDebug;
         }
 
-        if(isDebug == true)
+        if(bDebug == true)
         {
-            if(GUI.Button(new Rect(0, 50, 100, 50), "Ω√∞£ ∞®º“"))
+            if(GUI.Button(new Rect(0, 50, 100, 50), "ÏãúÍ∞Ñ Í∞êÏÜå"))
             {
-                inGame.GetComponent<InGameScene>().DecreaseTime();
+                UIManager.Instance.curTime--;
+                inGame.DecreaseTime();
             }
-            if (GUI.Button(new Rect(0, 100, 100, 50), "¡°ºˆ ¡ı∞°"))
+            if (GUI.Button(new Rect(0, 100, 100, 50), "Ï†êÏàò Ï¶ùÍ∞Ä"))
             {
-                inGame.GetComponent<InGameScene>().SetScore(0, 10);
-                inGame.GetComponent<InGameScene>().SetScore(1, 30);
+                IncreaseScore(1, 10);
+                IncreaseScore(2, 30);
             }
-            if (GUI.Button(new Rect(0, 150, 100, 50), "««πˆ ≈∏¿”"))
+            if (GUI.Button(new Rect(0, 150, 100, 50), "ÌîºÎ≤Ñ ÌÉÄÏûÑ"))
             {
-                inGame.GetComponent<InGameScene>().ActivateFeverTime();
+                inGame.ActivateFeverTime();
+            }
+            if (GUI.Button(new Rect(0, 200, 100, 50), "1pÏäπÎ¶¨"))
+            {
+                UIManager.Instance.curTime = 5;
+                IncreaseScore(1, 1000);
+                inGame.DecreaseTime();
+            }
+            if (GUI.Button(new Rect(0, 250, 100, 50), "2pÏäπÎ¶¨"))
+            {
+                UIManager.Instance.curTime = 5;
+                IncreaseScore(2, 1000);
+                inGame.DecreaseTime();
             }
         }
     }
