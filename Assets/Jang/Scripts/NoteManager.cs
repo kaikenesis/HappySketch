@@ -209,14 +209,14 @@ public class NoteManager : Singleton<NoteManager>
             {
                 if (score != noteTimeInfo.BadScore)
                 {
-                    GameController.Instance.MoveupPlayer(1, 1);
+                    GameController.Instance.MoveupPlayer(1);
                     UIManager.Instance.uiDirector.IncreaseScore(1, score);                    
                 }
                 return;
             }
             if (score != noteTimeInfo.BadScore)
             {
-                GameController.Instance.MoveupPlayer(2, 1);
+                GameController.Instance.MoveupPlayer(2);
                 UIManager.Instance.uiDirector.IncreaseScore(2, score);
             }
         }
