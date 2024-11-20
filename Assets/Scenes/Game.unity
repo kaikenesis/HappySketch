@@ -4519,6 +4519,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1963898636676121405, guid: 38d6bbbd88e8cc64c92368e21fe824ac, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3509072717114387154, guid: 38d6bbbd88e8cc64c92368e21fe824ac, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6047279301446450919, guid: 38d6bbbd88e8cc64c92368e21fe824ac, type: 3}
       propertyPath: m_Name
       value: UIDirector
@@ -4539,9 +4547,13 @@ PrefabInstance:
       propertyPath: mainMenuCamera
       value: 
       objectReference: {fileID: 1034828483}
-    - target: {fileID: 9144636063265313265, guid: 38d6bbbd88e8cc64c92368e21fe824ac, type: 3}
+    - target: {fileID: 9108364567959003849, guid: 38d6bbbd88e8cc64c92368e21fe824ac, type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9144636063265313265, guid: 38d6bbbd88e8cc64c92368e21fe824ac, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
