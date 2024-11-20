@@ -7,9 +7,9 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: LighterCoudMAT
-  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
-  m_Parent: {fileID: 7838436323390675806, guid: 9a106b1bc0c435f4caa2a3790ebc35ae, type: 3}
+  m_Name: UI_Rainbow 3
+  m_Shader: {fileID: 4800000, guid: 95e88af2c982db64d9c564eee0513a0d, type: 3}
+  m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -22,9 +22,22 @@ Material:
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
-    m_TexEnvs: []
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
-    m_Floats: []
-    m_Colors:
-    - _Color: {r: 0.9622642, g: 0.9304913, b: 0.86694556, a: 1}
+    m_Floats:
+    - _BandSize: 1
+    - _ColorMask: 15
+    - _Rotate: 45
+    - _Scale: 7.04
+    - _Speed: 5
+    - _Stencil: 0
+    - _StencilComp: 8
+    - _StencilOp: 0
+    - _StencilReadMask: 255
+    - _StencilWriteMask: 255
+    m_Colors: []
   m_BuildTextureStacks: []
