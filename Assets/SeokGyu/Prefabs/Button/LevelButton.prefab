@@ -349,6 +349,7 @@ MonoBehaviour:
   curUIType: 1
   uiDirectorObject: {fileID: 0}
   level: 0
+  subPanelImg: {fileID: 3328169426701348116}
 --- !u!1001 &1720460705482946122
 PrefabInstance:
   m_ObjectHideFlags: 0
