@@ -371,6 +371,7 @@ public class NoteManager : Singleton<NoteManager>
 
             GameController.Instance.PostProcessControl.PlayFeverEffect();
             UIManager.Instance.uiDirector.ActivateFever();
+            GameController.Instance.FireEffectControl.EnableFireEffect();
 
             for (int i = 0; i < notes.Count; i++)
             {
@@ -401,6 +402,7 @@ public class NoteManager : Singleton<NoteManager>
 
             GameController.Instance.StopPlayerAnimation();
             GameController.Instance.PostProcessControl.StopFeverEffect();
+            GameController.Instance.FireEffectControl.DisableFireEffect();
 
             for (int i = 0; i < notes.Count; i++)
             {
