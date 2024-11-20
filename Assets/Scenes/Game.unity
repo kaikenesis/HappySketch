@@ -98894,6 +98894,10 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 12161237}
+    - target: {fileID: 8924110323756138539, guid: fb1e338a55130b24b9cf191fc41761bc, type: 3}
+      propertyPath: feverNoteMat
+      value: 
+      objectReference: {fileID: 2100000, guid: 3af031c0f1f0a7441b62dc49b012a9fa, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -9,7 +9,7 @@ public class Note : MonoBehaviour
     private float lastCheckTime = 0;
     private float noteWidth = 150;
     private RectTransform rectTran;
-
+    private CircleGraphic circleGraphic;
     public void SetLevel(int lv)
     {
         level = lv;
@@ -80,6 +80,7 @@ public class Note : MonoBehaviour
     private void Start()
     {
         rectTran = GetComponent<RectTransform>();
+        circleGraphic = GetComponent<CircleGraphic>();
     }
     void OnEnable()
     {

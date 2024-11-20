@@ -1,7 +1,8 @@
+//using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor.Experimental.GraphView;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,6 +18,7 @@ public class NoteManager : Singleton<NoteManager>
     private int score = 0;
     private int circleWidth = 150;
     public float curTime = 0;
+    private float noteTime = 0;
 
     private bool canEnable = true;
     private bool isFever = false;
@@ -36,8 +38,10 @@ public class NoteManager : Singleton<NoteManager>
     private Dictionary<KeyCode, int> keyDict = new();
     private readonly KeyCode[] keyCodes = { KeyCode.A, KeyCode.S, KeyCode.Z, KeyCode.X, KeyCode.J, KeyCode.K, KeyCode.N, KeyCode.M };
 
+    Sprite feverKnob = null;
     void Start()
     {
+        feverKnob = AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/Knob.psd");
         SetKeys();
         GenerateNotes();
         noteEffect.transform.localScale = new Vector3(100,100,100);
@@ -49,10 +53,12 @@ public class NoteManager : Singleton<NoteManager>
         if (!isPlay)
             return;
 
-        curTime += Time.deltaTime;      
-        
+        curTime += Time.deltaTime;
+        noteTime += Time.deltaTime;
+
         CheckNotes();
         CheckGameEnd();
+        SetNumText();
 
         if (!isFever)
             CheckFever();
@@ -97,7 +103,7 @@ public class NoteManager : Singleton<NoteManager>
     {
         canEnable = false;
         Debug.Log("생성");
-
+        noteTime = 0;
         float rand = Random.Range(0, 100);
         int totalNoteCount = 0;
         int curNoteCount = 0;
@@ -210,7 +216,6 @@ public class NoteManager : Singleton<NoteManager>
             rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, circleWidth);
             rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, circleWidth);
 
-
             GameObject numText = new();
             TextMeshProUGUI text = numText.AddComponent<TextMeshProUGUI>();
             numText.name = "numberText" + (i + 1);
@@ -238,13 +243,26 @@ public class NoteManager : Singleton<NoteManager>
             feverNote.name = "feverNote";
             Image feverImage = feverNote.AddComponent<Image>();
             RectTransform feverRect = feverImage.GetComponent<RectTransform>();
-            feverRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, circleWidth);
-            feverRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, circleWidth);
+            feverRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, circleWidth + 10);
+            feverRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, circleWidth + 10);
             feverNote.transform.SetParent(transform);
             feverNote.transform.localPosition = new Vector3( positions[i].x, positions[i].y, -1);
+            feverImage.sprite = feverKnob;
             feverImage.material = feverNoteMat;
             feverNotes.Add(feverNote);
             feverNote.SetActive(false);
+
+            GameObject feverOutline = new();
+            CircleGraphic feverCircle = feverOutline.AddComponent<CircleGraphic>();
+            RectTransform feverOutlineRect = feverOutline.GetComponent<RectTransform>();
+            feverOutline.name = "FeverOutline";
+            feverOutlineRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, circleWidth);
+            feverOutlineRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, circleWidth);
+            feverOutline.transform.SetParent(transform);
+            feverOutline.transform.localPosition = new Vector3(positions[i].x, positions[i].y, -1);
+            feverOutline.transform.SetParent(feverNote.transform);
+            feverCircle.SetMode(CircleGraphic.Mode.Edge);
+            feverCircle.SetEdgeThickness(10);
 
             GameObject feverText = new();
             TextMeshProUGUI feverTextUGUI = feverText.AddComponent<TextMeshProUGUI>();
@@ -262,6 +280,15 @@ public class NoteManager : Singleton<NoteManager>
             numberText.Add(numText);
 
             insideCircle.SetActive(false);
+        }
+    }
+    
+    void SetNumText()
+    {
+        for(int i = 0; i < numberText.Count; i++)
+        {
+            TextMeshProUGUI numText = numberText[i].GetComponent<TextMeshProUGUI>();
+            numText.text = (noteTimeInfo.TotalTime[level] - noteTime).ToString("F1");
         }
     }
     
