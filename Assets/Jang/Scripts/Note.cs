@@ -18,6 +18,7 @@ public class Note : MonoBehaviour
     {
         isFever = b;
         curTime = noteTimeInfo.FeverStartTime;
+        lastCheckTime = 0;
         if (rectTran == null)
             rectTran = GetComponent<RectTransform>();
         rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 0);
@@ -41,39 +42,31 @@ public class Note : MonoBehaviour
         {
             if (curTime - lastCheckTime < noteTimeInfo.FeverCheckTime)
             {
-                Debug.Log(curTime);
                 return -1;
             }
             SetLastCheckTime();
-            Debug.Log("Perfect");
             return noteTimeInfo.PerfectScore;
         }
 
-        Debug.Log(curTime);
         transform.parent.gameObject.SetActive(false);
 
         if (curTime > noteTimeInfo.TotalTime[level] / 2 + noteTimeInfo.PerfectTime[level] + noteTimeInfo.GoodTime[level])
         {
-            Debug.Log("Bad");
             return noteTimeInfo.BadScore;
         }
         else if (curTime > noteTimeInfo.TotalTime[level] / 2 + noteTimeInfo.PerfectTime[level])
         {
-            Debug.Log("Good");
             return noteTimeInfo.GoodScore;
         }
         else if (curTime < noteTimeInfo.TotalTime[level] / 2 - noteTimeInfo.PerfectTime[level] - noteTimeInfo.GoodTime[level])
         {
-            Debug.Log("Bad");
             return noteTimeInfo.BadScore;
         }
         else if (curTime < noteTimeInfo.TotalTime[level] / 2 - noteTimeInfo.PerfectTime[level])
         {
-            Debug.Log("Good");
             return noteTimeInfo.GoodScore;
         }
 
-        Debug.Log("Perfect");
         return noteTimeInfo.PerfectScore;
     }
 
