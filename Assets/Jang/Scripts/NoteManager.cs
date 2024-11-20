@@ -225,7 +225,7 @@ public class NoteManager : Singleton<NoteManager>
         for (int i = 0; i < 8; i++)
         {
             GameObject insideCircle = new GameObject();
-            insideCircle.name = "inCircle note" + (i + 1);
+            insideCircle.name = "InCircle note" + (i + 1);
             insideCircle.transform.SetParent(transform);
             insideCircle.transform.localPosition = positions[i];
             CircleGraphic inCircleCG = insideCircle.AddComponent<CircleGraphic>();
@@ -236,21 +236,21 @@ public class NoteManager : Singleton<NoteManager>
             inCircleCG.color = new Color32(0xff, 0xa0, 0x7a, 255);
             inCircleNotes.Add(insideCircle);
 
-            GameObject obj = new GameObject();
-            obj.name = "note" + (i + 1);
-            obj.transform.SetParent(transform);
-            obj.transform.localPosition = positions[i];
-            obj.transform.SetParent(insideCircle.transform);
-            notes.Add(obj);
+            GameObject OutCircleNote = new GameObject();
+            OutCircleNote.name = "OutCircle Note" + (i + 1);
+            OutCircleNote.transform.SetParent(transform);
+            OutCircleNote.transform.localPosition = positions[i];
+            OutCircleNote.transform.SetParent(insideCircle.transform);
+            notes.Add(OutCircleNote);
 
-            Note note = obj.AddComponent<Note>();
+            Note note = OutCircleNote.AddComponent<Note>();
             note.SetNoteTimeInfo(noteTimeInfo);
-            CircleGraphic cg = obj.AddComponent<CircleGraphic>();
+            CircleGraphic cg = OutCircleNote.AddComponent<CircleGraphic>();
             cg.color = new Color32(238,74,74,255);
             cg.SetMode(CircleGraphic.Mode.Edge);
             cg.SetEdgeThickness(10);
 
-            RectTransform rectTran = obj.GetComponent<RectTransform>();
+            RectTransform rectTran = OutCircleNote.GetComponent<RectTransform>();
             rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, circleWidth);
             rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, circleWidth);
 
