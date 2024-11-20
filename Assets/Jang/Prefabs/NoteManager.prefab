@@ -116,4 +116,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   noteTimeInfo: {fileID: 11400000, guid: f9db6e8a31c2293449313b5687a15c17, type: 2}
   noteEffect: {fileID: 1429954232896169633, guid: 36bf435c2a513694ab923407a7aa7900, type: 3}
-  isPlay: 0
+  fontCafe24: {fileID: 11400000, guid: 8a96968c28d6e8948935498629eef405, type: 2}
+  feverFontMat: {fileID: 2100000, guid: 4e3eac7db42cbcb4ba31c467f234ffe2, type: 2}
+  feverNoteMat: {fileID: 2100000, guid: b5d439c4ce0ca3c48800cf9d178e2f73, type: 2}
+  curTime: 0
