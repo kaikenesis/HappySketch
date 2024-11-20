@@ -19,25 +19,16 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private float sfxVolume = 0.4f;
     [SerializeField] private float bgmVolume = 0.4f;
     [SerializeField] private AudioClip[] bgmArr, sfxArr;
+    [SerializeField] private AudioSource bgmPlayer, sfxPlayer;
 
-    IDictionary<string, AudioSource> bgmDict = new Dictionary<string, AudioSource>();
+    IDictionary<string, AudioClip> bgmDict = new Dictionary<string, AudioClip>();
     IDictionary<string, AudioClip> sfxDict = new Dictionary<string, AudioClip>();
-
-    private AudioSource bgmPlayer, sfxPlayer;
 
     private void Init()
     {
-        sfxPlayer = GetComponent<AudioSource>();
-
         foreach (AudioClip clip in bgmArr)
-        {
-            AudioSource source = gameObject.AddComponent<AudioSource>();
-            source.clip = clip;
-            source.playOnAwake = false;
-            source.volume = bgmVolume;
-            source.loop = true;
-            bgmDict.Add(clip.name, source);
-        }
+            bgmDict.Add(clip.name, clip);
+
         foreach (AudioClip clip in sfxArr)
             sfxDict.Add(clip.name, clip);
     }
@@ -54,7 +45,7 @@ public class SoundManager : MonoBehaviour
             return;
 
         PauseBGM();
-        bgmPlayer = bgmDict[name];
+        bgmPlayer.clip = bgmDict[name];
         bgmPlayer.volume = bgmVolume;
         bgmPlayer.Play();
     }
