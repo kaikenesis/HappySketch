@@ -260,6 +260,10 @@ PrefabInstance:
       propertyPath: uiDirectorObject
       value: 
       objectReference: {fileID: 6047279301446450919}
+    - target: {fileID: 2503822153774397339, guid: c8ffda07a5f8d0741a7cbcee84079ff3, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4585856635855099183, guid: c8ffda07a5f8d0741a7cbcee84079ff3, type: 3}
       propertyPath: uiDirectorObject
       value: 
@@ -373,7 +377,7 @@ PrefabInstance:
       objectReference: {fileID: 6047279301446450919}
     - target: {fileID: 3574734635262992154, guid: 662d0dd97f467444a985b748d23a4bdb, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4478837801776849230, guid: 662d0dd97f467444a985b748d23a4bdb, type: 3}
       propertyPath: m_Name

@@ -92,22 +92,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c58ca8aff99ba34194df6032da87caf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoreObject: {fileID: 633486042299224350, guid: a06a2a8396a889d4fb886654801d0cf0, type: 3}
+  scorePrefab: {fileID: 633486042299224350, guid: a06a2a8396a889d4fb886654801d0cf0, type: 3}
   scorePosition: {x: -800, y: 360}
-  feverText: {fileID: 7517071512960787846, guid: 47c6b77e68833dc48b97b463b65f09ce, type: 3}
+  feverTextPrefab: {fileID: 7517071512960787846, guid: 47c6b77e68833dc48b97b463b65f09ce, type: 3}
   feverTextPosition: {x: -500, y: 0}
-  decideNode: {fileID: 3277265173050237816, guid: 5b881adae2e737c4bac0847390cbc5f4, type: 3}
-  nodesPosition:
-  - {x: -800, y: 80}
-  - {x: -200, y: 80}
-  - {x: -800, y: -400}
-  - {x: -200, y: -400}
-  nodeWidth: 150
-  nodeHeight: 150
-  countDownObject: {fileID: 7457358289156929357}
-  timerObject: {fileID: 6190256149652717255}
+  countDownPrefab: {fileID: 7457358289156929357}
+  timerPrefab: {fileID: 6190256149652717255}
+  feverTextStrings:
+  - "A S Z X \uD0A4\uB97C \uBE60\uB974\uAC8C \uC5F0\uD0C0\uD558\uC138\uC694!"
+  - "J K N M \uD0A4\uB97C \uBE60\uB974\uAC8C \uC5F0\uD0C0\uD558\uC138\uC694!"
   delayTime: 1
-  maxTime: 60
+  linePrefab: {fileID: 2605423736721763535, guid: ddbb651f64ce65a48bbbc2a96dc093af, type: 3}
 --- !u!1 &4368107617824403872
 GameObject:
   m_ObjectHideFlags: 0
@@ -173,7 +168,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 541de5b11aebdd34391d1d466bd1f03f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4803baed26dbe064fb278c69c950c4a4, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

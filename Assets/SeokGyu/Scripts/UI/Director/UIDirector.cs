@@ -81,11 +81,13 @@ public class UIDirector : MonoBehaviour
                 inGame.Activate();
                 GameController.Instance.SetBackgroundDome(BgDomeType.REALISTIC, true);
                 GameController.Instance.SetBackgroundDome(BgDomeType.TOON, false);
+                GameController.Instance.ResetLevel();
                 break;
             case EButtonType.Retry:
                 inGame.ResetGame();
                 inGame.Activate();
-                //NoteManager.instance.SetGameStart();
+                NoteManager.instance.SetGameStart();
+                GameController.Instance.ResetLevel();
                 break;
             case EButtonType.MainMenu:
                 inGame.ResetGame();

@@ -15,6 +15,8 @@ using UnityEngine;
 */
 public class WallControl : MonoBehaviour
 {
+    public List<int> PlayerBlocks => playerBlocks;
+
     [SerializeField] private List<Transform> playerTransforms;
     [SerializeField] private List<Transform> blocks = new List<Transform>();
     [SerializeField] private List<TreeMixup> treeBlocks = new List<TreeMixup>();
@@ -31,6 +33,8 @@ public class WallControl : MonoBehaviour
 
     void Start()
     {
+        GameController.Instance.InitWallControl(this);
+
         for (int i = 0; i < blocks.Count; i++)
         {
             wallBlocks.Add(0);

@@ -23,4 +23,9 @@ public class CameraFollow : MonoBehaviour
 
         transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref velocity, smoothTime);
     }
+
+    public void ResetPosition()
+    {
+        transform.position = new Vector3(transform.position.x, initialHeight, transform.position.z);
+    }
 }

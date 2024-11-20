@@ -6,15 +6,25 @@ namespace HappySketch
 {
     public class Player : MonoBehaviour
     {
+        public Camera PlayerCam => playerCam;
+        public CameraFollow CameraControl => cameraFollow;
+
         [SerializeField] private int playerNumber;
         [SerializeField] private float animationSpeed;
+        [SerializeField] private AnimationClip idleClip;
         [SerializeField] private List<AnimationClip> climbAnimClips;
         [SerializeField] private Camera playerCam;
+
+        //////////////////////// ERASE
         [SerializeField] private KeyCode moveKey;
-        public Camera PlayerCam => playerCam;
+        ////////////////////////
 
         private WaitForEndOfFrame waitEndOfFrame = new WaitForEndOfFrame();
         private Animator playerAnim;
+        private CameraFollow cameraFollow;
+
+        private Vector3 initialPos;
+        private Quaternion initialRotation;
 
         private int animIndex = 0;
         int animationRepeat = 0;
@@ -25,8 +35,13 @@ namespace HappySketch
         {
             playerAnim = GetComponent<Animator>();
             playerAnim.speed = animationSpeed;
-            GameController.Instance.RegisterPlayer(playerNumber, this);
 
+            initialPos = transform.position;
+            initialRotation = transform.rotation;
+
+            cameraFollow = playerCam.GetComponent<CameraFollow>();
+
+            GameController.Instance.RegisterPlayer(playerNumber, this);
             StartCoroutine(MoveUp());
         }
 
@@ -67,6 +82,7 @@ namespace HappySketch
                 yield return new WaitForSeconds(animDuration);
                 yield return waitEndOfFrame;
 
+                GameController.Instance.TryDisableFirstFloor();
                 isPlayingAnimation = false;
             }
         }
@@ -74,6 +90,19 @@ namespace HappySketch
         private void DisableIsPlayingAnimation()
         {
             isPlayingAnimation = false;
+        }
+
+        public void ResetTransform()
+        {
+            transform.rotation = initialRotation;
+            transform.position = initialPos;
+        }
+
+        public void ResetAnimation()
+        {
+            ClearAnimationRepeat();
+            playerAnim.Play(idleClip.name, -1, 0f);
+            animIndex = 0;
         }
     }
 }

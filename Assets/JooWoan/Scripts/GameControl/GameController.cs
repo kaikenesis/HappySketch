@@ -25,6 +25,7 @@ public class GameController : MonoBehaviour
     
     public static GameController Instance => instance;
     public PostProcessingControl PostProcessControl => postProcessingControl;
+    public FireEffects FireEffectControl => fireEffects;
     public IDictionary<int, Player> PlayerDict => playerDict;
     public int EnableCloudBlockIndex => enableCloudBlockIndex;
     public int EnableBirdBlockIndex => enableBirdBlockIndex;
@@ -33,8 +34,11 @@ public class GameController : MonoBehaviour
     public float BirdSpawnProbability => birdSpawnProbability;
     #endregion
 
-    [SerializeField] private PostProcessingControl postProcessingControl;
-    [SerializeField] private float disableFirstFloorHeight;
+    private PostProcessingControl postProcessingControl;
+    private WallControl wallControl;
+    private FireEffects fireEffects;
+
+    [SerializeField] private float disableFirstLevelBlockIndex;
     [SerializeField] private int enableCloudBlockIndex;
     [SerializeField] private int enableBirdBlockIndex;
     [SerializeField] private int decreaseTreeBlockIndex;
@@ -74,17 +78,20 @@ public class GameController : MonoBehaviour
     }
 
     // Check each player's height(score), if both are high enough disable first floor
-    public void TryDisableFirstFloor(int[] playerScores)
+    public void TryDisableFirstFloor()
     {
+        if (!firstFloor.activeSelf)
+            return;
+
         bool canDisable = true;
 
-        for (int i = 0; i < playerScores.Length; i++)
+        for (int i = 0; i < wallControl.PlayerBlocks.Count; i++)
         {
-            if (playerScores[i] < disableFirstFloorHeight)
+            if (wallControl.PlayerBlocks[i] < disableFirstLevelBlockIndex)
             {
                 canDisable = false;
                 break;
-            }
+            }    
         }
         if (canDisable)
             firstFloor.SetActive(false);
@@ -114,6 +121,33 @@ public class GameController : MonoBehaviour
             default:
                 return;
         }
+    }
+
+    public void InitWallControl(WallControl wallControl)
+    {
+        this.wallControl = wallControl;
+    }
+
+    public void InitPostprocessing(PostProcessingControl postProcessingControl)
+    {
+        this.postProcessingControl = postProcessingControl;
+    }
+
+    public void InitFireEffectControl(FireEffects fireEffects)
+    {
+        this.fireEffects = fireEffects;
+    }
+
+    public void ResetLevel()
+    {
+        foreach (Player player in playerDict.Values)
+        {
+            player.ResetAnimation();
+            player.ResetTransform();
+            player.CameraControl.ResetPosition();
+        }
+        wallControl.ResetBlockStates();
+        firstFloor.SetActive(true);
     }
 }
 

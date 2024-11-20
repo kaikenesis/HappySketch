@@ -6,8 +6,6 @@ public class UIManager : MonoBehaviour
     public int playerNum = 2;
     public int[] scores;
     public bool bPlayGame = false;
-    public float maxTime = 60.0f;
-    public float curTime;
 
     private static UIManager instance;
     public static UIManager Instance

@@ -5,10 +5,12 @@ using UnityEngine;
 public class DebugControl : MonoBehaviour
 {
     [SerializeField] private PostProcessingControl postProcessingControl;
+    [SerializeField] private FireEffects fireEffects;
     [SerializeField] private NoteManager noteManager;
     [SerializeField] private UIDirector uIDirector;
 
     private bool isFeverEffect = false;
+    private bool isFireEnabled = false;
 
     void Update()
     {
@@ -16,12 +18,26 @@ public class DebugControl : MonoBehaviour
             Debug_GotoGameScene();
 
         if (Input.GetKeyDown(KeyCode.F2))
+        {
             isFeverEffect = !isFeverEffect;
+            if (isFeverEffect)
+                postProcessingControl.PlayFeverEffect();
+            else
+                postProcessingControl.StopFeverEffect();
+        }
 
-        if (isFeverEffect)
-            postProcessingControl.PlayFeverEffect();
-        else
-            postProcessingControl.StopFeverEffect();
+        if (Input.GetKeyDown(KeyCode.F3))
+            GameController.Instance.ResetLevel();
+
+        if (Input.GetKeyDown(KeyCode.F4))
+        {
+            isFireEnabled = !isFireEnabled;
+
+            if (isFireEnabled)
+                fireEffects.EnableFireEffect();
+            else
+                fireEffects.DisableFireEffect();
+        }
     }
     private void Debug_GotoGameScene()
     {

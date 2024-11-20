@@ -11,6 +11,8 @@ public class PostProcessingControl : MonoBehaviour
 
     void Start()
     {
+        GameController.Instance.InitPostprocessing(this);
+
         anim = GetComponent<Animator>();
         processVolume = GetComponent<PostProcessVolume>();
         processVolume.profile.TryGetSettings<Vignette>(out vignette);

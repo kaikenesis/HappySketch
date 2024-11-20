@@ -4,7 +4,7 @@ using UnityEngine;
 public class CountDown : MonoBehaviour
 {
     [SerializeField] private GameObject textObject;
-    private TextMeshProUGUI countText;
+    private TextMeshProUGUI thisText;
     private Canvas canvas;
     [SerializeField] private int maxTime = 3;
     private int curTime;
@@ -20,9 +20,9 @@ public class CountDown : MonoBehaviour
     private void Init()
     {
         canvas = GetComponent<Canvas>();
-        countText = textObject.GetComponent<TextMeshProUGUI>();
+        thisText = textObject.GetComponent<TextMeshProUGUI>();
         curTime = maxTime;
-        countText.text = curTime.ToString();
+        thisText.text = curTime.ToString();
         isActive = false;
     }
 
@@ -48,7 +48,7 @@ public class CountDown : MonoBehaviour
             }
             else
             {
-                countText.text = curTime.ToString();
+                thisText.text = curTime.ToString();
                 curTime--;
             }
             curFrame = 0f;
@@ -61,6 +61,6 @@ public class CountDown : MonoBehaviour
         isActive = true;
         curTime = maxTime;
         curFrame = 1.0f;
-        countText.text = curTime.ToString();
+        thisText.text = curTime.ToString();
     }
 }
