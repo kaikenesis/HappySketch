@@ -38,6 +38,15 @@ public class DebugControl : MonoBehaviour
             else
                 fireEffects.DisableFireEffect();
         }
+
+        if (Input.GetKeyDown(KeyCode.F5))
+            SoundManager.Instance.PlaySFX("Blunt6");
+
+        if (Input.GetKeyDown(KeyCode.F6))
+            SoundManager.Instance.PlayBGM("Rain-006");
+
+        if (Input.GetKeyDown(KeyCode.F7))
+            SoundManager.Instance.PauseBGM();
     }
     private void Debug_GotoGameScene()
     {
