@@ -1,7 +1,8 @@
+//using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor.Experimental.GraphView;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,6 +18,7 @@ public class NoteManager : Singleton<NoteManager>
     private int score = 0;
     private int circleWidth = 150;
     public float curTime = 0;
+    private float noteTime = 0;
 
     private bool canEnable = true;
     private bool isFever = false;
@@ -28,7 +30,7 @@ public class NoteManager : Singleton<NoteManager>
 
     private List<GameObject> notes = new();
     private List<GameObject> inCircleNotes = new();
-    private List<GameObject> numberText = new();
+    private List<TextMeshProUGUI> numberText = new();
     private List<GameObject> resultText = new();
     private List<GameObject> feverNotes = new();
     Vector2[] positions = { new(-800, 80), new(-200, 80), new(-800, -400), new(-200, -400),
@@ -36,8 +38,10 @@ public class NoteManager : Singleton<NoteManager>
     private Dictionary<KeyCode, int> keyDict = new();
     private readonly KeyCode[] keyCodes = { KeyCode.A, KeyCode.S, KeyCode.Z, KeyCode.X, KeyCode.J, KeyCode.K, KeyCode.N, KeyCode.M };
 
+    Sprite feverKnob = null;
     void Start()
     {
+        feverKnob = AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/Knob.psd");
         SetKeys();
         GenerateNotes();
         noteEffect.transform.localScale = new Vector3(100,100,100);
@@ -49,10 +53,12 @@ public class NoteManager : Singleton<NoteManager>
         if (!isPlay)
             return;
 
-        curTime += Time.deltaTime;      
-        
+        curTime += Time.deltaTime;
+        noteTime += Time.deltaTime;
+
         CheckNotes();
         CheckGameEnd();
+        SetNumText();
 
         if (!isFever)
             CheckFever();
@@ -96,8 +102,7 @@ public class NoteManager : Singleton<NoteManager>
     IEnumerator EnableNote()
     {
         canEnable = false;
-        Debug.Log("생성");
-
+        noteTime = 0;
         float rand = Random.Range(0, 100);
         int totalNoteCount = 0;
         int curNoteCount = 0;
@@ -105,12 +110,12 @@ public class NoteManager : Singleton<NoteManager>
         //  1 2 3 : 40 40 20
         //  총 점수 같음
         //  25퍼 50퍼 70퍼
-        if (rand <= 40)
+        if (rand < 40)
         {
             totalNoteCount = 1;
             range = 25;
         }
-        else if (rand <= 80)
+        else if (rand < 80)
         {
             totalNoteCount = 2;
             range = 50;
@@ -121,35 +126,76 @@ public class NoteManager : Singleton<NoteManager>
             range = 70;
         }
 
-        for (int i = 0; i < notes.Count / 2; i++)
+        if (totalNoteCount == 3)
         {
+            inCircleNotes[0].SetActive(true);
+            inCircleNotes[1].SetActive(true);
             float random = Random.Range(0, 100);
-            if(random < range && inCircleNotes[i].activeSelf == false)
-            {
-                inCircleNotes[i].SetActive(true);
-                curNoteCount++;
-            }
+            if (random < 50)
+                inCircleNotes[2].SetActive(true);
+            else
+                inCircleNotes[3].SetActive(true);
 
-            if (curNoteCount == totalNoteCount)
-                break;
-            if (i == 3 && curNoteCount != totalNoteCount)
-                i = 0;
+            inCircleNotes[4].SetActive(true);
+            inCircleNotes[5].SetActive(true);
+            random = Random.Range(0, 100);
+            if (random < 50)
+                inCircleNotes[6].SetActive(true);
+            else
+                inCircleNotes[7].SetActive(true);
         }
-
-        curNoteCount = 0;
-        for (int i = notes.Count / 2; i < notes.Count; i++)
+        else
         {
-            float random = Random.Range(0, 100);
-            if (random < range && inCircleNotes[i].activeSelf == false)
+            for (int i = 0; i < notes.Count / 2; i++)
             {
-                inCircleNotes[i].SetActive(true);
-                curNoteCount++;
+                float random = Random.Range(0, 100);
+                if (random < range && inCircleNotes[i].activeSelf == false)
+                {
+                    inCircleNotes[i].SetActive(true);
+                    curNoteCount++;
+                }
+
+
+
+                if (inCircleNotes[2].activeSelf == true && inCircleNotes[3].activeSelf == true)
+                {
+                    if (random < 50)
+                        inCircleNotes[2].SetActive(false);
+                    else
+                        inCircleNotes[3].SetActive(false);
+                    curNoteCount--;
+                }
+
+                if (curNoteCount == totalNoteCount)
+                    break;
+                if (i == 3 && curNoteCount != totalNoteCount)
+                    i = 0;
             }
 
-            if (curNoteCount == totalNoteCount)
-                break;
-            if (i == 7 && curNoteCount != totalNoteCount)
-                i = notes.Count / 2;
+            curNoteCount = 0;
+            for (int i = notes.Count / 2; i < notes.Count; i++)
+            {
+                float random = Random.Range(0, 100);
+                if (random < range && inCircleNotes[i].activeSelf == false)
+                {
+                    inCircleNotes[i].SetActive(true);
+                    curNoteCount++;
+                }
+
+                if (inCircleNotes[6].activeSelf == true && inCircleNotes[7].activeSelf == true)
+                {
+                    if (random < 50)
+                        inCircleNotes[6].SetActive(false);
+                    else
+                        inCircleNotes[7].SetActive(false);
+                    curNoteCount--;
+                }
+
+                if (curNoteCount == totalNoteCount)
+                    break;
+                if (i == 7 && curNoteCount != totalNoteCount)
+                    i = notes.Count / 2;
+            }
         }
         yield return new WaitForSeconds(noteTimeInfo.TotalTime[level]);
         enableNote = null;
@@ -158,7 +204,6 @@ public class NoteManager : Singleton<NoteManager>
 
     IEnumerator DisableNote()
     {
-        Debug.Log("턴 종료");
         for (int i = 0; i < notes.Count; i++)
         {
             inCircleNotes[i].SetActive(false);
@@ -170,7 +215,6 @@ public class NoteManager : Singleton<NoteManager>
     IEnumerator WaitRecreate()
     {
         float rand = Random.Range(noteTimeInfo.MinRecreateTime, noteTimeInfo.MaxRecreateTime);
-        Debug.Log($"재생성 시간 : {rand}");
         yield return new WaitForSeconds(rand);
         waitRecreate = null;
         canEnable = true;
@@ -210,19 +254,18 @@ public class NoteManager : Singleton<NoteManager>
             rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, circleWidth);
             rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, circleWidth);
 
-
             GameObject numText = new();
-            TextMeshProUGUI text = numText.AddComponent<TextMeshProUGUI>();
+            TextMeshProUGUI numTextUGUI = numText.AddComponent<TextMeshProUGUI>();
             numText.name = "numberText" + (i + 1);
             numText.transform.SetParent(transform);
             numText.transform.localPosition = positions[i];
             numText.transform.SetParent(insideCircle.transform);
-            text.text = (i + 1).ToString();
-            text.fontSize = 70;
-            text.alignment = TextAlignmentOptions.Center;
-            text.font = fontCafe24;
-            text.color = new Color32(0x00, 0x00, 0x00, 255);
-            numberText.Add(numText);
+            numTextUGUI.text = (i + 1).ToString();
+            numTextUGUI.fontSize = 70;
+            numTextUGUI.alignment = TextAlignmentOptions.Center;
+            numTextUGUI.font = fontCafe24;
+            numTextUGUI.color = new Color32(0x00, 0x00, 0x00, 255);
+            numberText.Add(numTextUGUI);
 
             GameObject resText = new();
             TextMeshProUGUI resTextUGUI = resText.AddComponent<TextMeshProUGUI>();
@@ -238,13 +281,26 @@ public class NoteManager : Singleton<NoteManager>
             feverNote.name = "feverNote";
             Image feverImage = feverNote.AddComponent<Image>();
             RectTransform feverRect = feverImage.GetComponent<RectTransform>();
-            feverRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, circleWidth);
-            feverRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, circleWidth);
+            feverRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, circleWidth + 10);
+            feverRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, circleWidth + 10);
             feverNote.transform.SetParent(transform);
             feverNote.transform.localPosition = new Vector3( positions[i].x, positions[i].y, -1);
+            feverImage.sprite = feverKnob;
             feverImage.material = feverNoteMat;
             feverNotes.Add(feverNote);
             feverNote.SetActive(false);
+
+            GameObject feverOutline = new();
+            CircleGraphic feverCircle = feverOutline.AddComponent<CircleGraphic>();
+            RectTransform feverOutlineRect = feverOutline.GetComponent<RectTransform>();
+            feverOutline.name = "FeverOutline";
+            feverOutlineRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, circleWidth);
+            feverOutlineRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, circleWidth);
+            feverOutline.transform.SetParent(transform);
+            feverOutline.transform.localPosition = new Vector3(positions[i].x, positions[i].y, -1);
+            feverOutline.transform.SetParent(feverNote.transform);
+            feverCircle.SetMode(CircleGraphic.Mode.Edge);
+            feverCircle.SetEdgeThickness(10);
 
             GameObject feverText = new();
             TextMeshProUGUI feverTextUGUI = feverText.AddComponent<TextMeshProUGUI>();
@@ -259,9 +315,16 @@ public class NoteManager : Singleton<NoteManager>
             feverTextUGUI.text = "FEVER";
             feverTextUGUI.fontSize = 34;
 
-            numberText.Add(numText);
-
             insideCircle.SetActive(false);
+        }
+    }
+    
+    void SetNumText()
+    {
+        for(int i = 0; i < numberText.Count; i++)
+        {
+            TextMeshProUGUI numText = numberText[i].GetComponent<TextMeshProUGUI>();
+            numText.text = (noteTimeInfo.TotalTime[level] - noteTime + 1).ToString("F0");
         }
     }
     
@@ -291,13 +354,14 @@ public class NoteManager : Singleton<NoteManager>
                     GameController.Instance.MoveupPlayer(1);
                     UIManager.Instance.uiDirector.IncreaseScore(1, score);
                 }
-                StartCoroutine(SetResultText(i, score));
-                return;
             }
-            if (score != noteTimeInfo.BadScore && score != -1)
+            else
             {
-                GameController.Instance.MoveupPlayer(2);
-                UIManager.Instance.uiDirector.IncreaseScore(2, score);
+                if (score != noteTimeInfo.BadScore && score != -1)
+                {
+                    GameController.Instance.MoveupPlayer(2);
+                    UIManager.Instance.uiDirector.IncreaseScore(2, score);
+                }
             }
             StartCoroutine(SetResultText(i, score));
         }
