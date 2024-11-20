@@ -86,7 +86,6 @@ public class UIDirector : MonoBehaviour
             case EButtonType.Retry:
                 inGame.ResetGame();
                 inGame.Activate();
-                NoteManager.instance.SetGameStart();
                 GameController.Instance.ResetLevel();
                 break;
             case EButtonType.MainMenu:
