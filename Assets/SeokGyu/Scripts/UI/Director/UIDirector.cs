@@ -154,26 +154,23 @@ public class UIDirector : MonoBehaviour
                 NoteManager.Instance.curTime++;
                 inGame.DecreaseTime();
             }
-            if (GUI.Button(new Rect(0, 100, 100, 50), "점수 증가"))
+            if (GUI.Button(new Rect(0, 100, 100, 50), "남은시간 60초"))
             {
-                IncreaseScore(1, 10);
-                IncreaseScore(2, 30);
+                NoteManager.Instance.curTime = 0;
+                inGame.DecreaseTime();
             }
-            if (GUI.Button(new Rect(0, 150, 100, 50), "피버 타임"))
+            if (GUI.Button(new Rect(0, 150, 100, 50), "남은시간 10초"))
             {
-                inGame.ActivateFeverTime();
+                NoteManager.Instance.curTime = 50;
+                inGame.DecreaseTime();
             }
-            if (GUI.Button(new Rect(0, 200, 100, 50), "1p승리"))
+            if (GUI.Button(new Rect(0, 200, 100, 50), "1p점수 + 1000"))
             {
-                NoteManager.Instance.curTime = 55;
                 IncreaseScore(1, 1000);
-                inGame.DecreaseTime();
             }
-            if (GUI.Button(new Rect(0, 250, 100, 50), "2p승리"))
+            if (GUI.Button(new Rect(0, 250, 100, 50), "2p점수 + 1000"))
             {
-                NoteManager.Instance.curTime = 55;
                 IncreaseScore(2, 1000);
-                inGame.DecreaseTime();
             }
         }
     }

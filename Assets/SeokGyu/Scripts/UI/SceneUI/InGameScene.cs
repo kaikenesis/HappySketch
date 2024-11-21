@@ -107,18 +107,14 @@ public class InGameScene : BaseScene
         if (UIManager.Instance.bPlayGame == true)
         {
             curFrame += Time.deltaTime;
+            DecreaseTime();
             if (curFrame >= delayTime)
             {
                 float time = NoteManager.Instance.noteTimeInfo.PlayTime - NoteManager.Instance.curTime;
                 if (time <= 0)
                 {
-                    DecreaseTime();
-                    StopGame();
                     // InGame 진행멈추고 결과화면 띄우기
-                }
-                else
-                {
-                    DecreaseTime();
+                    StopGame();
                 }
                 curFrame = 0f;
             }
@@ -136,7 +132,7 @@ public class InGameScene : BaseScene
         base.Activate();
 
         countDown.Activate();
-        timer.ResetText();
+        timer.ResetProgress();
     }
 
     public void ResetGame()
@@ -149,11 +145,13 @@ public class InGameScene : BaseScene
         }
 
         DeactivateFeverTime();
+        timer.SetDefaultColor();
     }
 
     public void DecreaseTime()
     {
         timer.SetText();
+        timer.SetSlider();
     }
 
     public void SetScore(int playerNum, int score)
@@ -167,6 +165,7 @@ public class InGameScene : BaseScene
         {
             feverCanvases[i].enabled = true;
         }
+        timer.SetFeverColor();
     }
 
     public void DeactivateFeverTime()
