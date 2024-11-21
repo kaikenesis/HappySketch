@@ -30,7 +30,7 @@ public class NoteManager : Singleton<NoteManager>
 
     private List<GameObject> notes = new();
     private List<GameObject> inCircleNotes = new();
-    private List<TextMeshProUGUI> numberText = new();
+    private List<GameObject> numberText = new();
     private List<GameObject> resultText = new();
     private List<GameObject> feverNotes = new();
     Vector2[] positions = { new(-800, 80), new(-200, 80), new(-800, -400), new(-200, -400),
@@ -58,6 +58,7 @@ public class NoteManager : Singleton<NoteManager>
 
         CheckNotes();
         CheckGameEnd();
+
         SetNumText();
 
         if (!isFever)
@@ -225,7 +226,7 @@ public class NoteManager : Singleton<NoteManager>
         for (int i = 0; i < 8; i++)
         {
             GameObject insideCircle = new GameObject();
-            insideCircle.name = "inCircle note" + (i + 1);
+            insideCircle.name = "InCircle note" + (i + 1);
             insideCircle.transform.SetParent(transform);
             insideCircle.transform.localPosition = positions[i];
             CircleGraphic inCircleCG = insideCircle.AddComponent<CircleGraphic>();
@@ -235,22 +236,23 @@ public class NoteManager : Singleton<NoteManager>
             childRectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, circleWidth);
             inCircleCG.color = new Color32(0xff, 0xa0, 0x7a, 255);
             inCircleNotes.Add(insideCircle);
+            insideCircle.SetActive(false);
 
-            GameObject obj = new GameObject();
-            obj.name = "note" + (i + 1);
-            obj.transform.SetParent(transform);
-            obj.transform.localPosition = positions[i];
-            obj.transform.SetParent(insideCircle.transform);
-            notes.Add(obj);
+            GameObject OutCircleNote = new GameObject();
+            OutCircleNote.name = "OutCircle Note" + (i + 1);
+            OutCircleNote.transform.SetParent(transform);
+            OutCircleNote.transform.localPosition = positions[i];
+            OutCircleNote.transform.SetParent(insideCircle.transform);
+            notes.Add(OutCircleNote);
 
-            Note note = obj.AddComponent<Note>();
+            Note note = OutCircleNote.AddComponent<Note>();
             note.SetNoteTimeInfo(noteTimeInfo);
-            CircleGraphic cg = obj.AddComponent<CircleGraphic>();
+            CircleGraphic cg = OutCircleNote.AddComponent<CircleGraphic>();
             cg.color = new Color32(238,74,74,255);
             cg.SetMode(CircleGraphic.Mode.Edge);
             cg.SetEdgeThickness(10);
 
-            RectTransform rectTran = obj.GetComponent<RectTransform>();
+            RectTransform rectTran = OutCircleNote.GetComponent<RectTransform>();
             rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, circleWidth);
             rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, circleWidth);
 
@@ -265,7 +267,7 @@ public class NoteManager : Singleton<NoteManager>
             numTextUGUI.alignment = TextAlignmentOptions.Center;
             numTextUGUI.font = fontCafe24;
             numTextUGUI.color = new Color32(0x00, 0x00, 0x00, 255);
-            numberText.Add(numTextUGUI);
+            numberText.Add(numText);
 
             GameObject resText = new();
             TextMeshProUGUI resTextUGUI = resText.AddComponent<TextMeshProUGUI>();
@@ -315,7 +317,6 @@ public class NoteManager : Singleton<NoteManager>
             feverTextUGUI.text = "FEVER";
             feverTextUGUI.fontSize = 34;
 
-            insideCircle.SetActive(false);
         }
     }
     
@@ -324,7 +325,13 @@ public class NoteManager : Singleton<NoteManager>
         for(int i = 0; i < numberText.Count; i++)
         {
             TextMeshProUGUI numText = numberText[i].GetComponent<TextMeshProUGUI>();
-            numText.text = (noteTimeInfo.TotalTime[level] - noteTime + 1).ToString("F0");
+            if (noteTimeInfo.TotalTime[level] / 2 - noteTime < 0)
+            {
+                numText.text = null;
+                
+            }
+            else
+                numText.text = (noteTimeInfo.TotalTime[level] / 2 - noteTime + 1).ToString("F0");
         }
     }
     
