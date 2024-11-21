@@ -7,10 +7,8 @@ public class InGameScene : BaseScene
     [SerializeField] private Vector2 scorePosition;
     [SerializeField] private GameObject feverTextPrefab;
     [SerializeField] private Vector2 feverTextPosition;
-    [SerializeField] private GameObject countDownPrefab;
-    private CountDown countDown;
-    [SerializeField] private GameObject timerPrefab;
-    private TimeProgress timer;
+    [SerializeField] private CountDown countDown;
+    [SerializeField] private TimeProgress timer;
     private InGameScore[] scoreTexts;
     private GameObject[] feverTexts;
     private Canvas[] feverCanvases;
@@ -64,16 +62,6 @@ public class InGameScene : BaseScene
 
             feverTexts[i] = gameObject;
             
-        }
-
-        // CountDown
-        {
-            countDown = countDownPrefab.GetComponent<CountDown>();
-        }
-
-        // Timer
-        {
-            timer = timerPrefab.GetComponent<TimeProgress>();
         }
 
         // Line
@@ -145,13 +133,12 @@ public class InGameScene : BaseScene
         }
 
         DeactivateFeverTime();
-        timer.SetDefaultColor();
+        timer.SetProgressColor(false);
     }
 
     public void DecreaseTime()
     {
-        timer.SetText();
-        timer.SetSlider();
+        timer.UpdateProgress();
     }
 
     public void SetScore(int playerNum, int score)
@@ -165,7 +152,7 @@ public class InGameScene : BaseScene
         {
             feverCanvases[i].enabled = true;
         }
-        timer.SetFeverColor();
+        timer.SetProgressColor(true);
     }
 
     public void DeactivateFeverTime()

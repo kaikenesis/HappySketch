@@ -2,22 +2,16 @@ using UnityEngine;
 
 public class UIDirector : MonoBehaviour
 {
-    [SerializeField] private GameObject mainMenuObject;
-    [SerializeField] private GameObject selectLevelObject;
-    [SerializeField] private GameObject explainObject;
-    [SerializeField] private GameObject inGameObject;
-    [SerializeField] private GameObject resultScreenObject;
+    [SerializeField] private Canvas mainMenuCanvas;
+    [SerializeField] private Canvas selectLevelCanvas;
+    [SerializeField] private Canvas explainCanvas;
+    [SerializeField] private Canvas inGameCanvas;
+    [SerializeField] private Canvas resultCanvas;
+
+    [SerializeField] private ExplainScene explain;
+    [SerializeField] private InGameScene inGame;
+    [SerializeField] private ResultScene resultScene;
     private bool bDebug = false;
-
-    private Canvas mainMenuCanvas;
-    private Canvas selectLevelCanvas;
-    private Canvas explainCanvas;
-    private Canvas inGameCanvas;
-    private Canvas resultCanvas;
-
-    private ExplainScene explain;
-    private InGameScene inGame;
-    private ResultScene resultScene;
 
     public ELevel curLevel;
 
@@ -29,16 +23,6 @@ public class UIDirector : MonoBehaviour
     private void SetInfo()
     {
         UIManager.Instance.uiDirector = this;
-
-        mainMenuCanvas = mainMenuObject.GetComponent<Canvas>();
-        selectLevelCanvas = selectLevelObject.GetComponent<Canvas>();
-        explainCanvas = explainObject.GetComponent<Canvas>();
-        inGameCanvas = inGameObject.GetComponent<Canvas>();
-        resultCanvas = resultScreenObject.GetComponent<Canvas>();
-
-        explain = explainObject.GetComponent<ExplainScene>();
-        inGame = inGameObject.GetComponent<InGameScene>();
-        resultScene = resultScreenObject.GetComponent<ResultScene>();
 
         mainMenuCanvas.enabled = true;
         selectLevelCanvas.enabled = false;

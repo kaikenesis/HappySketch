@@ -22,7 +22,7 @@ public class TimeProgress : MonoBehaviour
         feverImg.enabled = false;
     }
 
-    public void SetText()
+    private void SetText()
     {
         float time = NoteManager.Instance.noteTimeInfo.PlayTime - NoteManager.instance.curTime;
         if (UIManager.Instance.bPlayGame == false) return;
@@ -31,7 +31,7 @@ public class TimeProgress : MonoBehaviour
         timeText.text = time.ToString("F0") + "초";
     }
 
-    public void SetSlider()
+    private void SetSlider()
     {
         progressSlider.value = 1.0f - (NoteManager.Instance.curTime / NoteManager.Instance.noteTimeInfo.PlayTime);
         if (progressSlider.value <= 0.0f)
@@ -40,25 +40,37 @@ public class TimeProgress : MonoBehaviour
             feverImg.enabled = false;
         }
     }
-
-    public void ResetProgress()
-    {
-        timeText.text = NoteManager.Instance.noteTimeInfo.PlayTime.ToString("F0") + "초";
-        progressSlider.value = 1.0f;
-        SetDefaultColor();
-    }
-
-    public void SetFeverColor()
+    
+    private void SetFeverColor()
     {
         // Mask처리를 위해서 본래 progress바의 Material을 null로 초기화하고, mask를 씌울 rainbowImage를 활성화시킴
         BarImg.material = null;
         feverImg.enabled = true;
     }
 
-    public void SetDefaultColor()
+    private void SetDefaultColor()
     {
         BarImg.material = defaultMaterial;
         BarImg.enabled = true;
         feverImg.enabled = false;
+    }
+
+    public void UpdateProgress()
+    {
+        SetText();
+        SetSlider();
+    }
+
+    public void SetProgressColor(bool isFever)
+    {
+        if (isFever == true) SetFeverColor();
+        else SetDefaultColor();
+    }
+
+    public void ResetProgress()
+    {
+        timeText.text = NoteManager.Instance.noteTimeInfo.PlayTime.ToString("F0") + "초";
+        progressSlider.value = 1.0f;
+        SetDefaultColor();
     }
 }

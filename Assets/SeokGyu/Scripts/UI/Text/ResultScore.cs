@@ -3,22 +3,8 @@ using UnityEngine;
 
 public class ResultScore : MonoBehaviour
 {
-    [SerializeField] private GameObject textObject;
-    [SerializeField] private GameObject scoreObject;
-    private TextMeshProUGUI resultText;
-    private TextMeshProUGUI scoreText;
-
-
-    private void Start()
-    {
-        SetInfo();
-    }
-
-    private void SetInfo()
-    {
-        resultText = textObject.GetComponent<TextMeshProUGUI>();
-        scoreText = scoreObject.GetComponent<TextMeshProUGUI>();
-    }
+    [SerializeField] private TextMeshProUGUI resultText;
+    [SerializeField] private TextMeshProUGUI scoreText;
 
     public void SetText(bool bWinner, int playerNum)
     {
