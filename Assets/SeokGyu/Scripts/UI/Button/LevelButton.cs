@@ -1,10 +1,12 @@
 using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class LevelButton : ChangeUIButton
 {
     public ELevel level;
     private TextMeshProUGUI subTitleText;
-    
+    private Image thisImg;
 
     private void Awake()
     {
@@ -15,17 +17,25 @@ public class LevelButton : ChangeUIButton
     {
         base.Init();
         subTitleText = GetComponentInChildren<TextMeshProUGUI>();
+        thisImg = GetComponent<Image>();
+        Color color;
 
         switch (level)
         {
             case ELevel.Easy:
                 subTitleText.text = "쉬움";
+                ColorUtility.TryParseHtmlString("#FFE776FF", out color);
+                thisImg.color = color;
                 break;
             case ELevel.Normal:
                 subTitleText.text = "보통";
+                ColorUtility.TryParseHtmlString("#6AA6F7FF", out color);
+                thisImg.color = color;
                 break;
             case ELevel.Hard:
                 subTitleText.text = "어려움";
+                ColorUtility.TryParseHtmlString("#F75D76FF", out color);
+                thisImg.color = color;
                 break;
         }
     }
