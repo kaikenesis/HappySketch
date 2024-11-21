@@ -73,6 +73,8 @@ public class UIDirector : MonoBehaviour
                 GameController.Instance.ResetLevel();
                 break;
             case EButtonType.MainMenu:
+                GameController.Instance.SetBackgroundDome(BgDomeType.REALISTIC, false);
+                GameController.Instance.SetBackgroundDome(BgDomeType.TOON, true);
                 inGame.ResetGame();
                 inGameCanvas.enabled = false;
                 mainMenuCanvas.enabled = true;

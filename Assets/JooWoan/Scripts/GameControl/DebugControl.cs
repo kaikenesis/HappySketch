@@ -40,13 +40,19 @@ public class DebugControl : MonoBehaviour
         }
 
         if (Input.GetKeyDown(KeyCode.F5))
-            SoundManager.Instance.PlaySFX("Blunt6");
+            SoundManager.PlaySFX("Blunt6");
 
         if (Input.GetKeyDown(KeyCode.F6))
-            SoundManager.Instance.PlayBGM("Rain-006");
+            SoundManager.PlayBGM("CherryCola");
 
         if (Input.GetKeyDown(KeyCode.F7))
-            SoundManager.Instance.PauseBGM();
+            SoundManager.SetBgmSpeed(1.5f);
+
+        if (Input.GetKeyDown(KeyCode.F8))
+        {
+            SoundManager.PauseBGM();
+            SoundManager.SetBgmSpeed();
+        }
     }
     private void Debug_GotoGameScene()
     {
