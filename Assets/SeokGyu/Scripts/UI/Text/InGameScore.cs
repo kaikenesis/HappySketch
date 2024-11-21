@@ -3,8 +3,7 @@ using UnityEngine;
 
 public class InGameScore : MonoBehaviour
 {
-    [SerializeField] private GameObject scoreTextObject;
-    private TextMeshProUGUI thisText;
+    [SerializeField] private TextMeshProUGUI scoreText;
     private int defaultScore = 0;
 
     private void Awake()
@@ -14,12 +13,11 @@ public class InGameScore : MonoBehaviour
 
     private void Init()
     {
-        thisText = scoreTextObject.GetComponent<TextMeshProUGUI>();
-        thisText.text = defaultScore + "M";
+        scoreText.text = defaultScore + "M";
     }
 
     public void SetText(int score)
     {
-        thisText.text = score + "M";
+        scoreText.text = score + "M";
     }
 }

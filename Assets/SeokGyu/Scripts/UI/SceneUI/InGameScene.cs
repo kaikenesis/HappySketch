@@ -7,10 +7,8 @@ public class InGameScene : BaseScene
     [SerializeField] private Vector2 scorePosition;
     [SerializeField] private GameObject feverTextPrefab;
     [SerializeField] private Vector2 feverTextPosition;
-    [SerializeField] private GameObject countDownPrefab;
-    private CountDown countDown;
-    [SerializeField] private GameObject timerPrefab;
-    private TimeProgress timer;
+    [SerializeField] private CountDown countDown;
+    [SerializeField] private TimeProgress timer;
     private InGameScore[] scoreTexts;
     private GameObject[] feverTexts;
     private Canvas[] feverCanvases;
@@ -66,16 +64,6 @@ public class InGameScene : BaseScene
             
         }
 
-        // CountDown
-        {
-            countDown = countDownPrefab.GetComponent<CountDown>();
-        }
-
-        // Timer
-        {
-            timer = timerPrefab.GetComponent<TimeProgress>();
-        }
-
         // Line
         int dist = Screen.width / playerNum;
         int posX = 0;
@@ -107,18 +95,14 @@ public class InGameScene : BaseScene
         if (UIManager.Instance.bPlayGame == true)
         {
             curFrame += Time.deltaTime;
+            DecreaseTime();
             if (curFrame >= delayTime)
             {
                 float time = NoteManager.Instance.noteTimeInfo.PlayTime - NoteManager.Instance.curTime;
                 if (time <= 0)
                 {
-                    DecreaseTime();
-                    StopGame();
                     // InGame 진행멈추고 결과화면 띄우기
-                }
-                else
-                {
-                    DecreaseTime();
+                    StopGame();
                 }
                 curFrame = 0f;
             }
@@ -136,7 +120,7 @@ public class InGameScene : BaseScene
         base.Activate();
 
         countDown.Activate();
-        timer.ResetText();
+        timer.ResetProgress();
     }
 
     public void ResetGame()
@@ -149,11 +133,12 @@ public class InGameScene : BaseScene
         }
 
         DeactivateFeverTime();
+        timer.SetProgressColor(false);
     }
 
     public void DecreaseTime()
     {
-        timer.SetText();
+        timer.UpdateProgress();
     }
 
     public void SetScore(int playerNum, int score)
@@ -167,6 +152,7 @@ public class InGameScene : BaseScene
         {
             feverCanvases[i].enabled = true;
         }
+        timer.SetProgressColor(true);
     }
 
     public void DeactivateFeverTime()

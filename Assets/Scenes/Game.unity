@@ -48308,6 +48308,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 461747618880042143, guid: 38d6bbbd88e8cc64c92368e21fe824ac, type: 3}
+      propertyPath: mainCamera
+      value: 
+      objectReference: {fileID: 1034828485}
+    - target: {fileID: 461747618880042143, guid: 38d6bbbd88e8cc64c92368e21fe824ac, type: 3}
       propertyPath: mainMenuCamera
       value: 
       objectReference: {fileID: 1034828483}
@@ -48459,6 +48463,18 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4695020833601736965, guid: 38d6bbbd88e8cc64c92368e21fe824ac, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4695020833601736965, guid: 38d6bbbd88e8cc64c92368e21fe824ac, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5996075637127563495, guid: 38d6bbbd88e8cc64c92368e21fe824ac, type: 3}
+      propertyPath: m_FillAmount
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6047279301446450919, guid: 38d6bbbd88e8cc64c92368e21fe824ac, type: 3}
       propertyPath: m_Name
       value: UIDirector
@@ -48476,9 +48492,25 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8509787068088838305, guid: 38d6bbbd88e8cc64c92368e21fe824ac, type: 3}
+      propertyPath: mainCamera
+      value: 
+      objectReference: {fileID: 1034828485}
+    - target: {fileID: 8509787068088838305, guid: 38d6bbbd88e8cc64c92368e21fe824ac, type: 3}
       propertyPath: mainMenuCamera
       value: 
       objectReference: {fileID: 1034828483}
+    - target: {fileID: 8943374691760128129, guid: 38d6bbbd88e8cc64c92368e21fe824ac, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8943374691760128129, guid: 38d6bbbd88e8cc64c92368e21fe824ac, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8943374691760128129, guid: 38d6bbbd88e8cc64c92368e21fe824ac, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9108364567959003849, guid: 38d6bbbd88e8cc64c92368e21fe824ac, type: 3}
       propertyPath: m_Enabled
       value: 0

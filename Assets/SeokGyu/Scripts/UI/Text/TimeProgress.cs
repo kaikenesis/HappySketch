@@ -4,20 +4,11 @@ using UnityEngine.UI;
 
 public class TimeProgress : MonoBehaviour
 {
-    [SerializeField] private GameObject textObject;
-    private TextMeshProUGUI timeText;
-    private Image progressImg;
-
-    private void Awake()
-    {
-        Init();
-    }
-
-    void Init()
-    {
-        timeText = textObject.GetComponentInChildren<TextMeshProUGUI>();
-        progressImg = GetComponent<Image>();
-    }
+    [SerializeField] private TextMeshProUGUI timeText;
+    [SerializeField] private Slider progressSlider;
+    [SerializeField] private Material defaultMaterial;
+    [SerializeField] private Image BarImg;
+    [SerializeField] private Image feverImg;
 
     private void Start()
     {
@@ -27,14 +18,11 @@ public class TimeProgress : MonoBehaviour
     private void SetInfo()
     {
         timeText.text = NoteManager.Instance.noteTimeInfo.PlayTime.ToString("F0") + "초";
+        BarImg.material = defaultMaterial;
+        feverImg.enabled = false;
     }
 
-    public void ResetText()
-    {
-        timeText.text = NoteManager.Instance.noteTimeInfo.PlayTime.ToString("F0") + "초";
-    }
-
-    public void SetText()
+    private void SetText()
     {
         float time = NoteManager.Instance.noteTimeInfo.PlayTime - NoteManager.instance.curTime;
         if (UIManager.Instance.bPlayGame == false) return;
@@ -43,13 +31,46 @@ public class TimeProgress : MonoBehaviour
         timeText.text = time.ToString("F0") + "초";
     }
 
-    public void SetFeverColor()
+    private void SetSlider()
     {
-        // 피버타임때 무지개색으로 변경
+        progressSlider.value = 1.0f - (NoteManager.Instance.curTime / NoteManager.Instance.noteTimeInfo.PlayTime);
+        if (progressSlider.value <= 0.0f)
+        {
+            BarImg.enabled = false;
+            feverImg.enabled = false;
+        }
+    }
+    
+    private void SetFeverColor()
+    {
+        // Mask처리를 위해서 본래 progress바의 Material을 null로 초기화하고, mask를 씌울 rainbowImage를 활성화시킴
+        BarImg.material = null;
+        feverImg.enabled = true;
     }
 
-    public void SetDefaultColor()
+    private void SetDefaultColor()
     {
+        BarImg.material = defaultMaterial;
+        BarImg.enabled = true;
+        feverImg.enabled = false;
+    }
 
+    public void UpdateProgress()
+    {
+        SetText();
+        SetSlider();
+    }
+
+    public void SetProgressColor(bool isFever)
+    {
+        if (isFever == true) SetFeverColor();
+        else SetDefaultColor();
+    }
+
+    public void ResetProgress()
+    {
+        timeText.text = NoteManager.Instance.noteTimeInfo.PlayTime.ToString("F0") + "초";
+        progressSlider.value = 1.0f;
+        SetDefaultColor();
     }
 }

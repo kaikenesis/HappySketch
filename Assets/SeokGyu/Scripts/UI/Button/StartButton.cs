@@ -1,21 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class StartButton : ChangeUIButton
 {
-    [SerializeField] private GameObject mainMenuCamera;
-    private Camera mainCamera;
-
-    private void Start()
-    {
-        SetInfo();
-    }
-
-    private void SetInfo()
-    {
-        mainCamera = mainMenuCamera.GetComponent<Camera>();
-    }
+    [SerializeField] private Camera mainCamera;
 
     public override void OnClicked()
     {

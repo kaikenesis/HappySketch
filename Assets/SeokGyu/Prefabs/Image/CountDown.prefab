@@ -93,7 +93,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1a8e976586008a4aaa7f088c36f0277, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textObject: {fileID: 7600804473834339240}
+  countText: {fileID: 6890196870627816127}
   maxTime: 3
 --- !u!1 &6275781188113026842
 GameObject:
