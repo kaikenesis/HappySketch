@@ -8,11 +8,14 @@ public class SoundManager : MonoBehaviour
     public static SoundManager Instance { get; private set; }
     void Awake()
     {
-        if (Instance != null)
+        if (Instance == null)
+        {
+            Instance = this;
+            Init();
+            DontDestroyOnLoad(gameObject);
             return;
-
-        Instance = this;
-        Init();
+        }
+        Destroy(gameObject);
     }
     #endregion
 
@@ -32,49 +35,54 @@ public class SoundManager : MonoBehaviour
         foreach (AudioClip clip in sfxArr)
             sfxDict.Add(clip.name, clip);
     }
-    public void PlaySFX(string name)
+    public static void PlaySFX(string name)
     {
-        if (!sfxDict.ContainsKey(name))
+        if (!Instance.sfxDict.ContainsKey(name))
             return;
 
-        sfxPlayer.PlayOneShot(sfxDict[name], sfxVolume);
+        Instance.sfxPlayer.PlayOneShot(Instance.sfxDict[name], Instance.sfxVolume);
     }
-    public void PlayBGM(string name)
+    public static void PlayBGM(string name)
     {
-        if (!bgmDict.ContainsKey(name))
+        if (!Instance.bgmDict.ContainsKey(name))
             return;
 
         PauseBGM();
-        bgmPlayer.clip = bgmDict[name];
-        bgmPlayer.volume = bgmVolume;
-        bgmPlayer.Play();
+        Instance.bgmPlayer.clip = Instance.bgmDict[name];
+        Instance.bgmPlayer.volume = Instance.bgmVolume;
+        Instance.bgmPlayer.Play();
     }
 
-    public void PauseBGM()
+    public static void PauseBGM()
     {
-        if (bgmPlayer == null)
+        if (Instance.bgmPlayer == null)
             return;
 
-        bgmPlayer.Pause();
+        Instance.bgmPlayer.Pause();
     }
 
-    public void StopBGM()
+    public static void StopBGM()
     {
-        if (bgmPlayer == null)
+        if (Instance.bgmPlayer == null)
             return;
 
-        bgmPlayer.Stop();
+        Instance.bgmPlayer.Stop();
     }
-    public void SetVolumeBGM(float volume)
+    public static void SetVolumeBGM(float volume)
     {
-        bgmVolume = volume;
+        Instance.bgmVolume = volume;
 
-        if (bgmPlayer != null)
-            bgmPlayer.volume = bgmVolume;
+        if (Instance.bgmPlayer != null)
+            Instance.bgmPlayer.volume = Instance.bgmVolume;
     }
 
-    public void SetVolumeSFX(float volume)
+    public static void SetVolumeSFX(float volume)
     {
-        sfxVolume = volume;
+        Instance.sfxVolume = volume;
+    }
+
+    public static void SetBgmSpeed(float speed = 1.0f)
+    {
+        Instance.bgmPlayer.pitch = speed;
     }
 }
