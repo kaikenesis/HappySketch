@@ -30,7 +30,7 @@ public class NoteManager : Singleton<NoteManager>
 
     private List<GameObject> notes = new();
     private List<GameObject> inCircleNotes = new();
-    private List<TextMeshProUGUI> numberText = new();
+    private List<GameObject> numberText = new();
     private List<GameObject> resultText = new();
     private List<GameObject> feverNotes = new();
     Vector2[] positions = { new(-800, 80), new(-200, 80), new(-800, -400), new(-200, -400),
@@ -58,6 +58,7 @@ public class NoteManager : Singleton<NoteManager>
 
         CheckNotes();
         CheckGameEnd();
+
         SetNumText();
 
         if (!isFever)
@@ -235,6 +236,7 @@ public class NoteManager : Singleton<NoteManager>
             childRectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, circleWidth);
             inCircleCG.color = new Color32(0xff, 0xa0, 0x7a, 255);
             inCircleNotes.Add(insideCircle);
+            insideCircle.SetActive(false);
 
             GameObject OutCircleNote = new GameObject();
             OutCircleNote.name = "OutCircle Note" + (i + 1);
@@ -265,7 +267,7 @@ public class NoteManager : Singleton<NoteManager>
             numTextUGUI.alignment = TextAlignmentOptions.Center;
             numTextUGUI.font = fontCafe24;
             numTextUGUI.color = new Color32(0x00, 0x00, 0x00, 255);
-            numberText.Add(numTextUGUI);
+            numberText.Add(numText);
 
             GameObject resText = new();
             TextMeshProUGUI resTextUGUI = resText.AddComponent<TextMeshProUGUI>();
@@ -315,7 +317,6 @@ public class NoteManager : Singleton<NoteManager>
             feverTextUGUI.text = "FEVER";
             feverTextUGUI.fontSize = 34;
 
-            insideCircle.SetActive(false);
         }
     }
     
@@ -324,7 +325,13 @@ public class NoteManager : Singleton<NoteManager>
         for(int i = 0; i < numberText.Count; i++)
         {
             TextMeshProUGUI numText = numberText[i].GetComponent<TextMeshProUGUI>();
-            numText.text = (noteTimeInfo.TotalTime[level] - noteTime + 1).ToString("F0");
+            if (noteTimeInfo.TotalTime[level] / 2 - noteTime < 0)
+            {
+                numText.text = null;
+                
+            }
+            else
+                numText.text = (noteTimeInfo.TotalTime[level] / 2 - noteTime + 1).ToString("F0");
         }
     }
     
