@@ -63751,9 +63751,9 @@ MonoBehaviour:
   sfxVolume: 0.4
   bgmVolume: 0.4
   bgmArr:
-  - {fileID: 8300000, guid: 79fd49b6bfbd84a4991b7a057788478f, type: 3}
+  - {fileID: 0}
   sfxArr:
-  - {fileID: 8300000, guid: e29a71f9ca223774fb7a7e3b1ebadd3e, type: 3}
+  - {fileID: 0}
   bgmPlayer: {fileID: 1712024620}
   sfxPlayer: {fileID: 1712024617}
 --- !u!4 &1712024619
