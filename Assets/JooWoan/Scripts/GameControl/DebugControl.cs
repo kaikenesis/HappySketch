@@ -40,13 +40,13 @@ public class DebugControl : MonoBehaviour
         }
 
         if (Input.GetKeyDown(KeyCode.F5))
-            SoundManager.PlaySFX("Blunt6");
+            SoundManager.PlaySFX("punch_blocked_03");
 
         if (Input.GetKeyDown(KeyCode.F6))
-            SoundManager.PlayBGM("CherryCola");
+            SoundManager.PlayBGM("Skunk Jump Looping");
 
         if (Input.GetKeyDown(KeyCode.F7))
-            SoundManager.SetBgmSpeed(1.5f);
+            SoundManager.SetBgmSpeed(1.2f);
 
         if (Input.GetKeyDown(KeyCode.F8))
         {

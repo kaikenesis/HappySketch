@@ -63751,9 +63751,14 @@ MonoBehaviour:
   sfxVolume: 0.4
   bgmVolume: 0.4
   bgmArr:
-  - {fileID: 0}
+  - {fileID: 8300000, guid: 48992f71ea79efd41bb8f8a3abac4a7b, type: 3}
+  - {fileID: 8300000, guid: f7a7c5a3e10f4fb4dbaa558fe1a73a23, type: 3}
   sfxArr:
-  - {fileID: 0}
+  - {fileID: 8300000, guid: 34f9cbd28a9740349b6cc2f5e280dda3, type: 3}
+  - {fileID: 8300000, guid: 612981ea77925cc4e90503a49c0bf2cc, type: 3}
+  - {fileID: 8300000, guid: daaf3da4a2943f242a9cf9d3d1b2efe7, type: 3}
+  - {fileID: 8300000, guid: 8ea3439db6655434f95736557a60bfc5, type: 3}
+  - {fileID: 8300000, guid: 0a0e201efb6a78c4baffb4827dcc1b73, type: 3}
   bgmPlayer: {fileID: 1712024620}
   sfxPlayer: {fileID: 1712024617}
 --- !u!4 &1712024619
