@@ -42,9 +42,11 @@ public class CountDown : MonoBehaviour
                 canvas.enabled = false;
                 UIManager.Instance.bPlayGame = true;
                 NoteManager.instance.SetGameStart();
+                SoundManager.PlayBGM(ConstStrings.BGM_GAME);
             }
             else
             {
+                SoundManager.PlaySFX(ConstStrings.SFX_COUNTDOWN);
                 countText.text = curTime.ToString();
                 curTime--;
             }
@@ -54,6 +56,8 @@ public class CountDown : MonoBehaviour
 
     public void Activate()
     {
+        SoundManager.StopBGM();
+
         canvas.enabled = true;
         isActive = true;
         curTime = maxTime;

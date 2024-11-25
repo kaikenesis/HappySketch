@@ -351,6 +351,8 @@ public class NoteManager : Singleton<NoteManager>
         Note note = notes[i].GetComponent<Note>();
         Vector3 createPos = note.transform.position;
         Instantiate(noteEffect, createPos, Quaternion.identity, transform.parent);
+        SoundManager.PlaySFX(ConstStrings.SFX_NOTEHIT_DEFAULT);
+
         if (inCircleNotes[i].activeSelf == true)
         {
             score = note.Check();
@@ -417,6 +419,10 @@ public class NoteManager : Singleton<NoteManager>
             UIManager.Instance.uiDirector.ActivateFever();
             GameController.Instance.FireEffectControl.EnableFireEffect();
 
+            float playBackSpeed = GameController.Instance.FeverPlaybackSpeed;
+            SoundManager.PlaySFX(ConstStrings.SFX_FEVER_TRANSITION);
+            SoundManager.SetBgmSpeed(playBackSpeed);
+
             for (int i = 0; i < notes.Count; i++)
             {
                 notes[i].GetComponent<Note>().SetFever(true);
@@ -447,6 +453,8 @@ public class NoteManager : Singleton<NoteManager>
             GameController.Instance.StopPlayerAnimation();
             GameController.Instance.PostProcessControl.StopFeverEffect();
             GameController.Instance.FireEffectControl.DisableFireEffect();
+
+            SoundManager.SetBgmSpeed();
 
             for (int i = 0; i < notes.Count; i++)
             {

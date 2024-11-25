@@ -75,6 +75,7 @@ public class UIDirector : MonoBehaviour
             case EButtonType.MainMenu:
                 GameController.Instance.SetBackgroundDome(BgDomeType.REALISTIC, false);
                 GameController.Instance.SetBackgroundDome(BgDomeType.TOON, true);
+                SoundManager.PlayBGM(ConstStrings.BGM_TITLE);
                 inGame.ResetGame();
                 inGameCanvas.enabled = false;
                 mainMenuCanvas.enabled = true;
