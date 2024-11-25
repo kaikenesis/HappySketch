@@ -421,6 +421,7 @@ public class NoteManager : Singleton<NoteManager>
 
             float playBackSpeed = GameController.Instance.FeverPlaybackSpeed;
             SoundManager.PlaySFX(ConstStrings.SFX_FEVER_TRANSITION);
+            SoundManager.PlaySFX(ConstStrings.SFX_FEVER_CHARGEUP);
             SoundManager.SetBgmSpeed(playBackSpeed);
 
             for (int i = 0; i < notes.Count; i++)
@@ -454,6 +455,7 @@ public class NoteManager : Singleton<NoteManager>
             GameController.Instance.PostProcessControl.StopFeverEffect();
             GameController.Instance.FireEffectControl.DisableFireEffect();
 
+            SoundManager.PlaySFX(ConstStrings.SFX_FEVER_COOLDOWN);
             SoundManager.SetBgmSpeed();
 
             for (int i = 0; i < notes.Count; i++)

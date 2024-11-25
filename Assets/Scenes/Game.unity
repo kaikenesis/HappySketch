@@ -63665,6 +63665,10 @@ MonoBehaviour:
     minPlaybackInterval: 0.06
   - audioClip: {fileID: 8300000, guid: 8ea3439db6655434f95736557a60bfc5, type: 3}
     minPlaybackInterval: 0.06
+  - audioClip: {fileID: 8300000, guid: 20fe6bcadf7268d4ab4ec3664eeeb56b, type: 3}
+    minPlaybackInterval: 0.06
+  - audioClip: {fileID: 8300000, guid: 99b752e2b1f76814bb6db14d0784520f, type: 3}
+    minPlaybackInterval: 0.06
   bgmPlayer: {fileID: 1712024620}
   audioSourceTemplate: {fileID: 8676303276430625535, guid: cc22e5a3d7ada964581e5fb21142df53, type: 3}
 --- !u!4 &1712024619
