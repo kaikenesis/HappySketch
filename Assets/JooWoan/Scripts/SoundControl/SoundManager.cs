@@ -19,29 +19,60 @@ public class SoundManager : MonoBehaviour
     }
     #endregion
 
-    [SerializeField] private float sfxVolume = 0.4f;
-    [SerializeField] private float bgmVolume = 0.4f;
-    [SerializeField] private AudioClip[] bgmArr, sfxArr;
-    [SerializeField] private AudioSource bgmPlayer, sfxPlayer;
+    [SerializeField] private float sfxVolume;
+    [SerializeField] private float bgmVolume;
 
-    IDictionary<string, AudioClip> bgmDict = new Dictionary<string, AudioClip>();
-    IDictionary<string, AudioClip> sfxDict = new Dictionary<string, AudioClip>();
+    [SerializeField] private AudioClip[] bgmArr;
+    [SerializeField] private SoundConfig[] sfxArr;
+
+    [SerializeField] private AudioSource bgmPlayer, audioSourceTemplate;
+    private AudioSource[] sfxSources = new AudioSource[32];
+
+    private IDictionary<string, AudioClip> bgmDict = new Dictionary<string, AudioClip>();
+    private IDictionary<string, SoundConfig> sfxDict = new Dictionary<string, SoundConfig>();
 
     private void Init()
     {
         foreach (AudioClip clip in bgmArr)
             bgmDict.Add(clip.name, clip);
 
-        foreach (AudioClip clip in sfxArr)
-            sfxDict.Add(clip.name, clip);
+        foreach (SoundConfig config in sfxArr)
+            sfxDict.Add(config.Clip.name, config);
+
+        for (int i = 0; i < sfxSources.Length; i++)
+            sfxSources[i] = Instantiate(audioSourceTemplate, transform);
     }
+
     public static void PlaySFX(string name)
     {
-        if (!Instance.sfxDict.ContainsKey(name))
+        AudioSource audioSource = null;
+
+        foreach (AudioSource source in Instance.sfxSources)
+        {
+            if (source.isPlaying &&
+                source.clip.name == name &&
+                source.time <= Instance.sfxDict[name].MinPlaybackInterval)
+            {
+                return;
+            }
+            if (audioSource == null && !source.isPlaying)
+                audioSource = source;
+        }
+
+        if (audioSource == null)
             return;
 
-        Instance.sfxPlayer.PlayOneShot(Instance.sfxDict[name], Instance.sfxVolume);
+        if (!Instance.sfxDict.ContainsKey(name))
+        {
+            Debug.LogWarning($"Failed to find clip named : {name}");
+            return;
+        }
+
+        audioSource.clip    = Instance.sfxDict[name].Clip;
+        audioSource.volume  = Instance.sfxVolume;
+        audioSource.Play();
     }
+
     public static void PlayBGM(string name)
     {
         if (!Instance.bgmDict.ContainsKey(name))
@@ -85,4 +116,14 @@ public class SoundManager : MonoBehaviour
     {
         Instance.bgmPlayer.pitch = speed;
     }
+}
+
+[System.Serializable]
+public class SoundConfig
+{
+    [SerializeField] private AudioClip audioClip;
+    [SerializeField] private float minPlaybackInterval;
+
+    public AudioClip Clip => audioClip;
+    public float MinPlaybackInterval => minPlaybackInterval;
 }
