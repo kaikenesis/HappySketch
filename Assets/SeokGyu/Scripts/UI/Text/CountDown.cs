@@ -42,11 +42,11 @@ public class CountDown : MonoBehaviour
                 canvas.enabled = false;
                 UIManager.Instance.bPlayGame = true;
                 NoteManager.instance.SetGameStart();
-                SoundManager.PlayBGM(ConstStrings.BGM_GAME);
+                SoundManager.PlayBGM(AudioNameTag.BGM_GAME);
             }
             else
             {
-                SoundManager.PlaySFX(ConstStrings.SFX_COUNTDOWN);
+                SoundManager.PlaySFX(AudioNameTag.SFX_COUNTDOWN);
                 countText.text = curTime.ToString();
                 curTime--;
             }

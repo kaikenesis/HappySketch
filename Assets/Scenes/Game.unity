@@ -63654,20 +63654,24 @@ MonoBehaviour:
   sfxVolume: 0.3
   bgmVolume: 0.3
   bgmArr:
-  - {fileID: 8300000, guid: 48992f71ea79efd41bb8f8a3abac4a7b, type: 3}
-  - {fileID: 8300000, guid: f7a7c5a3e10f4fb4dbaa558fe1a73a23, type: 3}
+  - nameTag: 0
+    audioClip: {fileID: 8300000, guid: 48992f71ea79efd41bb8f8a3abac4a7b, type: 3}
+    minPlaybackInterval: 0
+  - nameTag: 1
+    audioClip: {fileID: 8300000, guid: f7a7c5a3e10f4fb4dbaa558fe1a73a23, type: 3}
+    minPlaybackInterval: 0
   sfxArr:
-  - audioClip: {fileID: 8300000, guid: 00cbf22fae658ad41aabf62d0e241bae, type: 3}
+  - nameTag: 4
+    audioClip: {fileID: 8300000, guid: 00cbf22fae658ad41aabf62d0e241bae, type: 3}
     minPlaybackInterval: 0.06
-  - audioClip: {fileID: 8300000, guid: 612981ea77925cc4e90503a49c0bf2cc, type: 3}
+  - nameTag: 5
+    audioClip: {fileID: 8300000, guid: 612981ea77925cc4e90503a49c0bf2cc, type: 3}
     minPlaybackInterval: 0.06
-  - audioClip: {fileID: 8300000, guid: daaf3da4a2943f242a9cf9d3d1b2efe7, type: 3}
+  - nameTag: 3
+    audioClip: {fileID: 8300000, guid: daaf3da4a2943f242a9cf9d3d1b2efe7, type: 3}
     minPlaybackInterval: 0.06
-  - audioClip: {fileID: 8300000, guid: 8ea3439db6655434f95736557a60bfc5, type: 3}
-    minPlaybackInterval: 0.06
-  - audioClip: {fileID: 8300000, guid: 20fe6bcadf7268d4ab4ec3664eeeb56b, type: 3}
-    minPlaybackInterval: 0.06
-  - audioClip: {fileID: 8300000, guid: 99b752e2b1f76814bb6db14d0784520f, type: 3}
+  - nameTag: 2
+    audioClip: {fileID: 8300000, guid: 8ea3439db6655434f95736557a60bfc5, type: 3}
     minPlaybackInterval: 0.06
   bgmPlayer: {fileID: 1712024620}
   audioSourceTemplate: {fileID: 8676303276430625535, guid: cc22e5a3d7ada964581e5fb21142df53, type: 3}

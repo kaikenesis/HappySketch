@@ -38,21 +38,6 @@ public class DebugControl : MonoBehaviour
             else
                 fireEffects.DisableFireEffect();
         }
-
-        if (Input.GetKeyDown(KeyCode.F5))
-            SoundManager.PlaySFX("punch_blocked_03");
-
-        if (Input.GetKeyDown(KeyCode.F6))
-            SoundManager.PlayBGM("Skunk Jump Looping");
-
-        if (Input.GetKeyDown(KeyCode.F7))
-            SoundManager.SetBgmSpeed(1.2f);
-
-        if (Input.GetKeyDown(KeyCode.F8))
-        {
-            SoundManager.PauseBGM();
-            SoundManager.SetBgmSpeed();
-        }
     }
     private void Debug_GotoGameScene()
     {

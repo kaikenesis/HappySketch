@@ -59,7 +59,7 @@ public class GameController : MonoBehaviour
         bgToonDome = GameObject.FindGameObjectWithTag("BgDomeToon");
         bgRealDome.SetActive(false);
 
-        SoundManager.PlayBGM(ConstStrings.BGM_TITLE);
+        SoundManager.PlayBGM(AudioNameTag.BGM_TITLE);
     }   
 
     public void RegisterPlayer(int playerNumber, Player newPlayer)

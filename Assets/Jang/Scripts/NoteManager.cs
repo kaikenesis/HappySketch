@@ -353,7 +353,7 @@ public class NoteManager : Singleton<NoteManager>
         Note note = notes[i].GetComponent<Note>();
         Vector3 createPos = note.transform.position;
         Instantiate(noteEffect, createPos, Quaternion.identity, transform.parent);
-        SoundManager.PlaySFX(ConstStrings.SFX_NOTEHIT_DEFAULT);
+        SoundManager.PlaySFX(AudioNameTag.SFX_NOTEHIT_DEFAULT);
 
         if (inCircleNotes[i].activeSelf == true)
         {
@@ -415,7 +415,7 @@ public class NoteManager : Singleton<NoteManager>
         if (!isAboutToFever && curTime >= noteTimeInfo.FeverStartTime - 0.8f)
         {
             isAboutToFever = true;
-            SoundManager.PlaySFX(ConstStrings.SFX_FEVER_TRANSITION);
+            SoundManager.PlaySFX(AudioNameTag.SFX_FEVER_TRANSITION);
         }
 
         if (curTime >= noteTimeInfo.FeverStartTime)
