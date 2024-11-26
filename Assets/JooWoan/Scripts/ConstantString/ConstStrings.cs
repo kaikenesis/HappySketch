@@ -1,12 +1,12 @@
 
 public static class ConstStrings
 {
-    public const string BGM_TITLE               = "Lax_Layover_Looping";
-    public const string BGM_GAME                = "Skunk_Jump_Looping";
-    public const string SFX_UIBUTTON            = "UI_Menu_Button_Confirm_09";
-    public const string SFX_COUNTDOWN           = "UI_Button_Simple_Click_05";
-    public const string SFX_FEVER_TRANSITION    = "Magic_Spell_Coins_2";
-    public const string SFX_FEVER_CHARGEUP      = "ChargeUp";
-    public const string SFX_FEVER_COOLDOWN      = "Cooldown";
-    public const string SFX_NOTEHIT_DEFAULT     = "Punch_Blocked_03";
+    public const string BGM_TITLE               = "lax_layover_looping";
+    public const string BGM_GAME                = "skunk_jump_looping";
+    public const string SFX_UIBUTTON            = "ui_menu_button_confirm_09";
+    public const string SFX_COUNTDOWN           = "ui_button_simple_click_05";
+    public const string SFX_FEVER_TRANSITION    = "magic_spell_coins_2";
+    public const string SFX_FEVER_CHARGEUP      = "charge_up";
+    public const string SFX_FEVER_COOLDOWN      = "cooldown";
+    public const string SFX_NOTEHIT_DEFAULT     = "punch_blocked_03";
 }

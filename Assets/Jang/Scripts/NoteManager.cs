@@ -23,6 +23,7 @@ public class NoteManager : Singleton<NoteManager>
     private bool canEnable = true;
     private bool isFever = false;
     private bool isPlay = false;
+    private bool isAboutToFever = false;
 
     Coroutine enableNote = null;
     Coroutine disableNote = null;
@@ -87,6 +88,7 @@ public class NoteManager : Singleton<NoteManager>
     {
         curTime = 0;
         isFever = false;
+        isAboutToFever = false;
         canEnable = true;
         isPlay = true;
     }
@@ -410,7 +412,13 @@ public class NoteManager : Singleton<NoteManager>
 
     void CheckFever()
     {
-        if(curTime >= noteTimeInfo.FeverStartTime)
+        if (!isAboutToFever && curTime >= noteTimeInfo.FeverStartTime - 0.8f)
+        {
+            isAboutToFever = true;
+            SoundManager.PlaySFX(ConstStrings.SFX_FEVER_TRANSITION);
+        }
+
+        if (curTime >= noteTimeInfo.FeverStartTime)
         {
             isFever = true;
             Debug.Log("FEVER!");
@@ -420,8 +428,6 @@ public class NoteManager : Singleton<NoteManager>
             GameController.Instance.FireEffectControl.EnableFireEffect();
 
             float playBackSpeed = GameController.Instance.FeverPlaybackSpeed;
-            SoundManager.PlaySFX(ConstStrings.SFX_FEVER_TRANSITION);
-            SoundManager.PlaySFX(ConstStrings.SFX_FEVER_CHARGEUP);
             SoundManager.SetBgmSpeed(playBackSpeed);
 
             for (int i = 0; i < notes.Count; i++)
@@ -455,7 +461,6 @@ public class NoteManager : Singleton<NoteManager>
             GameController.Instance.PostProcessControl.StopFeverEffect();
             GameController.Instance.FireEffectControl.DisableFireEffect();
 
-            SoundManager.PlaySFX(ConstStrings.SFX_FEVER_COOLDOWN);
             SoundManager.SetBgmSpeed();
 
             for (int i = 0; i < notes.Count; i++)
