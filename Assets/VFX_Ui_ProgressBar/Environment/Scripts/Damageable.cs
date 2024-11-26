@@ -39,7 +39,7 @@ namespace Damageable
                 return;
 
             TakeDamage(dmg.Damage);
-            DestroyObject(dmg.gameObject);
+            Destroy(dmg.gameObject);
         }
 
         public void TakeDamage(float dmg)

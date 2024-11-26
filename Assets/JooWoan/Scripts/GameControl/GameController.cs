@@ -27,17 +27,19 @@ public class GameController : MonoBehaviour
     public PostProcessingControl PostProcessControl => postProcessingControl;
     public FireEffects FireEffectControl => fireEffects;
     public IDictionary<int, Player> PlayerDict => playerDict;
+    public float BirdSpawnProbability => birdSpawnProbability;
+    public float FeverPlaybackSpeed => feverPlaybackSpeed;
     public int EnableCloudBlockIndex => enableCloudBlockIndex;
     public int EnableBirdBlockIndex => enableBirdBlockIndex;
     public int DecreaseTreeBlockIndex => decreaseTreeBlockIndex;
     public int BlocksPerTreeDecrease => blocksPerTreeDecrease;
-    public float BirdSpawnProbability => birdSpawnProbability;
     #endregion
 
     private PostProcessingControl postProcessingControl;
     private WallControl wallControl;
     private FireEffects fireEffects;
 
+    [SerializeField] private float feverPlaybackSpeed;
     [SerializeField] private float disableFirstLevelBlockIndex;
     [SerializeField] private int enableCloudBlockIndex;
     [SerializeField] private int enableBirdBlockIndex;
@@ -56,7 +58,9 @@ public class GameController : MonoBehaviour
         bgRealDome = GameObject.FindGameObjectWithTag("BgDomeRealistic");
         bgToonDome = GameObject.FindGameObjectWithTag("BgDomeToon");
         bgRealDome.SetActive(false);
-    }
+
+        SoundManager.PlayBGM(AudioNameTag.BGM_TITLE);
+    }   
 
     public void RegisterPlayer(int playerNumber, Player newPlayer)
     {

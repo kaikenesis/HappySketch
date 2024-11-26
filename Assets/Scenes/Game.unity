@@ -48308,6 +48308,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 461747618880042143, guid: 38d6bbbd88e8cc64c92368e21fe824ac, type: 3}
+      propertyPath: mainCamera
+      value: 
+      objectReference: {fileID: 1034828485}
+    - target: {fileID: 461747618880042143, guid: 38d6bbbd88e8cc64c92368e21fe824ac, type: 3}
       propertyPath: mainMenuCamera
       value: 
       objectReference: {fileID: 1034828483}
@@ -48459,6 +48463,18 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4695020833601736965, guid: 38d6bbbd88e8cc64c92368e21fe824ac, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4695020833601736965, guid: 38d6bbbd88e8cc64c92368e21fe824ac, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5996075637127563495, guid: 38d6bbbd88e8cc64c92368e21fe824ac, type: 3}
+      propertyPath: m_FillAmount
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6047279301446450919, guid: 38d6bbbd88e8cc64c92368e21fe824ac, type: 3}
       propertyPath: m_Name
       value: UIDirector
@@ -48476,9 +48492,25 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8509787068088838305, guid: 38d6bbbd88e8cc64c92368e21fe824ac, type: 3}
+      propertyPath: mainCamera
+      value: 
+      objectReference: {fileID: 1034828485}
+    - target: {fileID: 8509787068088838305, guid: 38d6bbbd88e8cc64c92368e21fe824ac, type: 3}
       propertyPath: mainMenuCamera
       value: 
       objectReference: {fileID: 1034828483}
+    - target: {fileID: 8943374691760128129, guid: 38d6bbbd88e8cc64c92368e21fe824ac, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8943374691760128129, guid: 38d6bbbd88e8cc64c92368e21fe824ac, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8943374691760128129, guid: 38d6bbbd88e8cc64c92368e21fe824ac, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9108364567959003849, guid: 38d6bbbd88e8cc64c92368e21fe824ac, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -63600,7 +63632,6 @@ GameObject:
   - component: {fileID: 1712024619}
   - component: {fileID: 1712024618}
   - component: {fileID: 1712024620}
-  - component: {fileID: 1712024617}
   m_Layer: 0
   m_Name: SoundManager
   m_TagString: Untagged
@@ -63608,102 +63639,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!82 &1712024617
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1712024616}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 0
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!114 &1712024618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63716,14 +63651,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 448ecd9e88a55a94abd339a7da9c528b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sfxVolume: 0.4
-  bgmVolume: 0.4
+  sfxVolume: 0.3
+  bgmVolume: 0.3
   bgmArr:
-  - {fileID: 8300000, guid: cf8109129dba56a4c9f670301a873bd5, type: 3}
+  - nameTag: 0
+    audioClip: {fileID: 8300000, guid: 48992f71ea79efd41bb8f8a3abac4a7b, type: 3}
+    minPlaybackInterval: 0
+  - nameTag: 1
+    audioClip: {fileID: 8300000, guid: f7a7c5a3e10f4fb4dbaa558fe1a73a23, type: 3}
+    minPlaybackInterval: 0
   sfxArr:
-  - {fileID: 8300000, guid: e29a71f9ca223774fb7a7e3b1ebadd3e, type: 3}
+  - nameTag: 4
+    audioClip: {fileID: 8300000, guid: 00cbf22fae658ad41aabf62d0e241bae, type: 3}
+    minPlaybackInterval: 0.06
+  - nameTag: 5
+    audioClip: {fileID: 8300000, guid: 612981ea77925cc4e90503a49c0bf2cc, type: 3}
+    minPlaybackInterval: 0.06
+  - nameTag: 3
+    audioClip: {fileID: 8300000, guid: daaf3da4a2943f242a9cf9d3d1b2efe7, type: 3}
+    minPlaybackInterval: 0.06
+  - nameTag: 2
+    audioClip: {fileID: 8300000, guid: 8ea3439db6655434f95736557a60bfc5, type: 3}
+    minPlaybackInterval: 0.06
   bgmPlayer: {fileID: 1712024620}
-  sfxPlayer: {fileID: 1712024617}
+  audioSourceTemplate: {fileID: 8676303276430625535, guid: cc22e5a3d7ada964581e5fb21142df53, type: 3}
 --- !u!4 &1712024619
 Transform:
   m_ObjectHideFlags: 0
@@ -84081,6 +84032,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 729583b9b4dae8a4b96799eb982a5a76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  feverPlaybackSpeed: 1.2
   disableFirstLevelBlockIndex: 1
   enableCloudBlockIndex: 0
   enableBirdBlockIndex: 1

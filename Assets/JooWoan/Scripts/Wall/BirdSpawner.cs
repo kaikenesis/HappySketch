@@ -16,7 +16,7 @@ public class BirdSpawner : MonoBehaviour
 
     public void TrySpawnBirds(int blockIndex)
     {
-        if (blockIndex <= GameController.Instance.EnableBirdBlockIndex)
+        if (blockIndex < GameController.Instance.EnableBirdBlockIndex)
             return;
 
         float randomChance = Random.Range(0.0f, 100.0f);

@@ -48,7 +48,7 @@ public class LevelButton : ChangeUIButton
 
     private void SetLevelInfo()
     {
-        uiDirector.curLevel = level;
+        UIManager.Instance.uiDirector.curLevel = level;
         switch (level)
         {
             case ELevel.Easy:

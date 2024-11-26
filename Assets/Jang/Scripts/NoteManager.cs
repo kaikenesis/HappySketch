@@ -23,6 +23,7 @@ public class NoteManager : Singleton<NoteManager>
     private bool canEnable = true;
     private bool isFever = false;
     private bool isPlay = false;
+    private bool isAboutToFever = false;
 
     Coroutine enableNote = null;
     Coroutine disableNote = null;
@@ -87,6 +88,7 @@ public class NoteManager : Singleton<NoteManager>
     {
         curTime = 0;
         isFever = false;
+        isAboutToFever = false;
         canEnable = true;
         isPlay = true;
     }
@@ -351,6 +353,8 @@ public class NoteManager : Singleton<NoteManager>
         Note note = notes[i].GetComponent<Note>();
         Vector3 createPos = note.transform.position;
         Instantiate(noteEffect, createPos, Quaternion.identity, transform.parent);
+        SoundManager.PlaySFX(AudioNameTag.SFX_NOTEHIT_DEFAULT);
+
         if (inCircleNotes[i].activeSelf == true)
         {
             score = note.Check();
@@ -408,7 +412,13 @@ public class NoteManager : Singleton<NoteManager>
 
     void CheckFever()
     {
-        if(curTime >= noteTimeInfo.FeverStartTime)
+        if (!isAboutToFever && curTime >= noteTimeInfo.FeverStartTime - 0.8f)
+        {
+            isAboutToFever = true;
+            SoundManager.PlaySFX(AudioNameTag.SFX_FEVER_TRANSITION);
+        }
+
+        if (curTime >= noteTimeInfo.FeverStartTime)
         {
             isFever = true;
             Debug.Log("FEVER!");
@@ -416,6 +426,9 @@ public class NoteManager : Singleton<NoteManager>
             GameController.Instance.PostProcessControl.PlayFeverEffect();
             UIManager.Instance.uiDirector.ActivateFever();
             GameController.Instance.FireEffectControl.EnableFireEffect();
+
+            float playBackSpeed = GameController.Instance.FeverPlaybackSpeed;
+            SoundManager.SetBgmSpeed(playBackSpeed);
 
             for (int i = 0; i < notes.Count; i++)
             {
@@ -447,6 +460,8 @@ public class NoteManager : Singleton<NoteManager>
             GameController.Instance.StopPlayerAnimation();
             GameController.Instance.PostProcessControl.StopFeverEffect();
             GameController.Instance.FireEffectControl.DisableFireEffect();
+
+            SoundManager.SetBgmSpeed();
 
             for (int i = 0; i < notes.Count; i++)
             {
