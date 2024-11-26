@@ -91,13 +91,8 @@ public class UIDirector : MonoBehaviour
             case EButtonType.MainMenu:
                 GameController.Instance.SetBackgroundDome(BgDomeType.REALISTIC, false);
                 GameController.Instance.SetBackgroundDome(BgDomeType.TOON, true);
-<<<<<<< HEAD
                 SoundManager.PlayBGM(AudioNameTag.BGM_TITLE);
-                inGame.ResetGame();
-=======
-                SoundManager.PlayBGM(ConstStrings.BGM_TITLE);
                 inGameScene.ResetGame();
->>>>>>> feature/SeokGyu
                 inGameCanvas.enabled = false;
                 mainMenuCanvas.enabled = true;
                 break;
