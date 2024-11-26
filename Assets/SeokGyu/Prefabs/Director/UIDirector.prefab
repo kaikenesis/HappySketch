@@ -124,8 +124,8 @@ MonoBehaviour:
   explainCanvas: {fileID: 3509072717114387154}
   inGameCanvas: {fileID: 9108364567959003849}
   resultCanvas: {fileID: 7711208111597341205}
-  explain: {fileID: 4584488398406203181}
-  inGame: {fileID: 9063779490885102444}
+  explainScene: {fileID: 4584488398406203181}
+  inGameScene: {fileID: 9063779490885102444}
   resultScene: {fileID: 6344611715776224648}
   curLevel: 0
 --- !u!1001 &2411391067331129296

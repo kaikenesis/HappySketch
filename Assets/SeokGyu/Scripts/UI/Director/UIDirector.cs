@@ -8,8 +8,8 @@ public class UIDirector : MonoBehaviour
     [SerializeField] private Canvas inGameCanvas;
     [SerializeField] private Canvas resultCanvas;
 
-    [SerializeField] private ExplainScene explain;
-    [SerializeField] private InGameScene inGame;
+    [SerializeField] private ExplainScene explainScene;
+    [SerializeField] private InGameScene inGameScene;
     [SerializeField] private ResultScene resultScene;
     private bool bDebug = false;
 
@@ -29,6 +29,22 @@ public class UIDirector : MonoBehaviour
         explainCanvas.enabled = false;
         inGameCanvas.enabled = false;
         resultCanvas.enabled = false;
+    }
+
+    private void CompareScore()
+    {
+        int max = UIManager.Instance.scores[0];
+        int playerNum = 0;
+        for (int i = 1; i < UIManager.Instance.playerNum; i++)
+        {
+            if (max < UIManager.Instance.scores[i])
+            {
+                max = UIManager.Instance.scores[i];
+                playerNum = i;
+            }
+        }
+
+        resultScene.SetWinner(playerNum);
     }
 
     public void ChangeUI(EUIType curUIType, EButtonType buttonType)
@@ -59,24 +75,24 @@ public class UIDirector : MonoBehaviour
                 break;
             case EButtonType.SelectLevel:
                 explainCanvas.enabled = true;
-                explain.SetText(curLevel);
+                explainScene.SetText(curLevel);
                 break;
             case EButtonType.GameStart:
-                inGame.Activate();
+                inGameScene.Activate();
                 GameController.Instance.SetBackgroundDome(BgDomeType.REALISTIC, true);
                 GameController.Instance.SetBackgroundDome(BgDomeType.TOON, false);
                 GameController.Instance.ResetLevel();
                 break;
             case EButtonType.Retry:
-                inGame.ResetGame();
-                inGame.Activate();
+                inGameScene.ResetGame();
+                inGameScene.Activate();
                 GameController.Instance.ResetLevel();
                 break;
             case EButtonType.MainMenu:
                 GameController.Instance.SetBackgroundDome(BgDomeType.REALISTIC, false);
                 GameController.Instance.SetBackgroundDome(BgDomeType.TOON, true);
                 SoundManager.PlayBGM(ConstStrings.BGM_TITLE);
-                inGame.ResetGame();
+                inGameScene.ResetGame();
                 inGameCanvas.enabled = false;
                 mainMenuCanvas.enabled = true;
                 break;
@@ -89,42 +105,19 @@ public class UIDirector : MonoBehaviour
 
         int num = playerNum - 1;
         UIManager.Instance.scores[num] += score;
-        inGame.SetScore(num, UIManager.Instance.scores[num]);
+        inGameScene.SetScore(num, UIManager.Instance.scores[num]);
     }
 
     public void ActivateFever()
     {
         if (UIManager.Instance.bPlayGame == false) return;
-        inGame.ActivateFeverTime();
-    }
-
-    public void UpdateTimer()
-    {
-        if (UIManager.Instance.bPlayGame == false) return;
-
-        inGame.DecreaseTime();
+        inGameScene.ActivateFeverTime();
     }
 
     public void FinishGame()
     {
         resultCanvas.enabled = true;
         CompareScore();
-    }
-
-    void CompareScore()
-    {
-        int max = UIManager.Instance.scores[0];
-        int playerNum = 0;
-        for(int i =1;i<UIManager.Instance.playerNum;i++)
-        {
-            if(max < UIManager.Instance.scores[i])
-            {
-                max = UIManager.Instance.scores[i];
-                playerNum = i;
-            }
-        }
-
-        resultScene.SetWinner(playerNum);
     }
 
     private void OnGUI()
@@ -139,17 +132,17 @@ public class UIDirector : MonoBehaviour
             if(GUI.Button(new Rect(0, 50, 100, 50), "시간 감소"))
             {
                 NoteManager.Instance.curTime++;
-                inGame.DecreaseTime();
+                inGameScene.DecreaseTime();
             }
             if (GUI.Button(new Rect(0, 100, 100, 50), "남은시간 60초"))
             {
                 NoteManager.Instance.curTime = 0;
-                inGame.DecreaseTime();
+                inGameScene.DecreaseTime();
             }
             if (GUI.Button(new Rect(0, 150, 100, 50), "남은시간 10초"))
             {
                 NoteManager.Instance.curTime = 50;
-                inGame.DecreaseTime();
+                inGameScene.DecreaseTime();
             }
             if (GUI.Button(new Rect(0, 200, 100, 50), "1p점수 + 1000"))
             {
