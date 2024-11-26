@@ -155,7 +155,7 @@ public class InGameScene : BaseScene
         timer.SetProgressColor(true);
     }
 
-    public void DeactivateFeverTime()
+    private void DeactivateFeverTime()
     {
         for (int i = 0; i < feverTexts.Length; i++)
         {
