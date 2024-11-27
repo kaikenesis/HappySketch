@@ -12,6 +12,7 @@ public class NoteManager : Singleton<NoteManager>
     [SerializeField] private GameObject noteEffect;
     [SerializeField] private TMP_FontAsset fontCafe24;
     [SerializeField] private Material feverNoteMat;
+    [SerializeField] private GameObject[] resultTextObject;
     private Material originalFontMat;
 
     private int level = 0;
@@ -157,8 +158,6 @@ public class NoteManager : Singleton<NoteManager>
                     inCircleNotes[i].SetActive(true);
                     curNoteCount++;
                 }
-
-
 
                 if (inCircleNotes[2].activeSelf == true && inCircleNotes[3].activeSelf == true)
                 {
@@ -374,7 +373,17 @@ public class NoteManager : Singleton<NoteManager>
                     UIManager.Instance.uiDirector.IncreaseScore(2, score);
                 }
             }
-            StartCoroutine(SetResultText(i, score));
+
+            GameObject textObj = null;
+            if (score == noteTimeInfo.BadScore)
+                textObj = Instantiate(resultTextObject[0], notes[i].transform.position, Quaternion.identity, transform);
+            else if (score == noteTimeInfo.GoodScore)
+                textObj = Instantiate(resultTextObject[1], notes[i].transform.position, Quaternion.identity, transform);
+            else if (score == noteTimeInfo.PerfectScore)
+                textObj = Instantiate(resultTextObject[2], notes[i].transform.position, Quaternion.identity, transform);
+
+            Destroy(textObj, 0.7f);
+            //StartCoroutine(SetResultText(i, score));
         }
     }
     
