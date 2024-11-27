@@ -7,7 +7,7 @@ Shader "EGA/Particles/Premultiplied"
 		_TintColor ("Tint Color", Color) = (0.5,0.5,0.5,0.5)
 		_MainTex ("Particle Texture", 2D) = "white" {}
 		_InvFade ("Soft Particles Factor", Range(0.01,3.0)) = 1.0
-		_MainTex("MainTex", 2D) = "white" {}
+		//_MainTex("MainTex", 2D) = "white" {}
 		_Noise("Noise", 2D) = "white" {}
 		_SpeedMainTexUVNoiseZW("Speed MainTex U/V + Noise Z/W", Vector) = (0,0,0,0)
 		_Emission("Emission", Float) = 2
