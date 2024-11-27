@@ -12,6 +12,7 @@ public class UIDirector : MonoBehaviour
     [SerializeField] private InGameScene inGameScene;
     [SerializeField] private ResultScene resultScene;
     private bool bDebug = false;
+    private bool bVisible = false;
 
     public ELevel curLevel;
 
@@ -131,12 +132,15 @@ public class UIDirector : MonoBehaviour
 
     private void OnGUI()
     {
-        if (GUI.Button(new Rect(0, 0, 100, 50), "디버깅"))
+        if(bDebug == true)
         {
-            bDebug = !bDebug;
+            if (GUI.Button(new Rect(0, 0, 100, 50), "디버깅"))
+            {
+                bVisible = !bVisible;
+            }
         }
 
-        if(bDebug == true)
+        if(bVisible == true)
         {
             if(GUI.Button(new Rect(0, 50, 100, 50), "시간 감소"))
             {
