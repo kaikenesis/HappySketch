@@ -49,6 +49,12 @@ public class UIDirector : MonoBehaviour
 
     public void ChangeUI(EUIType curUIType, EButtonType buttonType)
     {
+        DeactivateUI(curUIType);
+        ActivateUI(buttonType);
+    }
+
+    private void DeactivateUI(EUIType curUIType)
+    {
         switch (curUIType)
         {
             case EUIType.MainMenu:
@@ -67,7 +73,10 @@ public class UIDirector : MonoBehaviour
                 resultCanvas.enabled = false;
                 break;
         }
+    }
 
+    private void ActivateUI(EButtonType buttonType)
+    {
         switch (buttonType)
         {
             case EButtonType.Start:

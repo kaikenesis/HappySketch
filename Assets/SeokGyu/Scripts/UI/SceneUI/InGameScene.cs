@@ -25,13 +25,16 @@ public class InGameScene : BaseScene
 
     private void SetInfo()
     {
+        SetScore();
+        SetFeverText();
+        SetLine();
+    }
+
+    private void SetScore()
+    {
         int playerNum = UIManager.Instance.playerNum;
-
         scoreTexts = new InGameScore[playerNum];
-        feverTexts = new GameObject[playerNum];
-        feverCanvases = new Canvas[playerNum];
 
-        // Score
         for (int i = 0; i < playerNum; i++)
         {
             float distance = 1600f * i;
@@ -43,8 +46,14 @@ public class InGameScene : BaseScene
 
             scoreTexts[i] = gameObject.GetComponent<InGameScore>();
         }
+    }
 
-        // FeverText
+    private void SetFeverText()
+    {
+        int playerNum = UIManager.Instance.playerNum;
+        feverTexts = new GameObject[playerNum];
+        feverCanvases = new Canvas[playerNum];
+
         for (int i = 0; i < playerNum; i++)
         {
             float distance = 1000f * i;
@@ -61,10 +70,13 @@ public class InGameScene : BaseScene
             feverCanvases[i].enabled = false;
 
             feverTexts[i] = gameObject;
-            
-        }
 
-        // Line
+        }
+    }
+
+    private void SetLine()
+    {
+        int playerNum = UIManager.Instance.playerNum;
         int dist = Screen.width / playerNum;
         int posX = 0;
 
