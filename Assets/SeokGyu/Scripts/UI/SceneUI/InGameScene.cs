@@ -151,6 +151,7 @@ public class InGameScene : BaseScene
         for(int i =0;i< feverTexts.Length;i++)
         {
             feverCanvases[i].enabled = true;
+            feverTexts[i].GetComponent<FeverText>().Activate();
         }
         timer.SetProgressColor(true);
     }
@@ -160,6 +161,7 @@ public class InGameScene : BaseScene
         for (int i = 0; i < feverTexts.Length; i++)
         {
             feverCanvases[i].enabled = false;
+            feverTexts[i].GetComponent<FeverText>().Deactivate();
         }
     }
 }
