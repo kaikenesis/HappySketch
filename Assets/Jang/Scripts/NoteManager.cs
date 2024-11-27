@@ -382,7 +382,7 @@ public class NoteManager : Singleton<NoteManager>
             else if (score == noteTimeInfo.PerfectScore)
                 textObj = Instantiate(resultTextObject[2], notes[i].transform.position, Quaternion.identity, transform);
 
-            Destroy(textObj, 0.7f);
+            //Destroy(textObj, 0.7f);
             //StartCoroutine(SetResultText(i, score));
         }
     }
