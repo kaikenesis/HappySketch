@@ -99143,11 +99143,43 @@ PrefabInstance:
     - target: {fileID: 8924110323756138539, guid: fb1e338a55130b24b9cf191fc41761bc, type: 3}
       propertyPath: noteEffect
       value: 
-      objectReference: {fileID: 4553287630450876385, guid: c54a6299d84c0c141ae8c93c15ff1337, type: 3}
+      objectReference: {fileID: 1429954232896169633, guid: 36bf435c2a513694ab923407a7aa7900, type: 3}
     - target: {fileID: 8924110323756138539, guid: fb1e338a55130b24b9cf191fc41761bc, type: 3}
       propertyPath: feverNoteMat
       value: 
       objectReference: {fileID: 2100000, guid: 3af031c0f1f0a7441b62dc49b012a9fa, type: 2}
+    - target: {fileID: 8924110323756138539, guid: fb1e338a55130b24b9cf191fc41761bc, type: 3}
+      propertyPath: textObject.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8924110323756138539, guid: fb1e338a55130b24b9cf191fc41761bc, type: 3}
+      propertyPath: textObject.Array.data[0]
+      value: 
+      objectReference: {fileID: 5681582237168148055, guid: beb0010d4efe0d64d8888467b2b4e86d, type: 3}
+    - target: {fileID: 8924110323756138539, guid: fb1e338a55130b24b9cf191fc41761bc, type: 3}
+      propertyPath: textObject.Array.data[1]
+      value: 
+      objectReference: {fileID: 3558094449298717387, guid: 29dff24c8736d284ba9e69a931faeda7, type: 3}
+    - target: {fileID: 8924110323756138539, guid: fb1e338a55130b24b9cf191fc41761bc, type: 3}
+      propertyPath: textObject.Array.data[2]
+      value: 
+      objectReference: {fileID: 7568640432813397066, guid: 35a5b429d8febe248a4647c5d3f40eba, type: 3}
+    - target: {fileID: 8924110323756138539, guid: fb1e338a55130b24b9cf191fc41761bc, type: 3}
+      propertyPath: resultTextObject.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8924110323756138539, guid: fb1e338a55130b24b9cf191fc41761bc, type: 3}
+      propertyPath: resultTextObject.Array.data[0]
+      value: 
+      objectReference: {fileID: 5681582237168148055, guid: beb0010d4efe0d64d8888467b2b4e86d, type: 3}
+    - target: {fileID: 8924110323756138539, guid: fb1e338a55130b24b9cf191fc41761bc, type: 3}
+      propertyPath: resultTextObject.Array.data[1]
+      value: 
+      objectReference: {fileID: 3558094449298717387, guid: 29dff24c8736d284ba9e69a931faeda7, type: 3}
+    - target: {fileID: 8924110323756138539, guid: fb1e338a55130b24b9cf191fc41761bc, type: 3}
+      propertyPath: resultTextObject.Array.data[2]
+      value: 
+      objectReference: {fileID: 7568640432813397066, guid: 35a5b429d8febe248a4647c5d3f40eba, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
