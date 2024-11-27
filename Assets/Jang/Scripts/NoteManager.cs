@@ -158,8 +158,6 @@ public class NoteManager : Singleton<NoteManager>
                     curNoteCount++;
                 }
 
-
-
                 if (inCircleNotes[2].activeSelf == true && inCircleNotes[3].activeSelf == true)
                 {
                     if (random < 50)

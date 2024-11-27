@@ -99141,6 +99141,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 12161237}
     - target: {fileID: 8924110323756138539, guid: fb1e338a55130b24b9cf191fc41761bc, type: 3}
+      propertyPath: noteEffect
+      value: 
+      objectReference: {fileID: 4553287630450876385, guid: c54a6299d84c0c141ae8c93c15ff1337, type: 3}
+    - target: {fileID: 8924110323756138539, guid: fb1e338a55130b24b9cf191fc41761bc, type: 3}
       propertyPath: feverNoteMat
       value: 
       objectReference: {fileID: 2100000, guid: 3af031c0f1f0a7441b62dc49b012a9fa, type: 2}
