@@ -7,7 +7,7 @@ public class Note : MonoBehaviour
     private int level = 0;
     private bool isFever = false;
     private float lastCheckTime = 0;
-    private float noteWidth = 150;
+    private float noteWidth = 300;
     private RectTransform rectTran;
     private CircleGraphic circleGraphic;
     public void SetLevel(int lv)
@@ -78,13 +78,12 @@ public class Note : MonoBehaviour
     void OnEnable()
     {
         curTime = 0;
-        noteWidth = 300;
     }
 
     void Update()
     {
         curTime += Time.deltaTime;
-        if(!isFever)
+        if (!isFever)
             ShrinkCircle();
     }
 

@@ -13,7 +13,6 @@ public class NoteManager : Singleton<NoteManager>
     [SerializeField] private TMP_FontAsset fontCafe24;
     [SerializeField] private Material feverNoteMat;
     [SerializeField] private GameObject[] resultTextObject;
-    private Material originalFontMat;
 
     private int level = 0;
     private int score = 0;
@@ -31,7 +30,7 @@ public class NoteManager : Singleton<NoteManager>
     Coroutine waitRecreate = null;
 
     private List<GameObject> notes = new();
-    private List<GameObject> inCircleNotes = new();
+    private List<GameObject> parentNotes = new();
     private List<GameObject> numberText = new();
     private List<GameObject> resultText = new();
     private List<GameObject> feverNotes = new();
@@ -46,8 +45,7 @@ public class NoteManager : Singleton<NoteManager>
         feverKnob = AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/Knob.psd");
         SetKeys();
         GenerateNotes();
-        noteEffect.transform.localScale = new Vector3(100,100,100);
-        originalFontMat = numberText[0].GetComponent<TextMeshProUGUI>().fontMaterial;
+        noteEffect.transform.localScale = new Vector3(100, 100, 100);
     }
 
     void Update()
@@ -58,7 +56,7 @@ public class NoteManager : Singleton<NoteManager>
         curTime += Time.deltaTime;
         noteTime += Time.deltaTime;
 
-        CheckNotes();
+        InputKeys();
         CheckGameEnd();
 
         SetNumText();
@@ -74,7 +72,7 @@ public class NoteManager : Singleton<NoteManager>
     }
 
     private void SetKeys()
-    {        
+    {
         keyDict.Add(KeyCode.A, 0);
         keyDict.Add(KeyCode.S, 1);
         keyDict.Add(KeyCode.Z, 2);
@@ -132,39 +130,39 @@ public class NoteManager : Singleton<NoteManager>
 
         if (totalNoteCount == 3)
         {
-            inCircleNotes[0].SetActive(true);
-            inCircleNotes[1].SetActive(true);
+            parentNotes[0].SetActive(true);
+            parentNotes[1].SetActive(true);
             float random = Random.Range(0, 100);
             if (random < 50)
-                inCircleNotes[2].SetActive(true);
+                parentNotes[2].SetActive(true);
             else
-                inCircleNotes[3].SetActive(true);
+                parentNotes[3].SetActive(true);
 
-            inCircleNotes[4].SetActive(true);
-            inCircleNotes[5].SetActive(true);
+            parentNotes[4].SetActive(true);
+            parentNotes[5].SetActive(true);
             random = Random.Range(0, 100);
             if (random < 50)
-                inCircleNotes[6].SetActive(true);
+                parentNotes[6].SetActive(true);
             else
-                inCircleNotes[7].SetActive(true);
+                parentNotes[7].SetActive(true);
         }
         else
         {
             for (int i = 0; i < notes.Count / 2; i++)
             {
                 float random = Random.Range(0, 100);
-                if (random < range && inCircleNotes[i].activeSelf == false)
+                if (random < range && parentNotes[i].activeSelf == false)
                 {
-                    inCircleNotes[i].SetActive(true);
+                    parentNotes[i].SetActive(true);
                     curNoteCount++;
                 }
 
-                if (inCircleNotes[2].activeSelf == true && inCircleNotes[3].activeSelf == true)
+                if (parentNotes[2].activeSelf == true && parentNotes[3].activeSelf == true)
                 {
                     if (random < 50)
-                        inCircleNotes[2].SetActive(false);
+                        parentNotes[2].SetActive(false);
                     else
-                        inCircleNotes[3].SetActive(false);
+                        parentNotes[3].SetActive(false);
                     curNoteCount--;
                 }
 
@@ -178,18 +176,18 @@ public class NoteManager : Singleton<NoteManager>
             for (int i = notes.Count / 2; i < notes.Count; i++)
             {
                 float random = Random.Range(0, 100);
-                if (random < range && inCircleNotes[i].activeSelf == false)
+                if (random < range && parentNotes[i].activeSelf == false)
                 {
-                    inCircleNotes[i].SetActive(true);
+                    parentNotes[i].SetActive(true);
                     curNoteCount++;
                 }
 
-                if (inCircleNotes[6].activeSelf == true && inCircleNotes[7].activeSelf == true)
+                if (parentNotes[6].activeSelf == true && parentNotes[7].activeSelf == true)
                 {
                     if (random < 50)
-                        inCircleNotes[6].SetActive(false);
+                        parentNotes[6].SetActive(false);
                     else
-                        inCircleNotes[7].SetActive(false);
+                        parentNotes[7].SetActive(false);
                     curNoteCount--;
                 }
 
@@ -208,7 +206,7 @@ public class NoteManager : Singleton<NoteManager>
     {
         for (int i = 0; i < notes.Count; i++)
         {
-            inCircleNotes[i].SetActive(false);
+            parentNotes[i].SetActive(false);
         }
         disableNote = null;
         yield return waitRecreate = StartCoroutine(WaitRecreate());
@@ -227,7 +225,7 @@ public class NoteManager : Singleton<NoteManager>
         for (int i = 0; i < 8; i++)
         {
             GameObject insideCircle = new GameObject();
-            insideCircle.name = "InCircle note" + (i + 1);
+            insideCircle.name = "Parent note" + (i + 1);
             insideCircle.transform.SetParent(transform);
             insideCircle.transform.localPosition = positions[i];
             CircleGraphic inCircleCG = insideCircle.AddComponent<CircleGraphic>();
@@ -236,11 +234,11 @@ public class NoteManager : Singleton<NoteManager>
             childRectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, circleWidth);
             childRectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, circleWidth);
             inCircleCG.color = new Color32(0xff, 0xa0, 0x7a, 255);
-            inCircleNotes.Add(insideCircle);
+            parentNotes.Add(insideCircle);
             insideCircle.SetActive(false);
 
             GameObject OutCircleNote = new GameObject();
-            OutCircleNote.name = "OutCircle Note" + (i + 1);
+            OutCircleNote.name = "Note" + (i + 1);
             OutCircleNote.transform.SetParent(transform);
             OutCircleNote.transform.localPosition = positions[i];
             OutCircleNote.transform.SetParent(insideCircle.transform);
@@ -249,7 +247,7 @@ public class NoteManager : Singleton<NoteManager>
             Note note = OutCircleNote.AddComponent<Note>();
             note.SetNoteTimeInfo(noteTimeInfo);
             CircleGraphic cg = OutCircleNote.AddComponent<CircleGraphic>();
-            cg.color = new Color32(238,74,74,255);
+            cg.color = new Color32(238, 74, 74, 255);
             cg.SetMode(CircleGraphic.Mode.Edge);
             cg.SetEdgeThickness(10);
 
@@ -270,16 +268,6 @@ public class NoteManager : Singleton<NoteManager>
             numTextUGUI.color = new Color32(0x00, 0x00, 0x00, 255);
             numberText.Add(numText);
 
-            GameObject resText = new();
-            TextMeshProUGUI resTextUGUI = resText.AddComponent<TextMeshProUGUI>();
-            resText.name = "resultText" + (i + 1);
-            resText.transform.SetParent(transform);
-            resText.transform.localPosition = new Vector2(positions[i].x, positions[i].y - 120);
-            resTextUGUI.fontSize = 32;
-            resTextUGUI.alignment = TextAlignmentOptions.Center;
-            resTextUGUI.font = fontCafe24;
-            resultText.Add(resText);
-
             GameObject feverNote = new();
             feverNote.name = "feverNote";
             Image feverImage = feverNote.AddComponent<Image>();
@@ -287,7 +275,7 @@ public class NoteManager : Singleton<NoteManager>
             feverRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, circleWidth + 10);
             feverRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, circleWidth + 10);
             feverNote.transform.SetParent(transform);
-            feverNote.transform.localPosition = new Vector3( positions[i].x, positions[i].y, -1);
+            feverNote.transform.localPosition = new Vector3(positions[i].x, positions[i].y, -1);
             feverImage.sprite = feverKnob;
             feverImage.material = feverNoteMat;
             feverNotes.Add(feverNote);
@@ -307,7 +295,7 @@ public class NoteManager : Singleton<NoteManager>
 
             GameObject feverText = new();
             TextMeshProUGUI feverTextUGUI = feverText.AddComponent<TextMeshProUGUI>();
-            feverText.name = "numberText" + (i + 1);
+            feverText.name = "feverText" + (i + 1);
             feverText.transform.SetParent(transform);
             feverText.transform.localPosition = new Vector3(positions[i].x, positions[i].y, -1);
             feverText.transform.SetParent(feverNote.transform);
@@ -317,44 +305,43 @@ public class NoteManager : Singleton<NoteManager>
             feverTextUGUI.outlineColor = Color.red;
             feverTextUGUI.text = "FEVER";
             feverTextUGUI.fontSize = 34;
-
         }
     }
-    
+
     void SetNumText()
     {
-        for(int i = 0; i < numberText.Count; i++)
+        for (int i = 0; i < numberText.Count; i++)
         {
             TextMeshProUGUI numText = numberText[i].GetComponent<TextMeshProUGUI>();
             if (noteTimeInfo.TotalTime[level] / 2 - noteTime < 0)
             {
                 numText.text = null;
-                
+
             }
             else
                 numText.text = (noteTimeInfo.TotalTime[level] / 2 - noteTime + 1).ToString("F0");
         }
     }
-    
-    void CheckNotes()
+
+    void InputKeys()
     {
         foreach (KeyCode key in keyCodes)
         {
             if (Input.GetKeyDown(key))
             {
-                Check(keyDict[key]);
+                CheckNotes(keyDict[key]);
             }
         }
     }
 
-    void Check(int i)
+    void CheckNotes(int i)
     {
         Note note = notes[i].GetComponent<Note>();
         Vector3 createPos = note.transform.position;
         Instantiate(noteEffect, createPos, Quaternion.identity, transform.parent);
         SoundManager.PlaySFX(AudioNameTag.SFX_NOTEHIT_DEFAULT);
 
-        if (inCircleNotes[i].activeSelf == true)
+        if (parentNotes[i].activeSelf == true)
         {
             score = note.Check();
             if (i < 4)
@@ -383,40 +370,7 @@ public class NoteManager : Singleton<NoteManager>
                 textObj = Instantiate(resultTextObject[2], notes[i].transform.position, Quaternion.identity, transform);
 
             Destroy(textObj, 0.7f);
-            //StartCoroutine(SetResultText(i, score));
         }
-    }
-    
-    IEnumerator SetResultText(int idx, int score)
-    {
-        TextMeshProUGUI resTextUGUI = resultText[idx].GetComponent<TextMeshProUGUI>();
-        resultText[idx].SetActive(true);
-        resTextUGUI.outlineColor = new Color32(0x00, 0x00, 0x00, 255);
-
-        if (score == noteTimeInfo.BadScore)
-        {
-            resTextUGUI.text = "Bad";
-            resTextUGUI.color = new Color32(0xc0, 0xc0, 0xc0, 255);
-        }
-        else if (score == noteTimeInfo.GoodScore)
-        {
-            resTextUGUI.text = "Good";
-            resTextUGUI.color = new Color32(0x94, 0xc1, 0x36, 255);
-        }
-        else if (score == noteTimeInfo.PerfectScore)
-        {
-            resTextUGUI.text = "Perfect";
-            resTextUGUI.color = new Color32(0xff, 0xd7, 0x00, 255);
-        }
-        else
-            yield return null;
-
-        if (isFever)
-            yield return new WaitForSeconds(0.5f);
-        else
-            yield return new WaitForSeconds(1.0f);
-
-        resultText[idx].SetActive(false);
     }
 
     void CheckFever()
@@ -453,7 +407,7 @@ public class NoteManager : Singleton<NoteManager>
 
             for (int i = 0; i < notes.Count; i++)
             {
-                inCircleNotes[i].SetActive(true);
+                parentNotes[i].SetActive(true);
                 feverNotes[i].SetActive(true);
             }
         }
@@ -461,7 +415,7 @@ public class NoteManager : Singleton<NoteManager>
 
     void CheckGameEnd()
     {
-        if(curTime >= noteTimeInfo.PlayTime)
+        if (curTime >= noteTimeInfo.PlayTime)
         {
             Debug.Log("게임 종료");
             isPlay = false;
@@ -479,7 +433,7 @@ public class NoteManager : Singleton<NoteManager>
             for (int i = 0; i < notes.Count; i++)
             {
                 feverNotes[i].SetActive(false);
-                inCircleNotes[i].SetActive(false);
+                parentNotes[i].SetActive(false);
             }
         }
     }
