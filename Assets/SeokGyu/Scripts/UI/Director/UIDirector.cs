@@ -11,7 +11,7 @@ public class UIDirector : MonoBehaviour
     [SerializeField] private ExplainScene explainScene;
     [SerializeField] private InGameScene inGameScene;
     [SerializeField] private ResultScene resultScene;
-    private bool bDebug = false;
+    private bool bDebug = true;
     private bool bVisible = false;
 
     public ELevel curLevel;

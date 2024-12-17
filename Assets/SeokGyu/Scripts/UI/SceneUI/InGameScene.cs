@@ -113,7 +113,6 @@ public class InGameScene : BaseScene
                 float time = NoteManager.Instance.noteTimeInfo.PlayTime - NoteManager.Instance.curTime;
                 if (time <= 0)
                 {
-                    // InGame 진행멈추고 결과화면 띄우기
                     StopGame();
                 }
                 curFrame = 0f;
