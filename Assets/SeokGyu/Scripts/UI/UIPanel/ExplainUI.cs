@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class ExplainScene : BaseScene
+public class ExplainUI : BaseUI
 {
     [SerializeField] private TextMeshProUGUI subTitleText;
 

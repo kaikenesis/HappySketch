@@ -124,9 +124,9 @@ MonoBehaviour:
   explainCanvas: {fileID: 3509072717114387154}
   inGameCanvas: {fileID: 9108364567959003849}
   resultCanvas: {fileID: 7711208111597341205}
-  explainScene: {fileID: 4584488398406203181}
-  inGameScene: {fileID: 9063779490885102444}
-  resultScene: {fileID: 6344611715776224648}
+  explainUI: {fileID: 4584488398406203181}
+  inGameUI: {fileID: 9063779490885102444}
+  resultUI: {fileID: 6344611715776224648}
   curLevel: 0
 --- !u!1001 &2411391067331129296
 PrefabInstance:
@@ -638,8 +638,28 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1832171544078531186}
     m_Modifications:
+    - target: {fileID: 1603065464129555058, guid: 33b1ae76dddc9dc43ba0123ddee92164, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1603065464129555058, guid: 33b1ae76dddc9dc43ba0123ddee92164, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2985959436649183678, guid: 33b1ae76dddc9dc43ba0123ddee92164, type: 3}
       propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3101314368534780918, guid: 33b1ae76dddc9dc43ba0123ddee92164, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3101314368534780918, guid: 33b1ae76dddc9dc43ba0123ddee92164, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3101314368534780918, guid: 33b1ae76dddc9dc43ba0123ddee92164, type: 3}
+      propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3366583662177655762, guid: 33b1ae76dddc9dc43ba0123ddee92164, type: 3}

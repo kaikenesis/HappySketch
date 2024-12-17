@@ -8,11 +8,11 @@ public class UIDirector : MonoBehaviour
     [SerializeField] private Canvas inGameCanvas;
     [SerializeField] private Canvas resultCanvas;
 
-    [SerializeField] private ExplainScene explainScene;
-    [SerializeField] private InGameScene inGameScene;
-    [SerializeField] private ResultScene resultScene;
-    private bool bDebug = true;
-    private bool bVisible = false;
+    [SerializeField] private ExplainUI explainUI;
+    [SerializeField] private InGameUI inGameUI;
+    [SerializeField] private ResultUI resultUI;
+    //private bool bDebug = true;
+    //private bool bVisible = false;
 
     public ELevel curLevel;
 
@@ -45,7 +45,7 @@ public class UIDirector : MonoBehaviour
             }
         }
 
-        resultScene.SetWinner(playerNum);
+        resultUI.SetWinner(playerNum);
     }
 
     public void ChangeUI(EUIType curUIType, EButtonType buttonType)
@@ -85,22 +85,22 @@ public class UIDirector : MonoBehaviour
                 break;
             case EButtonType.SelectLevel:
                 explainCanvas.enabled = true;
-                explainScene.SetText(curLevel);
+                explainUI.SetText(curLevel);
                 break;
             case EButtonType.GameStart:
-                inGameScene.Activate();
+                inGameUI.Activate();
                 GameController.Instance.SetBackgroundDome(BgDomeType.REALISTIC, true);
                 GameController.Instance.SetBackgroundDome(BgDomeType.TOON, false);
                 break;
             case EButtonType.Retry:
-                inGameScene.ResetGame();
-                inGameScene.Activate();
+                inGameUI.ResetGame();
+                inGameUI.Activate();
                 break;
             case EButtonType.MainMenu:
                 GameController.Instance.SetBackgroundDome(BgDomeType.REALISTIC, false);
                 GameController.Instance.SetBackgroundDome(BgDomeType.TOON, true);
                 SoundManager.PlayBGM(AudioNameTag.BGM_TITLE);
-                inGameScene.ResetGame();
+                inGameUI.ResetGame();
                 inGameCanvas.enabled = false;
                 mainMenuCanvas.enabled = true;
                 break;
@@ -113,13 +113,13 @@ public class UIDirector : MonoBehaviour
 
         int num = playerNum - 1;
         UIManager.Instance.scores[num] += score;
-        inGameScene.SetScore(num, UIManager.Instance.scores[num]);
+        inGameUI.SetScore(num, UIManager.Instance.scores[num]);
     }
 
     public void ActivateFever()
     {
         if (UIManager.Instance.bPlayGame == false) return;
-        inGameScene.ActivateFeverTime();
+        inGameUI.ActivateFeverTime();
     }
 
     public void FinishGame()

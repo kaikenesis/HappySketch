@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InGameScene : BaseScene
+public class InGameUI : BaseUI
 {
     [SerializeField] private GameObject scorePrefab;
     [SerializeField] private Vector2 scorePosition;
