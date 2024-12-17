@@ -91,12 +91,10 @@ public class UIDirector : MonoBehaviour
                 inGameScene.Activate();
                 GameController.Instance.SetBackgroundDome(BgDomeType.REALISTIC, true);
                 GameController.Instance.SetBackgroundDome(BgDomeType.TOON, false);
-                GameController.Instance.ResetLevel();
                 break;
             case EButtonType.Retry:
                 inGameScene.ResetGame();
                 inGameScene.Activate();
-                GameController.Instance.ResetLevel();
                 break;
             case EButtonType.MainMenu:
                 GameController.Instance.SetBackgroundDome(BgDomeType.REALISTIC, false);
@@ -130,41 +128,38 @@ public class UIDirector : MonoBehaviour
         CompareScore();
     }
 
-    private void OnGUI()
-    {
-        if(bDebug == true)
-        {
-            if (GUI.Button(new Rect(0, 0, 100, 50), "디버깅"))
-            {
-                bVisible = !bVisible;
-            }
-        }
+    //private void OnGUI()
+    //{
+    //    if (GUI.Button(new Rect(0, 0, 100, 50), "디버깅"))
+    //    {
+    //        bDebug = !bDebug;
+    //    }
 
-        if(bVisible == true)
-        {
-            if(GUI.Button(new Rect(0, 50, 100, 50), "시간 감소"))
-            {
-                NoteManager.Instance.curTime++;
-                inGameScene.DecreaseTime();
-            }
-            if (GUI.Button(new Rect(0, 100, 100, 50), "남은시간 60초"))
-            {
-                NoteManager.Instance.curTime = 0;
-                inGameScene.DecreaseTime();
-            }
-            if (GUI.Button(new Rect(0, 150, 100, 50), "남은시간 10초"))
-            {
-                NoteManager.Instance.curTime = 50;
-                inGameScene.DecreaseTime();
-            }
-            if (GUI.Button(new Rect(0, 200, 100, 50), "1p점수 + 1000"))
-            {
-                IncreaseScore(1, 1000);
-            }
-            if (GUI.Button(new Rect(0, 250, 100, 50), "2p점수 + 1000"))
-            {
-                IncreaseScore(2, 1000);
-            }
-        }
-    }
+    //    if(bDebug == true)
+    //    {
+    //        if(GUI.Button(new Rect(0, 50, 100, 50), "시간 감소"))
+    //        {
+    //            NoteManager.Instance.curTime++;
+    //            inGameScene.DecreaseTime();
+    //        }
+    //        if (GUI.Button(new Rect(0, 100, 100, 50), "남은시간 60초"))
+    //        {
+    //            NoteManager.Instance.curTime = 0;
+    //            inGameScene.DecreaseTime();
+    //        }
+    //        if (GUI.Button(new Rect(0, 150, 100, 50), "남은시간 10초"))
+    //        {
+    //            NoteManager.Instance.curTime = 50;
+    //            inGameScene.DecreaseTime();
+    //        }
+    //        if (GUI.Button(new Rect(0, 200, 100, 50), "1p점수 + 1000"))
+    //        {
+    //            IncreaseScore(1, 1000);
+    //        }
+    //        if (GUI.Button(new Rect(0, 250, 100, 50), "2p점수 + 1000"))
+    //        {
+    //            IncreaseScore(2, 1000);
+    //        }
+    //    }
+    //}
 }

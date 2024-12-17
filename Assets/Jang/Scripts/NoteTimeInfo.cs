@@ -1,21 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "NoteTimeInfo", menuName = "ScriptableObjects/NoteTimeInfo", order = 1)]
 public class NoteTimeInfo : ScriptableObject
 {
-    [SerializeField] float[] totalTime;
-    [SerializeField] float[] perfectTime;
-    [SerializeField] float[] goodTime;
-    [SerializeField] float minRecreateTime;
-    [SerializeField] float maxRecreateTime;
-    [SerializeField] float feverStartTime;
-    [SerializeField] float feverCheckTime;
-    [SerializeField] int perfectScore;
-    [SerializeField] int goodScore;
-    [SerializeField] int badScore;
-    [SerializeField] float playTime;
+    [SerializeField] private float[] totalTime;
+    [SerializeField] private float[] perfectTime;
+    [SerializeField] private float[] goodTime;
+    [SerializeField] private float minRecreateTime;
+    [SerializeField] private float maxRecreateTime;
+    [SerializeField] private float feverStartTime;
+    [SerializeField] private float feverCheckTime;
+    [SerializeField] private int perfectScore;
+    [SerializeField] private int goodScore;
+    [SerializeField] private int badScore;
+    [SerializeField] private float playTime;
 
 
     public float[] TotalTime { get { return totalTime; } }
@@ -23,7 +21,7 @@ public class NoteTimeInfo : ScriptableObject
     public float[] GoodTime { get { return goodTime; } }
     public float MinRecreateTime { get { return minRecreateTime; } }
     public float MaxRecreateTime { get { return maxRecreateTime; } }
-    public float FeverStartTime {  get { return feverStartTime; } }
+    public float FeverStartTime { get { return feverStartTime; } }
     public float FeverCheckTime { get { return feverCheckTime; } }
     public float PlayTime { get { return playTime; } }
     public int PerfectScore { get { return perfectScore; } }

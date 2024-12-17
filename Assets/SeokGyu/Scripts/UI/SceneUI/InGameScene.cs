@@ -110,7 +110,7 @@ public class InGameScene : BaseScene
             DecreaseTime();
             if (curFrame >= delayTime)
             {
-                float time = NoteManager.Instance.noteTimeInfo.PlayTime - NoteManager.Instance.curTime;
+                float time = NoteManager.Instance.noteTimeInfo.PlayTime - NoteManager.Instance.CurTime;
                 if (time <= 0)
                 {
                     StopGame();

@@ -57,6 +57,7 @@ public class CountDown : MonoBehaviour
     public void Activate()
     {
         SoundManager.StopBGM();
+        GameController.Instance.ResetLevel();
 
         canvas.enabled = true;
         isActive = true;
