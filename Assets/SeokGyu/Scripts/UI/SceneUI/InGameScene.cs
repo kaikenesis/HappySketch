@@ -110,7 +110,7 @@ public class InGameScene : BaseScene
             DecreaseTime();
             if (curFrame >= delayTime)
             {
-                float time = NoteManager.Instance.noteTimeInfo.PlayTime - NoteManager.Instance.curTime;
+                float time = NoteManager.Instance.noteTimeInfo.PlayTime - NoteManager.Instance.CurTime;
                 if (time <= 0)
                 {
                     // InGame 진행멈추고 결과화면 띄우기

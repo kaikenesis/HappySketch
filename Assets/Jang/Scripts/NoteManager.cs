@@ -17,22 +17,21 @@ public class NoteManager : Singleton<NoteManager>
     private int level = 0;
     private int score = 0;
     private int circleWidth = 150;
-    public float curTime = 0;
+    private float curTime = 0;
+    public float CurTime { get { return curTime; } }
     private float noteTime = 0;
 
-    private bool canEnable = true;
     private bool isFever = false;
-    private bool isPlay = false;
+    private bool isGameStart = false;
     private bool isAboutToFever = false;
 
     Coroutine enableNote = null;
     Coroutine disableNote = null;
     Coroutine waitRecreate = null;
 
-    private List<GameObject> notes = new();
+    private List<Note> notes = new();
+    private List<TextMeshProUGUI> numberText = new();
     private List<GameObject> parentNotes = new();
-    private List<GameObject> numberText = new();
-    private List<GameObject> resultText = new();
     private List<GameObject> feverNotes = new();
     Vector2[] positions = { new(-800, 80), new(-200, 80), new(-800, -400), new(-200, -400),
                             new(200, 80), new(800, 80), new(200, -400), new(800, -400)};
@@ -40,7 +39,8 @@ public class NoteManager : Singleton<NoteManager>
     private readonly KeyCode[] keyCodes = { KeyCode.A, KeyCode.S, KeyCode.Z, KeyCode.X, KeyCode.J, KeyCode.K, KeyCode.N, KeyCode.M };
 
     Sprite feverKnob = null;
-    void Start()
+
+    private void Start()
     {
         feverKnob = AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/Knob.psd");
         SetKeys();
@@ -48,9 +48,9 @@ public class NoteManager : Singleton<NoteManager>
         noteEffect.transform.localScale = new Vector3(100, 100, 100);
     }
 
-    void Update()
+    private void Update()
     {
-        if (!isPlay)
+        if (!isGameStart)
             return;
 
         curTime += Time.deltaTime;
@@ -63,12 +63,6 @@ public class NoteManager : Singleton<NoteManager>
 
         if (!isFever)
             CheckFever();
-
-        if (canEnable && !isFever)
-        {
-            enableNote = StartCoroutine(EnableNote());
-        }
-
     }
 
     private void SetKeys()
@@ -88,8 +82,8 @@ public class NoteManager : Singleton<NoteManager>
         curTime = 0;
         isFever = false;
         isAboutToFever = false;
-        canEnable = true;
-        isPlay = true;
+        isGameStart = true;
+        enableNote = StartCoroutine(EnableNote());
     }
 
     public void SetLevel(int lv)
@@ -101,9 +95,8 @@ public class NoteManager : Singleton<NoteManager>
         }
     }
 
-    IEnumerator EnableNote()
+    private IEnumerator EnableNote()
     {
-        canEnable = false;
         noteTime = 0;
         float rand = Random.Range(0, 100);
         int totalNoteCount = 0;
@@ -202,7 +195,7 @@ public class NoteManager : Singleton<NoteManager>
         disableNote = StartCoroutine(DisableNote());
     }
 
-    IEnumerator DisableNote()
+    private IEnumerator DisableNote()
     {
         for (int i = 0; i < notes.Count; i++)
         {
@@ -212,15 +205,15 @@ public class NoteManager : Singleton<NoteManager>
         yield return waitRecreate = StartCoroutine(WaitRecreate());
     }
 
-    IEnumerator WaitRecreate()
+    private IEnumerator WaitRecreate()
     {
         float rand = Random.Range(noteTimeInfo.MinRecreateTime, noteTimeInfo.MaxRecreateTime);
         yield return new WaitForSeconds(rand);
         waitRecreate = null;
-        canEnable = true;
+        enableNote = StartCoroutine(EnableNote());
     }
 
-    void GenerateNotes()
+    private void GenerateNotes()
     {
         for (int i = 0; i < 8; i++)
         {
@@ -242,10 +235,11 @@ public class NoteManager : Singleton<NoteManager>
             OutCircleNote.transform.SetParent(transform);
             OutCircleNote.transform.localPosition = positions[i];
             OutCircleNote.transform.SetParent(insideCircle.transform);
-            notes.Add(OutCircleNote);
 
             Note note = OutCircleNote.AddComponent<Note>();
             note.SetNoteTimeInfo(noteTimeInfo);
+            notes.Add(note);
+
             CircleGraphic cg = OutCircleNote.AddComponent<CircleGraphic>();
             cg.color = new Color32(238, 74, 74, 255);
             cg.SetMode(CircleGraphic.Mode.Edge);
@@ -266,7 +260,7 @@ public class NoteManager : Singleton<NoteManager>
             numTextUGUI.alignment = TextAlignmentOptions.Center;
             numTextUGUI.font = fontCafe24;
             numTextUGUI.color = new Color32(0x00, 0x00, 0x00, 255);
-            numberText.Add(numText);
+            numberText.Add(numTextUGUI);
 
             GameObject feverNote = new();
             feverNote.name = "feverNote";
@@ -308,42 +302,40 @@ public class NoteManager : Singleton<NoteManager>
         }
     }
 
-    void SetNumText()
+    private void SetNumText()
     {
         for (int i = 0; i < numberText.Count; i++)
         {
-            TextMeshProUGUI numText = numberText[i].GetComponent<TextMeshProUGUI>();
             if (noteTimeInfo.TotalTime[level] / 2 - noteTime < 0)
             {
-                numText.text = null;
+                numberText[i].text = null;
 
             }
             else
-                numText.text = (noteTimeInfo.TotalTime[level] / 2 - noteTime + 1).ToString("F0");
+                numberText[i].text = (noteTimeInfo.TotalTime[level] / 2 - noteTime + 1).ToString("F0");
         }
     }
 
-    void InputKeys()
+    private void InputKeys()
     {
         foreach (KeyCode key in keyCodes)
         {
             if (Input.GetKeyDown(key))
             {
-                CheckNotes(keyDict[key]);
+                CheckNote(keyDict[key]);
             }
         }
     }
 
-    void CheckNotes(int i)
+    private void CheckNote(int i)
     {
-        Note note = notes[i].GetComponent<Note>();
-        Vector3 createPos = note.transform.position;
+        Vector3 createPos = notes[i].transform.position;
         Instantiate(noteEffect, createPos, Quaternion.identity, transform.parent);
         SoundManager.PlaySFX(AudioNameTag.SFX_NOTEHIT_DEFAULT);
 
         if (parentNotes[i].activeSelf == true)
         {
-            score = note.Check();
+            score = notes[i].Check();
             if (i < 4)
             {
                 if (score != noteTimeInfo.BadScore && score != -1)
@@ -373,7 +365,7 @@ public class NoteManager : Singleton<NoteManager>
         }
     }
 
-    void CheckFever()
+    private void CheckFever()
     {
         if (!isAboutToFever && curTime >= noteTimeInfo.FeverStartTime - 0.8f)
         {
@@ -413,12 +405,12 @@ public class NoteManager : Singleton<NoteManager>
         }
     }
 
-    void CheckGameEnd()
+    private void CheckGameEnd()
     {
         if (curTime >= noteTimeInfo.PlayTime)
         {
             Debug.Log("게임 종료");
-            isPlay = false;
+            isGameStart = false;
 
             GameController.Instance.StopPlayerAnimation();
             GameController.Instance.PostProcessControl.StopFeverEffect();

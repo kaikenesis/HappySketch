@@ -9,7 +9,7 @@ public class Note : MonoBehaviour
     private float lastCheckTime = 0;
     private float noteWidth = 300;
     private RectTransform rectTran;
-    private CircleGraphic circleGraphic;
+
     public void SetLevel(int lv)
     {
         level = lv;
@@ -25,7 +25,7 @@ public class Note : MonoBehaviour
         rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
     }
 
-    void SetLastCheckTime()
+    private void SetLastCheckTime()
     {
         lastCheckTime = curTime;
     }
@@ -73,21 +73,20 @@ public class Note : MonoBehaviour
     private void Start()
     {
         rectTran = GetComponent<RectTransform>();
-        circleGraphic = GetComponent<CircleGraphic>();
     }
-    void OnEnable()
+    private void OnEnable()
     {
         curTime = 0;
     }
 
-    void Update()
+    private void Update()
     {
         curTime += Time.deltaTime;
         if (!isFever)
             ShrinkCircle();
     }
 
-    void ShrinkCircle()
+    private void ShrinkCircle()
     {
         float progress = Mathf.Clamp01(1 - (curTime / noteTimeInfo.TotalTime[level]));
         rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, noteWidth * progress);

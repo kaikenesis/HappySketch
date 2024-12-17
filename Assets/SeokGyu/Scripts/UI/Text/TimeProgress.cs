@@ -24,7 +24,7 @@ public class TimeProgress : MonoBehaviour
 
     private void SetText()
     {
-        float time = NoteManager.Instance.noteTimeInfo.PlayTime - NoteManager.instance.curTime;
+        float time = NoteManager.Instance.noteTimeInfo.PlayTime - NoteManager.instance.CurTime;
         if (UIManager.Instance.bPlayGame == false) return;
         if (time < 0) return;
 
@@ -33,7 +33,7 @@ public class TimeProgress : MonoBehaviour
 
     private void SetSlider()
     {
-        progressSlider.value = 1.0f - (NoteManager.Instance.curTime / NoteManager.Instance.noteTimeInfo.PlayTime);
+        progressSlider.value = 1.0f - (NoteManager.Instance.CurTime / NoteManager.Instance.noteTimeInfo.PlayTime);
         if (progressSlider.value <= 0.0f)
         {
             BarImg.enabled = false;
