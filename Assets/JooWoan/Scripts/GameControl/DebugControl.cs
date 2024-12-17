@@ -12,7 +12,14 @@ public class DebugControl : MonoBehaviour
     private bool isFeverEffect = false;
     private bool isFireEnabled = false;
 
+    /*
     void Update()
+    {
+        TryDebug();
+    }
+    */
+
+    private void TryDebug()
     {
         if (Input.GetKeyDown(KeyCode.F1))
             Debug_GotoGameScene();
@@ -39,6 +46,7 @@ public class DebugControl : MonoBehaviour
                 fireEffects.DisableFireEffect();
         }
     }
+
     private void Debug_GotoGameScene()
     {
         GameController.Instance.GetPlayerCamera(1).enabled = true;
