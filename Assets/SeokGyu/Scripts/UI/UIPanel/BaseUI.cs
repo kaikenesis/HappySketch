@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class BaseScene : MonoBehaviour
+public abstract class BaseUI : MonoBehaviour
 {
     private Canvas canvas;
 

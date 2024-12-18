@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ResultScene : BaseScene
+public class ResultUI : BaseUI
 {
     [SerializeField] private GameObject resultScoreObject;
     [SerializeField] private GameObject backImgObject;
