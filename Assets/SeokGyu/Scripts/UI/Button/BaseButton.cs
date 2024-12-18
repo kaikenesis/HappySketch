@@ -6,8 +6,6 @@ public abstract class BaseButton : MonoBehaviour
     public EButtonType buttonType;
     public EUIType curUIType;
 
-    private Button button;
-
     private void Awake()
     {
         Init();
@@ -15,7 +13,7 @@ public abstract class BaseButton : MonoBehaviour
 
     protected virtual void Init()
     {
-        button = transform.GetComponent<Button>();
+        Button button = transform.GetComponent<Button>();
         if (button != null)
         {
             button.onClick.AddListener(OnClicked);
