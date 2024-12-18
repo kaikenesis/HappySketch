@@ -36,7 +36,7 @@ public class GameController : MonoBehaviour
     #endregion
 
     private PostProcessingControl postProcessingControl;
-    private WallControl wallControl;
+    private BlockControl blockControl;
     private FireEffects fireEffects;
 
     [SerializeField] private float feverPlaybackSpeed;
@@ -89,9 +89,9 @@ public class GameController : MonoBehaviour
 
         bool canDisable = true;
 
-        for (int i = 0; i < wallControl.PlayerBlocks.Count; i++)
+        for (int i = 0; i < blockControl.PlayerBlockIndexes.Count; i++)
         {
-            if (wallControl.PlayerBlocks[i] < disableFirstLevelBlockIndex)
+            if (blockControl.PlayerBlockIndexes[i] < disableFirstLevelBlockIndex)
             {
                 canDisable = false;
                 break;
@@ -127,9 +127,9 @@ public class GameController : MonoBehaviour
         }
     }
 
-    public void InitWallControl(WallControl wallControl)
+    public void InitWallControl(BlockControl wallControl)
     {
-        this.wallControl = wallControl;
+        this.blockControl = wallControl;
     }
 
     public void InitPostprocessing(PostProcessingControl postProcessingControl)
@@ -150,7 +150,7 @@ public class GameController : MonoBehaviour
             player.ResetTransform();
             player.CameraControl.ResetPosition();
         }
-        wallControl.ResetBlockStates();
+        blockControl.ResetBlockStates();
         firstFloor.SetActive(true);
     }
 }
