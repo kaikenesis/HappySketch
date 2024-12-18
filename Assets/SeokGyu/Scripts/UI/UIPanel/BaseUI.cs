@@ -2,25 +2,13 @@ using UnityEngine;
 
 public abstract class BaseUI : MonoBehaviour
 {
-    private Canvas canvas;
-
-    private void Awake()
-    {
-        Init();
-    }
-
-    protected virtual void Init()
-    {
-        canvas = GetComponent<Canvas>();
-    }
-
     public virtual void Activate()
     {
-        canvas.enabled = true;
+        gameObject.SetActive(true);
     }
 
     public virtual void Deactivate()
     {
-        canvas.enabled = false;
+        gameObject.SetActive(false);
     }
 }

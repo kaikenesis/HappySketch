@@ -17,7 +17,7 @@ public class NoteManager : Singleton<NoteManager>
     private int level = 0;
     private int score = 0;
     private int circleWidth = 150;
-    private float curTime = 0;
+    public float curTime = 0;
     public float CurTime { get { return curTime; } }
     private float noteTime = 0;
 

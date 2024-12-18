@@ -1,4 +1,4 @@
 public interface ICameraChanger
 {
-    public void ChangeCamera();
+    public void ChangeCamera(EButtonType type);
 }

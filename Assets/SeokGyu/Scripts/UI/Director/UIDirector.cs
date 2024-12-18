@@ -2,17 +2,12 @@ using UnityEngine;
 
 public class UIDirector : MonoBehaviour
 {
-    [SerializeField] private Canvas mainMenuCanvas;
-    [SerializeField] private Canvas selectLevelCanvas;
-    [SerializeField] private Canvas explainCanvas;
-    [SerializeField] private Canvas inGameCanvas;
-    [SerializeField] private Canvas resultCanvas;
-
+    [SerializeField] private GameObject mainMenuUI;
+    [SerializeField] private GameObject selectLevelUI;
     [SerializeField] private ExplainUI explainUI;
     [SerializeField] private InGameUI inGameUI;
     [SerializeField] private ResultUI resultUI;
-    //private bool bDebug = true;
-    //private bool bVisible = false;
+    private bool bDebug = true;
 
     public ELevel curLevel;
 
@@ -25,11 +20,11 @@ public class UIDirector : MonoBehaviour
     {
         UIManager.Instance.uiDirector = this;
 
-        mainMenuCanvas.enabled = true;
-        selectLevelCanvas.enabled = false;
-        explainCanvas.enabled = false;
-        inGameCanvas.enabled = false;
-        resultCanvas.enabled = false;
+        mainMenuUI.SetActive(true);
+        selectLevelUI.SetActive(false);
+        explainUI.Deactivate();
+        inGameUI.Deactivate();
+        resultUI.Deactivate();
     }
 
     private void CompareScore()
@@ -50,8 +45,8 @@ public class UIDirector : MonoBehaviour
 
     public void ChangeUI(EUIType curUIType, EButtonType buttonType)
     {
-        DeactivateUI(curUIType);
         ActivateUI(buttonType);
+        DeactivateUI(curUIType);
     }
 
     private void DeactivateUI(EUIType curUIType)
@@ -59,19 +54,19 @@ public class UIDirector : MonoBehaviour
         switch (curUIType)
         {
             case EUIType.MainMenu:
-                mainMenuCanvas.enabled = false;
+                mainMenuUI.SetActive(false);
                 break;
             case EUIType.SelectLevel:
-                selectLevelCanvas.enabled = false;
+                selectLevelUI.SetActive(false);
                 break;
             case EUIType.Explain:
-                explainCanvas.enabled = false;
+                explainUI.Deactivate();
                 break;
             case EUIType.InGame:
-                inGameCanvas.enabled = false;
+                inGameUI.Deactivate();
                 break;
             case EUIType.Result:
-                resultCanvas.enabled = false;
+                resultUI.Deactivate();
                 break;
         }
     }
@@ -81,10 +76,10 @@ public class UIDirector : MonoBehaviour
         switch (buttonType)
         {
             case EButtonType.Start:
-                selectLevelCanvas.enabled = true;
+                selectLevelUI.SetActive(true);
                 break;
             case EButtonType.SelectLevel:
-                explainCanvas.enabled = true;
+                explainUI.Activate();
                 explainUI.SetText(curLevel);
                 break;
             case EButtonType.GameStart:
@@ -101,8 +96,8 @@ public class UIDirector : MonoBehaviour
                 GameController.Instance.SetBackgroundDome(BgDomeType.TOON, true);
                 SoundManager.PlayBGM(AudioNameTag.BGM_TITLE);
                 inGameUI.ResetGame();
-                inGameCanvas.enabled = false;
-                mainMenuCanvas.enabled = true;
+                inGameUI.Deactivate();
+                mainMenuUI.SetActive(true);
                 break;
         }
     }
@@ -113,7 +108,7 @@ public class UIDirector : MonoBehaviour
 
         int num = playerNum - 1;
         UIManager.Instance.scores[num] += score;
-        inGameUI.SetScore(num, UIManager.Instance.scores[num]);
+        inGameUI.UpdateScore(num, UIManager.Instance.scores[num]);
     }
 
     public void ActivateFever()
@@ -124,42 +119,42 @@ public class UIDirector : MonoBehaviour
 
     public void FinishGame()
     {
-        resultCanvas.enabled = true;
+        resultUI.Activate();
         CompareScore();
     }
 
-    //private void OnGUI()
-    //{
-    //    if (GUI.Button(new Rect(0, 0, 100, 50), "디버깅"))
-    //    {
-    //        bDebug = !bDebug;
-    //    }
+    private void OnGUI()
+    {
+        if (GUI.Button(new Rect(0, 0, 100, 50), "디버깅"))
+        {
+            bDebug = !bDebug;
+        }
 
-    //    if(bDebug == true)
-    //    {
-    //        if(GUI.Button(new Rect(0, 50, 100, 50), "시간 감소"))
-    //        {
-    //            NoteManager.Instance.curTime++;
-    //            inGameScene.DecreaseTime();
-    //        }
-    //        if (GUI.Button(new Rect(0, 100, 100, 50), "남은시간 60초"))
-    //        {
-    //            NoteManager.Instance.curTime = 0;
-    //            inGameScene.DecreaseTime();
-    //        }
-    //        if (GUI.Button(new Rect(0, 150, 100, 50), "남은시간 10초"))
-    //        {
-    //            NoteManager.Instance.curTime = 50;
-    //            inGameScene.DecreaseTime();
-    //        }
-    //        if (GUI.Button(new Rect(0, 200, 100, 50), "1p점수 + 1000"))
-    //        {
-    //            IncreaseScore(1, 1000);
-    //        }
-    //        if (GUI.Button(new Rect(0, 250, 100, 50), "2p점수 + 1000"))
-    //        {
-    //            IncreaseScore(2, 1000);
-    //        }
-    //    }
-    //}
+        if (bDebug == true)
+        {
+            if (GUI.Button(new Rect(0, 50, 100, 50), "시간 감소"))
+            {
+                NoteManager.Instance.curTime++;
+                inGameUI.DecreaseTime();
+            }
+            if (GUI.Button(new Rect(0, 100, 100, 50), "남은시간 60초"))
+            {
+                NoteManager.Instance.curTime = 0;
+                inGameUI.DecreaseTime();
+            }
+            if (GUI.Button(new Rect(0, 150, 100, 50), "남은시간 10초"))
+            {
+                NoteManager.Instance.curTime = 50;
+                inGameUI.DecreaseTime();
+            }
+            if (GUI.Button(new Rect(0, 200, 100, 50), "1p점수 + 1000"))
+            {
+                IncreaseScore(1, 1000);
+            }
+            if (GUI.Button(new Rect(0, 250, 100, 50), "2p점수 + 1000"))
+            {
+                IncreaseScore(2, 1000);
+            }
+        }
+    }
 }

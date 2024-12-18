@@ -45,16 +45,6 @@ public class ResultUI : BaseUI
         }
     }
 
-    public override void Activate()
-    {
-        base.Activate();
-    }
-
-    public override void Deactivate()
-    {
-        base.Deactivate();
-    }
-
     public void SetWinner(int playerNum)
     {
         for (int i = 0; i < UIManager.Instance.playerNum; i++)

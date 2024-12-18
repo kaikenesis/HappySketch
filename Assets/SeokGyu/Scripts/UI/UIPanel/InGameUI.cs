@@ -11,12 +11,8 @@ public class InGameUI : BaseUI
     [SerializeField] private TimeProgress timer;
     private InGameScore[] scoreTexts;
     private GameObject[] feverTexts;
-    private Canvas[] feverCanvases;
     [SerializeField] private string[] feverTextStrings;
-    [SerializeField] private float delayTime = 1.0f;
-    private float curFrame = 1.0f;
     [SerializeField] private GameObject linePrefab;
-
 
     private void Start()
     {
@@ -52,7 +48,6 @@ public class InGameUI : BaseUI
     {
         int playerNum = UIManager.Instance.playerNum;
         feverTexts = new GameObject[playerNum];
-        feverCanvases = new Canvas[playerNum];
 
         for (int i = 0; i < playerNum; i++)
         {
@@ -66,11 +61,8 @@ public class InGameUI : BaseUI
             ExplainFeverText explainFeverText = gameObject.GetComponentInChildren<ExplainFeverText>();
             explainFeverText.SetText(feverTextStrings[i]);
 
-            feverCanvases[i] = gameObject.GetComponent<Canvas>();
-            feverCanvases[i].enabled = false;
-
             feverTexts[i] = gameObject;
-
+            feverTexts[i].gameObject.SetActive(false);
         }
     }
 
@@ -106,16 +98,10 @@ public class InGameUI : BaseUI
     {
         if (UIManager.Instance.bPlayGame == true)
         {
-            curFrame += Time.deltaTime;
             DecreaseTime();
-            if (curFrame >= delayTime)
+            if (NoteManager.Instance.noteTimeInfo.PlayTime <= NoteManager.Instance.CurTime)
             {
-                float time = NoteManager.Instance.noteTimeInfo.PlayTime - NoteManager.Instance.CurTime;
-                if (time <= 0)
-                {
-                    StopGame();
-                }
-                curFrame = 0f;
+                StopGame();
             }
         }
     }
@@ -152,7 +138,7 @@ public class InGameUI : BaseUI
         timer.UpdateProgress();
     }
 
-    public void SetScore(int playerNum, int score)
+    public void UpdateScore(int playerNum, int score)
     {
         scoreTexts[playerNum].SetText(score);
     }
@@ -161,7 +147,7 @@ public class InGameUI : BaseUI
     {
         for(int i =0;i< feverTexts.Length;i++)
         {
-            feverCanvases[i].enabled = true;
+            feverTexts[i].gameObject.SetActive(true);
         }
         timer.SetProgressColor(true);
     }
@@ -170,7 +156,7 @@ public class InGameUI : BaseUI
     {
         for (int i = 0; i < feverTexts.Length; i++)
         {
-            feverCanvases[i].enabled = false;
+            feverTexts[i].gameObject.SetActive(false);
         }
     }
 }
